@@ -8,7 +8,7 @@ export const getUsersQuery = `query {
 }`;
 
 export const getUserQuery = (id: number) => `query {
-  user(id: ${id}){
+  users(id: ${id}){
     id
     email
   }

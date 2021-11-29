@@ -80,7 +80,7 @@ const LoginPage = ({
           </form>
           <div className="text-sm text-center">
             <a
-              href="/register"
+              href="/users/register"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               아직 계정이 없으신가요?

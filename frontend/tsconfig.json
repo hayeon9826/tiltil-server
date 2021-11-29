@@ -21,7 +21,7 @@
       "@api": ["src/core/api/index"],
       "@config": ["src/core/config/index"],
       "@interface": ["src/core/interfaces/index"],
-      "@atoms": ["src/core/atoms/index"],
+      "@atoms": ["src/core/atom/index"],
       "@auth": ["src/core/auth/index"],
       "@query": ["src/core/query"]
     }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { postQuery } from "../core/api";
+import { postQuery } from "@api";
 import Header from "@components/Header";
 import { User, Category, Item } from "@interface";
 import Link from "next/link";
@@ -14,8 +14,10 @@ const Home = ({ isAuth }: any) => {
     // const query = getUserQuery(4);
     const { data } = await postQuery(query);
     console.log(data);
-    setUsers(data);
+    setUsers(data && data["data"] && data["data"]["users"]);
   };
+
+  console.log(users);
 
   const people: User[] = [
     {
@@ -86,7 +88,15 @@ const Home = ({ isAuth }: any) => {
               <div className="px-2 py-4">
                 <div className="text-lg font-bold">상품 목록</div>
                 <button onClick={() => requestTest()}>목록 가져오기</button>
+                <button
+                  onClick={() => {
+                    setUsers([]);
+                  }}
+                >
+                  목록 리셋
+                </button>
                 {users &&
+                  users.length > 0 &&
                   users.map((user) => <div key={user.id}>{user.email}</div>)}
               </div>
             </div>

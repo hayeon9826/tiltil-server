@@ -21,6 +21,7 @@ Bundler.require(*Rails.groups)
 
 module Backend
   class Application < Rails::Application
+    I18n.config.available_locales = :ko
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 

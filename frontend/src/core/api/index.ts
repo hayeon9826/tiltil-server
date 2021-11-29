@@ -9,7 +9,7 @@ export const login = async (params: SigninAttribute) => {
 };
 
 export const signUp = async (params: SignUpAttribute) => {
-  const res = await API.post("/users/sign_up", { params });
+  const res = await API.post("/users", { params });
   return res;
 };
 

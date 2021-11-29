@@ -18,9 +18,17 @@ module Types
       Post.all
     end
 
-    # field :users, [User], null: false
-    # def users
-    #   User.all
-    # end
+    field :users, [UserType, null: true], null: false do
+      argument :id, Integer, required: false
+    end
+
+    def users(**args)
+      args[:id]
+      if args[:id]
+        User.where(id: args[:id])
+      else
+        User.all
+      end
+    end
   end
 end
