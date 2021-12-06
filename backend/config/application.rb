@@ -30,6 +30,10 @@ module Backend
     config.encoding = "utf-8"
     config.api_only = true
 
+    config.to_prepare do
+      DeviseController.respond_to :html, :json
+    end   
+
     config.middleware.use ActionDispatch::Flash
     config.middleware.use Rack::MethodOverride
     config.middleware.use ActionDispatch::Cookies
