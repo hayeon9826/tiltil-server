@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  #devise
-  devise_for :users, :controllers => { registrations: 'users/registrations' }
-
   # graphql
   post "/graphql", to: "graphql#execute"
   # get '/graphiql', to: 'graphiql#index' if Rails.env.development?
@@ -11,9 +8,9 @@ Rails.application.routes.draw do
 
 
   # api routes
-  namespace :api do
-    namespace :v1 do
-      get '/items', to: 'items#index'
-    end
-  end
+  # namespace :api do
+  #   namespace :v1 do
+  #     get '/items', to: 'items#index'
+  #   end
+  # end
 end
