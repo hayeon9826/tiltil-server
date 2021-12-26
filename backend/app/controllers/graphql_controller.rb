@@ -1,5 +1,5 @@
 class GraphqlController < ApplicationController
-  before_action :jwt_authenticate_request!
+  # before_action :jwt_authenticate_request!
   # before_action :token_authentication
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,

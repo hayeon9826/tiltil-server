@@ -8,5 +8,6 @@ export const API = axios.create({
     Accept: "application/json",
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
+    Authorization: "Bearer *",
   },
 });
