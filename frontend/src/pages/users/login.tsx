@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Header from "@components/Header";
 import { useForm } from "react-hook-form";
-import { login } from "@api";
+import { postQuery } from "@api";
 import { setUserToken } from "@auth";
 import { useSetRecoilState } from "recoil";
 import { authenticatedUser } from "@atoms";
+import { loginUserQuery } from "src/core/query/user";
 import Link from "next/link";
 
 const LoginPage = ({
@@ -19,7 +20,8 @@ const LoginPage = ({
   const { handleSubmit, register } = useForm();
 
   const onSubmit = async (inputValues) => {
-    const { data } = await login(inputValues);
+    const query = loginUserQuery(inputValues.email, inputValues.password);
+    const { data } = await postQuery(query);
     await setUserToken(data?.token);
     await setAuthorizedUser({ email: data?.email, id: data?.id });
     window.location.replace("/");
