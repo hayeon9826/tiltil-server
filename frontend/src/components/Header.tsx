@@ -3,12 +3,10 @@ import { Fragment } from "react";
 import { Popover, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/solid";
-
-const navigation = [
-  { name: "021 라운지", href: "#", current: true },
-  { name: "이벤트", href: "#", current: false },
-  { name: "블로그", href: "#", current: false },
-];
+import { getToken, destroyToken } from "@store";
+import React, { useEffect, useState } from "react";
+import useAuth from "@auth";
+import { sleep } from "@utils";
 
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
@@ -28,6 +26,28 @@ const user = {
 };
 
 const Header = ({ isAuth, open }: any) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
+    useAuth();
+
+  useEffect(() => {
+    (async function checkToken() {
+      console.log(getToken, "@@@getToken header");
+      try {
+        // TODO Check Token 구현 필요
+
+        // const response = await refresh();
+        // saveToken(response.data);
+        authenticateUser(getToken());
+      } catch {
+        destroyToken();
+        unAuthenticateUser();
+      } finally {
+        await sleep(700);
+        setIsLoading(false);
+      }
+    })();
+  }, []);
   return (
     <Popover
       as="header"
@@ -154,23 +174,6 @@ const Header = ({ isAuth, open }: any) => {
             </div>
           </div>
           <Popover.Panel as="nav" className="lg:hidden" aria-label="Global">
-            <div className="max-w-3xl mx-auto px-2 pt-2 pb-3 space-y-1 sm:px-4">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  aria-current={item.current ? "page" : undefined}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-100 text-gray-900"
-                      : "hover:bg-gray-50",
-                    "block rounded-md py-2 px-3 text-base font-medium"
-                  )}
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
             <div className="border-t border-gray-200 pt-4">
               <div className="max-w-3xl mx-auto px-4 flex items-center sm:px-6">
                 <div className="flex-shrink-0">

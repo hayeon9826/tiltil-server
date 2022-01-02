@@ -1,5 +1,5 @@
 // 타입스크립트 인터페이스 정의
-
+import packageJson from "../../../package.json";
 interface User {
   id: number;
   email: string;
@@ -32,6 +32,19 @@ interface Category {
 interface Item {
   id: number;
   name: string;
+}
+
+/** 리터럴 혹은 불변 객체 */
+export const TOKEN_KEY = `${packageJson.name}_TOKEN`;
+export const CSRF_KEY = `${packageJson.name}_CSRF`;
+
+export interface Token {
+  token: string | null;
+  csrf: string | null;
+}
+
+export interface AuthState extends Token {
+  currentUser: any; // TODO currentUser 인터페이스화
 }
 
 export type { User, Category, Item, SigninAttribute, SignUpAttribute };

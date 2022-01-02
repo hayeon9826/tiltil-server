@@ -22,8 +22,11 @@
       "@config": ["src/core/config/index"],
       "@interface": ["src/core/interfaces/index"],
       "@atoms": ["src/core/atom/index"],
+      "@selectors": ["src/core/selectors/index"],
       "@auth": ["src/core/auth/index"],
-      "@query": ["src/core/query"]
+      "@query": ["src/core/query"],
+      "@store": ["src/core/store/index"],
+      "@utils": ["src/core/utils/index"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/**/*"],

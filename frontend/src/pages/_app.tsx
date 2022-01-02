@@ -2,6 +2,7 @@ import "tailwindcss/tailwind.css";
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { IS_PRODUCTION } from "@config";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       },
     },
   });
+
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>

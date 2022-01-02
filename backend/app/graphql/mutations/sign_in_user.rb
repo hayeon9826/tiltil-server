@@ -12,7 +12,6 @@ module Mutations
     field :errors, String, null: true
 
     def resolve(**attributes)
-      puts(attributes)
       if attributes
         user = User.find_for_database_authentication(email: attributes[:email])
         return unless user

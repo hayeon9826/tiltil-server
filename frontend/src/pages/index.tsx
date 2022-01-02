@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { postQuery } from "@api";
 import Header from "@components/Header";
 import { User, Category, Item } from "@interface";
 import Link from "next/link";
 import { getUsersQuery, getUserQuery } from "../core/query/user";
 import { Fragment } from "react";
+import useAuth from "@auth";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import {
   ChatAltIcon,
@@ -112,7 +113,10 @@ function classNames(...classes: string[]) {
 }
 
 const Home = ({ isAuth }: any) => {
+  const { currentUser, isAuthenticated } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
+
+  console.log(currentUser, "@@@currentUser");
 
   const requestTest = async () => {
     console.log("request!");
@@ -123,7 +127,11 @@ const Home = ({ isAuth }: any) => {
     setUsers(data && data["data"] && data["data"]["users"]);
   };
 
-  console.log(users);
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("Ss");
+    }
+  });
 
   const people: User[] = [
     {
@@ -861,4 +869,4 @@ const Home = ({ isAuth }: any) => {
 //   // 초기 데이터 비동기 호출
 // }
 
-export default Home;
+export default React.memo(Home);

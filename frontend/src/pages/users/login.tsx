@@ -3,9 +3,8 @@ import { LockClosedIcon } from "@heroicons/react/solid";
 import Header from "@components/Header";
 import { useForm } from "react-hook-form";
 import { postQuery } from "@api";
-import { setUserToken } from "@auth";
 import { useSetRecoilState } from "recoil";
-import { authenticatedUser } from "@atoms";
+import useAuth from "@auth";
 import { SignInUserQuery } from "src/core/query/user";
 import Link from "next/link";
 
@@ -16,22 +15,18 @@ const LoginPage = ({
   resetForm,
   isAuth,
 }: any) => {
-  const setAuthorizedUser = useSetRecoilState(authenticatedUser);
   const { handleSubmit, register } = useForm();
+  const { authenticateUser } = useAuth();
 
   const onSubmit = async (inputValues: any) => {
     const query = SignInUserQuery(inputValues.email, inputValues.password);
-    const { data } = await postQuery(query);
-    await setUserToken(data?.token);
-    await setAuthorizedUser({ email: data?.email, id: data?.id });
+    const response = await postQuery(query);
 
-    console.log(data);
-    console.log(data?.data?.signInUser?.errors);
-
-    if (data?.data?.signInUser?.token) {
+    if (response.data) {
+      await authenticateUser(response?.data?.data?.signInUser);
       await window.location.replace("/");
     } else {
-      window.alert(data?.data?.signInUser?.errors);
+      console.log(response?.data?.data?.signInUser?.errors);
     }
   };
 
