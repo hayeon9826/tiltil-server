@@ -11,8 +11,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user
     }
     result = BackendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -23,17 +22,13 @@ class GraphqlController < ApplicationController
 
   private
 
-  ## JWT 토큰 생성을 위한 Devise 유저 정보 검증
-  def authenticate_user
-    ## body로 부터 받은 json 형식의 params를 parsing
-    json_params = JSON.parse(request.body.read)
-    user = User.find_for_database_authentication(email: json_params["auth"]["email"])
-    if user.valid_password?(json_params["auth"]["password"])
-      render json: payload(user)
-    else
-      render json: {errors: ['Invalid Username/Password']}, status: :unauthorized
-    end
+  def current_user
+    return nil if request.headers['Authorization'].blank?
+    token = request.headers['Authorization'].split(' ').last
+    return nil if token.blank?
+
   end
+
 
   # Handle variables in form data, JSON body, or a blank value
   def prepare_variables(variables_param)
@@ -62,11 +57,4 @@ class GraphqlController < ApplicationController
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
   end
 
-  ## Response으로서 보여줄 json 내용 생성 및 JWT Token 생성
-  def payload(user)
-    ## 해당 코드 예제에서 토큰 만료기간은 '30일' 로 설정
-    @token = JWT.encode({ user_id: user.id, exp: 30.days.from_now.to_i }, Rails.application.credentials.secret_key_base)	
-    @tree = { :"JWT token" => @token, :userInfo => {id: user.id, email: user.email} } 
-    return @tree
-  end
 end

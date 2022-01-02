@@ -14,11 +14,10 @@ export const getUserQuery = (id: number) => `query {
   }
 }`;
 
-export const loginUserQuery = (email: string, password: string) => `mutation {
-  users(email: ${email}, password: ${password}) {
-    id
+export const SignInUserQuery = (email: string, password: string) => `mutation {
+  signInUser(email: "${email}", password:  "${password}") {
     token
-    email
+    csrf
+    errors
   }
-}
-`;
+}`;

@@ -6,7 +6,7 @@ import { postQuery } from "@api";
 import { setUserToken } from "@auth";
 import { useSetRecoilState } from "recoil";
 import { authenticatedUser } from "@atoms";
-import { loginUserQuery } from "src/core/query/user";
+import { SignInUserQuery } from "src/core/query/user";
 import Link from "next/link";
 
 const LoginPage = ({
@@ -15,16 +15,24 @@ const LoginPage = ({
   onSaveButtonClick,
   resetForm,
   isAuth,
-}) => {
+}: any) => {
   const setAuthorizedUser = useSetRecoilState(authenticatedUser);
   const { handleSubmit, register } = useForm();
 
-  const onSubmit = async (inputValues) => {
-    const query = loginUserQuery(inputValues.email, inputValues.password);
+  const onSubmit = async (inputValues: any) => {
+    const query = SignInUserQuery(inputValues.email, inputValues.password);
     const { data } = await postQuery(query);
     await setUserToken(data?.token);
     await setAuthorizedUser({ email: data?.email, id: data?.id });
-    window.location.replace("/");
+
+    console.log(data);
+    console.log(data?.data?.signInUser?.errors);
+
+    if (data?.data?.signInUser?.token) {
+      await window.location.replace("/");
+    } else {
+      window.alert(data?.data?.signInUser?.errors);
+    }
   };
 
   return (
