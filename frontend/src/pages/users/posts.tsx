@@ -10,8 +10,8 @@ import { sleep } from "@utils";
 import Link from "next/link";
 
 const tabs = [
-  { name: "계정 설정", href: "#", current: true },
-  { name: "나의 TIL", href: "/users/posts", current: false },
+  { name: "계정 설정", href: "/users/mypage", current: false },
+  { name: "나의 TIL", href: "#", current: true },
   { name: "저장한 TIL", href: "/users/likes", current: false },
 ];
 
@@ -19,7 +19,7 @@ function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function mypage() {
+export default function myPosts() {
   const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
     useAuth();
   const router = useRouter();

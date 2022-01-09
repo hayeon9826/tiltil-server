@@ -34,6 +34,14 @@ export const SignUpUserQuery = (
   }
 }`;
 
+export const UpdateUserQuery = (email: string, name: string) => `mutation {
+  updateUser(email: "${email}", name: "${name}") {
+    token
+    csrf
+    errors
+  }
+}`;
+
 export const LogOutUserQuery = (email: string) => `mutation {
   logOutUser(email: "${email}") {
     token

@@ -35,9 +35,9 @@ const categories = [
   { name: "Javascript", href: "#" },
 ];
 const tabs = [
-  { name: "인기글", href: "#", current: true },
+  { name: "인기글", href: "/", current: false },
   { name: "최신글", href: "/posts/recent", current: false },
-  { name: "저장됨", href: "/posts/saved", current: false },
+  { name: "저장됨", href: "#", current: true },
 ];
 const questions = [
   {
@@ -90,7 +90,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Home = ({ isAuth }: any) => {
+const SavedPosts = ({ isAuth }: any) => {
   const { currentUser, isAuthenticated } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
 
@@ -780,8 +780,8 @@ const Home = ({ isAuth }: any) => {
   );
 };
 
-// Home.getInitialProps = async () => {
+// RecentPosts.getInitialProps = async () => {
 //   // 초기 데이터 비동기 호출
 // }
 
-export default React.memo(Home);
+export default React.memo(SavedPosts);

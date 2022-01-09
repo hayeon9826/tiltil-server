@@ -21,7 +21,7 @@ module Mutations
         user = User.new(email: attributes[:email], password: attributes[:password], password_confirmation: attributes[:passwordConfirmation])
 
         if user.save
-          payload = { user_id: user.id, email: user.email }
+          payload = { user_id: user.id, email: user.email, name: user.name, refresh_by_access_allowed: true }
           session =  JWTSessions::Session.new(payload: payload)
           tokens = session.login
 

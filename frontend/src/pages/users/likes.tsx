@@ -10,11 +10,10 @@ import { sleep } from "@utils";
 import Link from "next/link";
 
 const tabs = [
-  { name: "계정 설정", href: "#", current: true },
+  { name: "계정 설정", href: "/users/mypage", current: false },
   { name: "나의 TIL", href: "/users/posts", current: false },
-  { name: "저장한 TIL", href: "/users/likes", current: false },
+  { name: "저장한 TIL", href: "#", current: true },
 ];
-
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }

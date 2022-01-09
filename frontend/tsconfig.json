@@ -26,7 +26,8 @@
       "@auth": ["src/core/auth/index"],
       "@query": ["src/core/query"],
       "@store": ["src/core/store/index"],
-      "@utils": ["src/core/utils/index"]
+      "@utils": ["src/core/utils/index"],
+      "@usersQuery": ["src/core/query/user"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/**/*"],

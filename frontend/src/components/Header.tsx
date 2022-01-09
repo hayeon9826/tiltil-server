@@ -223,13 +223,11 @@ const Header = ({ searchBar = false }) => {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-
-                <a
-                  href="#"
-                  className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                >
-                  TIL 작성하기
-                </a>
+                <Link href="/posts/new">
+                  <a className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    TIL 작성하기
+                  </a>
+                </Link>
               </div>
             </div>
           </div>
