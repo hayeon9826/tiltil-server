@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { postQuery } from "@api";
 import Header from "@components/Header";
-import { User, Category, Item } from "@interface";
+import { User } from "@interface";
 import Link from "next/link";
-import { getUsersQuery, getUserQuery } from "../core/query/user";
+import { getUsersQuery } from "../core/query/user";
 import { Fragment } from "react";
 import useAuth from "@auth";
-import { Menu, Popover, Transition } from "@headlessui/react";
+import { Menu, Transition } from "@headlessui/react";
 import {
   ChatAltIcon,
   CodeIcon,
@@ -14,38 +14,25 @@ import {
   EyeIcon,
   FlagIcon,
   PlusSmIcon,
-  SearchIcon,
   ShareIcon,
   StarIcon,
   ThumbUpIcon,
 } from "@heroicons/react/solid";
 import {
-  BellIcon,
   FireIcon,
   HomeIcon,
-  MenuIcon,
   TrendingUpIcon,
   UserGroupIcon,
-  XIcon,
 } from "@heroicons/react/outline";
+import { API_URL } from "@config";
 
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelseahagon@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
 const navigation = [
   { name: "Home", href: "#", icon: HomeIcon, current: true },
   { name: "Popular", href: "#", icon: FireIcon, current: false },
   { name: "Communities", href: "#", icon: UserGroupIcon, current: false },
   { name: "Trending", href: "#", icon: TrendingUpIcon, current: false },
 ];
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+
 const communities = [
   { name: "Movies", href: "#" },
   { name: "Food", href: "#" },
@@ -116,12 +103,9 @@ const Home = ({ isAuth }: any) => {
   const { currentUser, isAuthenticated } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
 
-  console.log(currentUser, "@@@currentUser");
-
   const requestTest = async () => {
     console.log("request!");
     const query = getUsersQuery;
-    // const query = getUserQuery(4);
     const { data } = await postQuery(query);
     console.log(data);
     setUsers(data && data["data"] && data["data"]["users"]);
@@ -129,67 +113,14 @@ const Home = ({ isAuth }: any) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log("Ss");
+      console.log("isAuthenticated");
     }
   });
-
-  const people: User[] = [
-    {
-      id: 1,
-      name: "Jane Cooper",
-      title: "Regional Paradigm Technician",
-      department: "Optimization",
-      role: "Admin",
-      email: "jane.cooper@example.com",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    },
-    {
-      id: 2,
-      name: "Cody Fisher",
-      title: "Product Directives Officer",
-      department: "Intranet",
-      role: "Owner",
-      email: "cody.fisher@example.com",
-      image:
-        "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-    },
-  ];
-
-  const callouts: Category[] = [
-    {
-      name: "Desk and Office",
-      description: "Work from home accessories",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg",
-      imageAlt:
-        "Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug.",
-      href: "#",
-    },
-    {
-      name: "Self-Improvement",
-      description: "Journals and note-taking",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg",
-      imageAlt:
-        "Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.",
-      href: "#",
-    },
-    {
-      name: "Travel",
-      description: "Daily commute essentials",
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/home-page-02-edition-03.jpg",
-      imageAlt: "Collection of four insulated travel bottles on wooden shelf.",
-      href: "#",
-    },
-  ];
 
   return (
     <>
       <div className="min-h-full">
-        <Header isAuth={isAuth} />
-
+        <Header />
         <div className="py-10">
           <div className="max-w-3xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="hidden lg:block lg:col-span-3 xl:col-span-2">
@@ -265,7 +196,7 @@ const Home = ({ isAuth }: any) => {
                 </div>
                 <div className="hidden sm:block">
                   <nav
-                    className="relative z-0 rounded-lg shadow flex divide-x divide-gray-200"
+                    className="relative z-0 rounded-sm border flex divide-x divide-gray-200"
                     aria-label="Tabs"
                   >
                     {tabs.map((tab, tabIdx) => (
@@ -303,14 +234,14 @@ const Home = ({ isAuth }: any) => {
                       유저 목록
                     </div>
                     <button
-                      className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                       onClick={() => requestTest()}
                     >
                       목록 가져오기
                     </button>
                     <button
                       type="button"
-                      className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                      className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                       onClick={() => {
                         setUsers([]);
                       }}
@@ -333,7 +264,7 @@ const Home = ({ isAuth }: any) => {
                                   <div className="flex-shrink-0">
                                     <img
                                       className="h-10 w-10 rounded-full"
-                                      src={"#"}
+                                      src={`${API_URL}/image/profile.png`}
                                       alt=""
                                     />
                                   </div>
@@ -527,7 +458,7 @@ const Home = ({ isAuth }: any) => {
                   {questions.map((question) => (
                     <li
                       key={question.id}
-                      className="bg-white px-4 py-6 shadow sm:p-6 sm:rounded-lg"
+                      className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg"
                     >
                       <article
                         aria-labelledby={"question-title-" + question.id}
@@ -737,7 +668,7 @@ const Home = ({ isAuth }: any) => {
             <aside className="hidden xl:block xl:col-span-4">
               <div className="sticky top-4 space-y-4">
                 <section aria-labelledby="who-to-follow-heading">
-                  <div className="bg-white rounded-lg shadow">
+                  <div className="bg-white rounded-sm border">
                     <div className="p-6">
                       <h2
                         id="who-to-follow-heading"
@@ -798,7 +729,7 @@ const Home = ({ isAuth }: any) => {
                   </div>
                 </section>
                 <section aria-labelledby="trending-heading">
-                  <div className="bg-white rounded-lg shadow">
+                  <div className="bg-white rounded-sm border">
                     <div className="p-6">
                       <h2
                         id="trending-heading"

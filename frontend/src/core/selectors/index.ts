@@ -5,5 +5,5 @@ import { AuthState } from "@interface";
 export const authSelector = selector({
   key: "authSelector",
   get: ({ get }) => get(authState),
-  set: ({ set }, newAuthState: AuthState) => set(authState, newAuthState),
+  set: ({ set }, newAuthState) => set(authState, newAuthState),
 });

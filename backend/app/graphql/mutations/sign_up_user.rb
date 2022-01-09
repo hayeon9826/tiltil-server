@@ -1,10 +1,12 @@
 module Mutations
-  class SignInUser < BaseMutation
+  class SignUpUser < BaseMutation
 
     null true
     
+    
     argument :email, String, required: true
     argument :password, String, required: true
+    argument :passwordConfirmation, String, required: true
 
     # return type from the mutation
     field :token, String, null: true
@@ -14,16 +16,18 @@ module Mutations
     def resolve(**attributes)
       if attributes
         user = User.find_for_database_authentication(email: attributes[:email])
-        return unless user
+        return  { errors: "이메일이 존재합니다. 다를 이메일을 사용해주세요." } if user.present?
 
-        if user&.valid_password?(attributes[:password])
+        user = User.new(email: attributes[:email], password: attributes[:password], password_confirmation: attributes[:passwordConfirmation])
+
+        if user.save
           payload = { user_id: user.id, email: user.email }
           session =  JWTSessions::Session.new(payload: payload)
           tokens = session.login
 
-          { token: tokens[:access], csrf: tokens[:csrf], errors: "성공적으로 로그인 되었습니다." }
+          { token: tokens[:access], csrf: tokens[:csrf], errors: "성공적으로 가입이 되었습니다." }
         else
-          { errors: "비밀번호 오류입니다." }
+          { errors: "비밀번호를 다시 확인해주세요." }
         end
       else
         { errors: "모든 필드를 입력해주세요." }

@@ -1,42 +1,50 @@
 import React from "react";
 import Header from "@components/Header";
 import { useForm } from "react-hook-form";
-import { signUp } from "@api";
+import { postQuery } from "@api";
 import { SignUpAttribute } from "@interface";
+import useAuth from "@auth";
+import { SignUpUserQuery } from "src/core/query/user";
+import toast from "react-simple-toasts";
+import { useRouter } from "next/router";
 
 const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
+  const { authenticateUser } = useAuth();
   const { handleSubmit, register } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (inputValues: SignUpAttribute) => {
-    const { data } = await signUp(inputValues);
-    console.log(data);
-    // await setUserToken(data?.token);
-    // await setAuthorizedUser({ email: data?.email, id: data?.id });
-    // window.location.replace('/');
+    const query = SignUpUserQuery(
+      inputValues.email,
+      inputValues.password,
+      inputValues.password_confirmation
+    );
+    const response = await postQuery(query);
+    if (
+      response.data?.data?.signUpUser &&
+      response.data?.data?.signUpUser?.token
+    ) {
+      await toast("가입 되었습니다.");
+      await authenticateUser(response?.data?.data?.signUpUser);
+      // await window.location.replace("/");
+      await router.push("/");
+    } else {
+      if (response?.data?.data?.signUpUser?.errors) {
+        toast(response?.data?.data?.signUpUser?.errors);
+      } else {
+        toast("다시 시도해주세요.");
+      }
+    }
   };
 
   return (
     <>
-      <Header isAuth={isAuth} />
+      <Header />
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+            회원가입
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
-            <a
-              href="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              start your 14-day free trial
-            </a>
-          </p>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -59,7 +67,7 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                     id="email-address"
                     type="email"
                     {...register("email", { required: true })}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     placeholder="이메일 입력"
                     onChange={changeInput}
                     value={inputData?.email}
@@ -82,7 +90,7 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                   required
                   onChange={changeInput}
                   value={inputData?.password}
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  className="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   placeholder="Password"
                 />
               </div>
@@ -98,7 +106,7 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                     id="password_confirmation"
                     type="password"
                     {...register("password_confirmation", { required: true })}
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     placeholder="비밀번호 입력"
                     onChange={changeInput}
                     autoComplete="current-password"
@@ -114,22 +122,22 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
                   />
                   <label
                     htmlFor="remember-me"
                     className="ml-2 block text-sm text-gray-900"
                   >
-                    Remember me
+                    로그인 정보 기억하기
                   </label>
                 </div>
 
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                    className="font-medium text-purple-600 hover:text-purple-500"
                   >
-                    Forgot your password?
+                    비밀번호 찾기
                   </a>
                 </div>
               </div>
@@ -137,14 +145,14 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                 >
                   가입하기
                 </button>
               </div>
             </form>
 
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-300" />
@@ -216,7 +224,7 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                   </a>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

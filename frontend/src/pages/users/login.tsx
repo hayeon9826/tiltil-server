@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { LockClosedIcon } from "@heroicons/react/solid";
+import React from "react";
 import Header from "@components/Header";
 import { useForm } from "react-hook-form";
 import { postQuery } from "@api";
-import { useSetRecoilState } from "recoil";
 import useAuth from "@auth";
 import { SignInUserQuery } from "src/core/query/user";
 import Link from "next/link";
+import toast from "react-simple-toasts";
+import { useRouter } from "next/router";
 
 const LoginPage = ({
   changeInput,
@@ -17,22 +17,31 @@ const LoginPage = ({
 }: any) => {
   const { handleSubmit, register } = useForm();
   const { authenticateUser } = useAuth();
+  const router = useRouter();
 
   const onSubmit = async (inputValues: any) => {
     const query = SignInUserQuery(inputValues.email, inputValues.password);
     const response = await postQuery(query);
-
-    if (response.data) {
+    if (
+      response.data?.data?.signInUser &&
+      response.data?.data?.signInUser?.token
+    ) {
+      await toast("로그인 되었습니다.");
       await authenticateUser(response?.data?.data?.signInUser);
-      await window.location.replace("/");
+      // await window.location.replace("/");
+      await router.push("/");
     } else {
-      console.log(response?.data?.data?.signInUser?.errors);
+      if (response?.data?.data?.signInUser?.errors) {
+        toast(response?.data?.data?.signInUser?.errors);
+      } else {
+        toast("사용자가 없습니다. 다시 시도해주세요.");
+      }
     }
   };
 
   return (
     <>
-      <Header isAuth={isAuth} />
+      <Header />
       <div className="min-h-full flex items-center justify-center py-12 px-12 sm:px-6 lg:px-12">
         <div className="max-w-md w-full space-y-8">
           <div>

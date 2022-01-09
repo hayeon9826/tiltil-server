@@ -10,7 +10,7 @@ export const login = async (params: SigninAttribute) => {
 };
 
 export const signUp = async (params: SignUpAttribute) => {
-  const res = await PlainAPI.post("/users", { params });
+  const res = await PlainAPI.post("/users/sign_up", { params });
   return res;
 };
 

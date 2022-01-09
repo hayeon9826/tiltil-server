@@ -19,6 +19,7 @@ interface SignUpAttribute {
   email: string;
   password: string;
   name: string;
+  password_confirmation: string;
 }
 
 interface Category {
@@ -39,8 +40,8 @@ export const TOKEN_KEY = `${packageJson.name}_TOKEN`;
 export const CSRF_KEY = `${packageJson.name}_CSRF`;
 
 export interface Token {
-  token: string | null;
-  csrf: string | null;
+  token: null | string;
+  csrf: null | string;
 }
 
 export interface AuthState extends Token {
