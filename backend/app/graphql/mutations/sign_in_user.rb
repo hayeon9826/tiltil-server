@@ -17,7 +17,7 @@ module Mutations
         return unless user
 
         if user&.valid_password?(attributes[:password])
-          payload = { user_id: user.id, email: user.email }
+          payload = { user_id: user.id, email: user.email, created_at: user.created_at }
           session =  JWTSessions::Session.new(payload: payload)
           tokens = session.login
 

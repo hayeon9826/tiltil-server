@@ -18,35 +18,26 @@ import {
   StarIcon,
   ThumbUpIcon,
 } from "@heroicons/react/solid";
-import {
-  FireIcon,
-  HomeIcon,
-  TrendingUpIcon,
-  UserGroupIcon,
-} from "@heroicons/react/outline";
+
 import { API_URL } from "@config";
 
-const navigation = [
-  { name: "Home", href: "#", icon: HomeIcon, current: true },
-  { name: "Popular", href: "#", icon: FireIcon, current: false },
-  { name: "Communities", href: "#", icon: UserGroupIcon, current: false },
-  { name: "Trending", href: "#", icon: TrendingUpIcon, current: false },
-];
-
-const communities = [
-  { name: "Movies", href: "#" },
-  { name: "Food", href: "#" },
-  { name: "Sports", href: "#" },
-  { name: "Animals", href: "#" },
-  { name: "Science", href: "#" },
-  { name: "Dinosaurs", href: "#" },
-  { name: "Talents", href: "#" },
-  { name: "Gaming", href: "#" },
+const categories = [
+  { name: "Ruby on Rails", href: "#" },
+  { name: "Database", href: "#" },
+  { name: "GraphQL", href: "#" },
+  { name: "Computer Science", href: "#" },
+  { name: "AWS", href: "#" },
+  { name: "Operating Systems", href: "#" },
+  { name: "Network", href: "#" },
+  { name: "Algorithm", href: "#" },
+  { name: "Data Structures", href: "#" },
+  { name: "React.js", href: "#" },
+  { name: "Javascript", href: "#" },
 ];
 const tabs = [
-  { name: "Recent", href: "#", current: true },
-  { name: "Most Liked", href: "#", current: false },
-  { name: "Most Answers", href: "#", current: false },
+  { name: "최신글", href: "#", current: true },
+  { name: "인기글", href: "#", current: false },
+  { name: "저장됨", href: "#", current: false },
 ];
 const questions = [
   {
@@ -120,7 +111,7 @@ const Home = ({ isAuth }: any) => {
   return (
     <>
       <div className="min-h-full">
-        <Header />
+        <Header searchBar={true} />
         <div className="py-10">
           <div className="max-w-3xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
             <div className="hidden lg:block lg:col-span-3 xl:col-span-2">
@@ -128,50 +119,24 @@ const Home = ({ isAuth }: any) => {
                 aria-label="Sidebar"
                 className="sticky top-4 divide-y divide-gray-300"
               >
-                <div className="pb-8 space-y-1">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-200 text-gray-900"
-                          : "text-gray-600 hover:bg-gray-50",
-                        "group flex items-center px-3 py-2 text-sm font-medium rounded-md"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      <item.icon
-                        className={classNames(
-                          item.current
-                            ? "text-gray-500"
-                            : "text-gray-400 group-hover:text-gray-500",
-                          "flex-shrink-0 -ml-1 mr-3 h-6 w-6"
-                        )}
-                        aria-hidden="true"
-                      />
-                      <span className="truncate">{item.name}</span>
-                    </a>
-                  ))}
-                </div>
-                <div className="pt-10">
+                <div className="">
                   <p
                     className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
                     id="communities-headline"
                   >
-                    My communities
+                    CATEGORY
                   </p>
                   <div
                     className="mt-3 space-y-2"
                     aria-labelledby="communities-headline"
                   >
-                    {communities.map((community) => (
+                    {categories.map((category) => (
                       <a
-                        key={community.name}
-                        href={community.href}
+                        key={category.name}
+                        href={category.href}
                         className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
                       >
-                        <span className="truncate">{community.name}</span>
+                        <span className="truncate">{category.name}</span>
                       </a>
                     ))}
                   </div>
@@ -180,21 +145,21 @@ const Home = ({ isAuth }: any) => {
             </div>
             <main className="lg:col-span-9 xl:col-span-6">
               <div className="px-4 sm:px-0">
-                <div className="sm:hidden">
+                {/* <div className="sm:hidden">
                   <label htmlFor="question-tabs" className="sr-only">
                     Select a tab
                   </label>
                   <select
                     id="question-tabs"
-                    className="block w-full rounded-md border-gray-300 text-base font-medium text-gray-900 shadow-sm focus:border-rose-500 focus:ring-rose-500"
+                    className="block w-full rounded-md border-gray-300 text-base font-medium text-gray-900 focus:border-purple-500 focus:ring-purple-500"
                     defaultValue={tabs.find((tab) => tab.current).name}
                   >
                     {tabs.map((tab) => (
                       <option key={tab.name}>{tab.name}</option>
                     ))}
                   </select>
-                </div>
-                <div className="hidden sm:block">
+                </div> */}
+                {/* <div className="sm:block">
                   <nav
                     className="relative z-0 rounded-sm border flex divide-x divide-gray-200"
                     aria-label="Tabs"
@@ -224,237 +189,258 @@ const Home = ({ isAuth }: any) => {
                       </a>
                     ))}
                   </nav>
+                </div> */}
+                <div className=" lg:block">
+                  <div className="border-b border-gray-200">
+                    <nav className="-mb-px flex space-x-8">
+                      {tabs.map((tab) => (
+                        <a
+                          key={tab.name}
+                          href={tab.href}
+                          className={classNames(
+                            tab.current
+                              ? "border-purple-500 text-purple-600"
+                              : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                            "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                          )}
+                        >
+                          {tab.name}
+                        </a>
+                      ))}
+                    </nav>
+                  </div>
                 </div>
               </div>
               <div className="mt-4">
                 <h1 className="sr-only">Recent questions</h1>
                 <ul role="list" className="space-y-4">
-                  <div className="px-2 py-4">
-                    <div className="text-lg font-bold button mb-4">
+                  <div className="px-2  flex flex-row-reverse">
+                    {/* <div className="text-lg font-bold button mb-4">
                       유저 목록
-                    </div>
+                    </div> */}
                     <button
-                      className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                      className="inline-flex items-center px-2.5 py-1.5 m-2 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                       onClick={() => requestTest()}
                     >
                       목록 가져오기
                     </button>
                     <button
                       type="button"
-                      className="ml-2 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                      className="ml-2 inline-flex items-center px-2.5 py-1.5 m-2 border border-transparent text-xs font-medium rounded text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                       onClick={() => {
                         setUsers([]);
                       }}
                     >
                       목록 리셋
                     </button>
-                    {users &&
-                      users.length > 0 &&
-                      users.map((user) => (
-                        <>
-                          <li
-                            key={user.id}
-                            className="bg-white px-4 py-6 shadow sm:p-6 sm:rounded-lg mt-4"
-                          >
-                            <article
-                              aria-labelledby={"question-title-" + user.id}
-                            >
-                              <div>
-                                <div className="flex space-x-3">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      className="h-10 w-10 rounded-full"
-                                      src={`${API_URL}/image/profile.png`}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <div className="min-w-0 flex-1">
-                                    <p className="text-sm font-medium text-gray-900">
-                                      <a href={"#"} className="hover:underline">
-                                        {user.name}
-                                      </a>
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                      <a
-                                        href={"#"}
-                                        className="hover:underline"
-                                      ></a>
-                                    </p>
-                                  </div>
-                                  <div className="flex-shrink-0 self-center flex">
-                                    <Menu
-                                      as="div"
-                                      className="relative inline-block text-left"
-                                    >
-                                      <div>
-                                        <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600">
-                                          <span className="sr-only">
-                                            Open options
-                                          </span>
-                                          <DotsVerticalIcon
-                                            className="h-5 w-5"
-                                            aria-hidden="true"
-                                          />
-                                        </Menu.Button>
-                                      </div>
-
-                                      <Transition
-                                        as={Fragment}
-                                        enter="transition ease-out duration-100"
-                                        enterFrom="transform opacity-0 scale-95"
-                                        enterTo="transform opacity-100 scale-100"
-                                        leave="transition ease-in duration-75"
-                                        leaveFrom="transform opacity-100 scale-100"
-                                        leaveTo="transform opacity-0 scale-95"
-                                      >
-                                        <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                          <div className="py-1">
-                                            <Menu.Item>
-                                              {({ active }) => (
-                                                <a
-                                                  href="#"
-                                                  className={classNames(
-                                                    active
-                                                      ? "bg-gray-100 text-gray-900"
-                                                      : "text-gray-700",
-                                                    "flex px-4 py-2 text-sm"
-                                                  )}
-                                                >
-                                                  <StarIcon
-                                                    className="mr-3 h-5 w-5 text-gray-400"
-                                                    aria-hidden="true"
-                                                  />
-                                                  <span>Add to favorites</span>
-                                                </a>
-                                              )}
-                                            </Menu.Item>
-                                            <Menu.Item>
-                                              {({ active }) => (
-                                                <a
-                                                  href="#"
-                                                  className={classNames(
-                                                    active
-                                                      ? "bg-gray-100 text-gray-900"
-                                                      : "text-gray-700",
-                                                    "flex px-4 py-2 text-sm"
-                                                  )}
-                                                >
-                                                  <CodeIcon
-                                                    className="mr-3 h-5 w-5 text-gray-400"
-                                                    aria-hidden="true"
-                                                  />
-                                                  <span>Embed</span>
-                                                </a>
-                                              )}
-                                            </Menu.Item>
-                                            <Menu.Item>
-                                              {({ active }) => (
-                                                <a
-                                                  href="#"
-                                                  className={classNames(
-                                                    active
-                                                      ? "bg-gray-100 text-gray-900"
-                                                      : "text-gray-700",
-                                                    "flex px-4 py-2 text-sm"
-                                                  )}
-                                                >
-                                                  <FlagIcon
-                                                    className="mr-3 h-5 w-5 text-gray-400"
-                                                    aria-hidden="true"
-                                                  />
-                                                  <span>Report content</span>
-                                                </a>
-                                              )}
-                                            </Menu.Item>
-                                          </div>
-                                        </Menu.Items>
-                                      </Transition>
-                                    </Menu>
-                                  </div>
-                                </div>
-                                <h2
-                                  id={"question-title-" + user.id}
-                                  className="mt-4 text-base font-medium text-gray-900"
-                                >
-                                  {user.email}
-                                </h2>
-                              </div>
-                              <div
-                                className="mt-2 text-sm text-gray-700 space-y-4"
-                                dangerouslySetInnerHTML={{
-                                  __html: user.email,
-                                }}
-                              />
-                              <div className="mt-6 flex justify-between space-x-8">
-                                <div className="flex space-x-6">
-                                  <span className="inline-flex items-center text-sm">
-                                    <button
-                                      type="button"
-                                      className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
-                                    >
-                                      <ThumbUpIcon
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                      />
-                                      <span className="font-medium text-gray-900">
-                                        {user.id}
-                                      </span>
-                                      <span className="sr-only">likes</span>
-                                    </button>
-                                  </span>
-                                  <span className="inline-flex items-center text-sm">
-                                    <button
-                                      type="button"
-                                      className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
-                                    >
-                                      <ChatAltIcon
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                      />
-                                      <span className="font-medium text-gray-900">
-                                        {user.id}
-                                      </span>
-                                      <span className="sr-only">replies</span>
-                                    </button>
-                                  </span>
-                                  <span className="inline-flex items-center text-sm">
-                                    <button
-                                      type="button"
-                                      className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
-                                    >
-                                      <EyeIcon
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                      />
-                                      <span className="font-medium text-gray-900">
-                                        {user.id}
-                                      </span>
-                                      <span className="sr-only">views</span>
-                                    </button>
-                                  </span>
-                                </div>
-                                <div className="flex text-sm">
-                                  <span className="inline-flex items-center text-sm">
-                                    <button
-                                      type="button"
-                                      className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
-                                    >
-                                      <ShareIcon
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                      />
-                                      <span className="font-medium text-gray-900">
-                                        Share
-                                      </span>
-                                    </button>
-                                  </span>
-                                </div>
-                              </div>
-                            </article>
-                          </li>
-                        </>
-                      ))}
                   </div>
+                  {users &&
+                    users.length > 0 &&
+                    users.map((user) => (
+                      <>
+                        <li
+                          key={user.id}
+                          className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg mt-4"
+                        >
+                          <article
+                            aria-labelledby={"question-title-" + user.id}
+                          >
+                            <div>
+                              <div className="flex space-x-3">
+                                <div className="flex-shrink-0">
+                                  <img
+                                    className="h-10 w-10 rounded-full"
+                                    src={`${API_URL}/image/profile.png`}
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-sm font-medium text-gray-900">
+                                    <a href={"#"} className="hover:underline">
+                                      {user.name}
+                                    </a>
+                                  </p>
+                                  <p className="text-sm text-gray-500">
+                                    <a
+                                      href={"#"}
+                                      className="hover:underline"
+                                    ></a>
+                                  </p>
+                                </div>
+                                <div className="flex-shrink-0 self-center flex">
+                                  <Menu
+                                    as="div"
+                                    className="relative inline-block text-left"
+                                  >
+                                    <div>
+                                      <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600">
+                                        <span className="sr-only">
+                                          Open options
+                                        </span>
+                                        <DotsVerticalIcon
+                                          className="h-5 w-5"
+                                          aria-hidden="true"
+                                        />
+                                      </Menu.Button>
+                                    </div>
+
+                                    <Transition
+                                      as={Fragment}
+                                      enter="transition ease-out duration-100"
+                                      enterFrom="transform opacity-0 scale-95"
+                                      enterTo="transform opacity-100 scale-100"
+                                      leave="transition ease-in duration-75"
+                                      leaveFrom="transform opacity-100 scale-100"
+                                      leaveTo="transform opacity-0 scale-95"
+                                    >
+                                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <div className="py-1">
+                                          <Menu.Item>
+                                            {({ active }) => (
+                                              <a
+                                                href="#"
+                                                className={classNames(
+                                                  active
+                                                    ? "bg-gray-100 text-gray-900"
+                                                    : "text-gray-700",
+                                                  "flex px-4 py-2 text-sm"
+                                                )}
+                                              >
+                                                <StarIcon
+                                                  className="mr-3 h-5 w-5 text-gray-400"
+                                                  aria-hidden="true"
+                                                />
+                                                <span>Add to favorites</span>
+                                              </a>
+                                            )}
+                                          </Menu.Item>
+                                          <Menu.Item>
+                                            {({ active }) => (
+                                              <a
+                                                href="#"
+                                                className={classNames(
+                                                  active
+                                                    ? "bg-gray-100 text-gray-900"
+                                                    : "text-gray-700",
+                                                  "flex px-4 py-2 text-sm"
+                                                )}
+                                              >
+                                                <CodeIcon
+                                                  className="mr-3 h-5 w-5 text-gray-400"
+                                                  aria-hidden="true"
+                                                />
+                                                <span>Embed</span>
+                                              </a>
+                                            )}
+                                          </Menu.Item>
+                                          <Menu.Item>
+                                            {({ active }) => (
+                                              <a
+                                                href="#"
+                                                className={classNames(
+                                                  active
+                                                    ? "bg-gray-100 text-gray-900"
+                                                    : "text-gray-700",
+                                                  "flex px-4 py-2 text-sm"
+                                                )}
+                                              >
+                                                <FlagIcon
+                                                  className="mr-3 h-5 w-5 text-gray-400"
+                                                  aria-hidden="true"
+                                                />
+                                                <span>Report content</span>
+                                              </a>
+                                            )}
+                                          </Menu.Item>
+                                        </div>
+                                      </Menu.Items>
+                                    </Transition>
+                                  </Menu>
+                                </div>
+                              </div>
+                              <h2
+                                id={"question-title-" + user.id}
+                                className="mt-4 text-base font-medium text-gray-900"
+                              >
+                                {user.email}
+                              </h2>
+                            </div>
+                            <div
+                              className="mt-2 text-sm text-gray-700 space-y-4"
+                              dangerouslySetInnerHTML={{
+                                __html: user.email,
+                              }}
+                            />
+                            <div className="mt-6 flex justify-between space-x-8">
+                              <div className="flex space-x-6">
+                                <span className="inline-flex items-center text-sm">
+                                  <button
+                                    type="button"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                  >
+                                    <ThumbUpIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="font-medium text-gray-900">
+                                      {user.id}
+                                    </span>
+                                    <span className="sr-only">likes</span>
+                                  </button>
+                                </span>
+                                <span className="inline-flex items-center text-sm">
+                                  <button
+                                    type="button"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                  >
+                                    <ChatAltIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="font-medium text-gray-900">
+                                      {user.id}
+                                    </span>
+                                    <span className="sr-only">replies</span>
+                                  </button>
+                                </span>
+                                <span className="inline-flex items-center text-sm">
+                                  <button
+                                    type="button"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                  >
+                                    <EyeIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="font-medium text-gray-900">
+                                      {user.id}
+                                    </span>
+                                    <span className="sr-only">views</span>
+                                  </button>
+                                </span>
+                              </div>
+                              <div className="flex text-sm">
+                                <span className="inline-flex items-center text-sm">
+                                  <button
+                                    type="button"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                  >
+                                    <ShareIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                    <span className="font-medium text-gray-900">
+                                      Share
+                                    </span>
+                                  </button>
+                                </span>
+                              </div>
+                            </div>
+                          </article>
+                        </li>
+                      </>
+                    ))}
+
                   {questions.map((question) => (
                     <li
                       key={question.id}
@@ -720,7 +706,7 @@ const Home = ({ isAuth }: any) => {
                       <div className="mt-6">
                         <a
                           href="#"
-                          className="w-full block text-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                          className="w-full block text-center px-4 py-2 border border-gray-300  text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                         >
                           View all
                         </a>
@@ -779,7 +765,7 @@ const Home = ({ isAuth }: any) => {
                       <div className="mt-6">
                         <a
                           href="#"
-                          className="w-full block text-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                          className="w-full block text-center px-4 py-2 border border-gray-300  text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                         >
                           View all
                         </a>

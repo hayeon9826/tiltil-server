@@ -1,14 +1,18 @@
-import { useState } from "react";
-import { Switch } from "@headlessui/react";
+import { useState, useEffect } from "react";
 import Header from "@components/Header";
+import { API_URL } from "@config";
+import useAuth from "@auth";
+import moment from "moment";
+import { LogOutUserQuery } from "src/core/query/user";
+import { postQuery } from "@api";
+import { useRouter } from "next/router";
+import toast from "react-simple-toasts";
+import { sleep } from "@utils";
 
 const tabs = [
-  { name: "General", href: "#", current: true },
-  { name: "Password", href: "#", current: false },
-  { name: "Notifications", href: "#", current: false },
-  { name: "Plan", href: "#", current: false },
-  { name: "Billing", href: "#", current: false },
-  { name: "Team Members", href: "#", current: false },
+  { name: "계정 설정", href: "#", current: true },
+  { name: "나의 TIL", href: "#", current: false },
+  { name: "저장한 TIL", href: "#", current: false },
 ];
 
 function classNames(...classes: any[]) {
@@ -20,6 +24,26 @@ export default function mypage() {
     useState(true);
   const [autoUpdateApplicantDataEnabled, setAutoUpdateApplicantDataEnabled] =
     useState(false);
+
+  const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
+    useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const query = await LogOutUserQuery(currentUser?.email);
+    const response = await postQuery(query);
+    if (response.data?.data?.logOutUser) {
+      toast("잠시 후 로그아웃 됩니다.");
+      await sleep(1000);
+      unAuthenticateUser();
+      await sleep(200);
+      await router.push("/");
+    } else {
+      toast("로그아웃 오류입니다. 문제가 계속되면 관리자에게 문의해주세요.");
+    }
+  };
+
+  console.log(currentUser);
 
   return (
     <>
@@ -35,13 +59,13 @@ export default function mypage() {
                 <div className="pt-10 pb-16">
                   <div className="px-4 sm:px-6 md:px-0">
                     <h1 className="text-3xl font-extrabold text-gray-900">
-                      Settings
+                      마이페이지
                     </h1>
                   </div>
                   <div className="px-4 sm:px-6 md:px-0">
                     <div className="py-6">
                       {/* Tabs */}
-                      <div className="lg:hidden">
+                      {/* <div className="lg:hidden">
                         <label htmlFor="selected-tab" className="sr-only">
                           Select a tab
                         </label>
@@ -55,8 +79,8 @@ export default function mypage() {
                             <option key={tab.name}>{tab.name}</option>
                           ))}
                         </select>
-                      </div>
-                      <div className="hidden lg:block">
+                      </div> */}
+                      <div className=" lg:block">
                         <div className="border-b border-gray-200">
                           <nav className="-mb-px flex space-x-8">
                             {tabs.map((tab) => (
@@ -81,40 +105,39 @@ export default function mypage() {
                       <div className="mt-10 divide-y divide-gray-200">
                         <div className="space-y-1">
                           <h3 className="text-lg leading-6 font-medium text-gray-900">
-                            Profile
+                            프로필
                           </h3>
                           <p className="max-w-2xl text-sm text-gray-500">
-                            This information will be displayed publicly so be
-                            careful what you share.
+                            프로필 정보를 설정해주세요.
                           </p>
                         </div>
                         <div className="mt-6">
                           <dl className="divide-y divide-gray-200">
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
                               <dt className="text-sm font-medium text-gray-500">
-                                Name
+                                이름
                               </dt>
                               <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">Chelsea Hagon</span>
+                                <span className="flex-grow">-</span>
                                 <span className="ml-4 flex-shrink-0">
                                   <button
                                     type="button"
                                     className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
-                                    Update
+                                    수정
                                   </button>
                                 </span>
                               </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
                               <dt className="text-sm font-medium text-gray-500">
-                                Photo
+                                사진
                               </dt>
                               <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow">
                                   <img
                                     className="h-8 w-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    src={`${API_URL}/image/profile.png`}
                                     alt=""
                                   />
                                 </span>
@@ -123,57 +146,27 @@ export default function mypage() {
                                     type="button"
                                     className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
-                                    Update
-                                  </button>
-                                  <span
-                                    className="text-gray-300"
-                                    aria-hidden="true"
-                                  >
-                                    |
-                                  </span>
-                                  <button
-                                    type="button"
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    Remove
+                                    수정
                                   </button>
                                 </span>
                               </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
                               <dt className="text-sm font-medium text-gray-500">
-                                Email
+                                이메일
                               </dt>
                               <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow">
-                                  chelsea.hagon@example.com
+                                  {currentUser?.email || "-"}
                                 </span>
-                                <span className="ml-4 flex-shrink-0">
+                                {/* <span className="ml-4 flex-shrink-0">
                                   <button
                                     type="button"
                                     className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
                                     Update
                                   </button>
-                                </span>
-                              </dd>
-                            </div>
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200">
-                              <dt className="text-sm font-medium text-gray-500">
-                                Job title
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">
-                                  Human Resources Manager
-                                </span>
-                                <span className="ml-4 flex-shrink-0">
-                                  <button
-                                    type="button"
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    Update
-                                  </button>
-                                </span>
+                                </span> */}
                               </dd>
                             </div>
                           </dl>
@@ -183,126 +176,61 @@ export default function mypage() {
                       <div className="mt-10 divide-y divide-gray-200">
                         <div className="space-y-1">
                           <h3 className="text-lg leading-6 font-medium text-gray-900">
-                            Account
+                            계정
                           </h3>
                           <p className="max-w-2xl text-sm text-gray-500">
-                            Manage how information is displayed on your account.
+                            계정을 관리해주세요.
                           </p>
                         </div>
                         <div className="mt-6">
                           <dl className="divide-y divide-gray-200">
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
                               <dt className="text-sm font-medium text-gray-500">
-                                Language
+                                계정 생성일
                               </dt>
                               <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">English</span>
+                                <span className="flex-grow">
+                                  {currentUser?.created_at
+                                    ? moment(currentUser?.created_at).format(
+                                        "YYYY-MM-DD HH:mm"
+                                      )
+                                    : "-"}
+                                </span>
+                              </dd>
+                            </div>
+                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                              <dt className="text-sm font-medium text-gray-500">
+                                로그아웃
+                              </dt>
+                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <span className="flex-grow"></span>
+                                <span className="ml-4 flex-shrink-0">
+                                  <button
+                                    type="button"
+                                    onClick={handleLogout}
+                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                  >
+                                    로그아웃
+                                  </button>
+                                </span>
+                              </dd>
+                            </div>
+                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
+                              <dt className="text-sm font-medium text-gray-500">
+                                계정 탈퇴
+                              </dt>
+                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <span className="flex-grow"></span>
                                 <span className="ml-4 flex-shrink-0">
                                   <button
                                     type="button"
                                     className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
-                                    Update
+                                    탈퇴하기
                                   </button>
                                 </span>
                               </dd>
                             </div>
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                              <dt className="text-sm font-medium text-gray-500">
-                                Date format
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">DD-MM-YYYY</span>
-                                <span className="ml-4 flex-shrink-0 flex items-start space-x-4">
-                                  <button
-                                    type="button"
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    Update
-                                  </button>
-                                  <span
-                                    className="text-gray-300"
-                                    aria-hidden="true"
-                                  >
-                                    |
-                                  </span>
-                                  <button
-                                    type="button"
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    Remove
-                                  </button>
-                                </span>
-                              </dd>
-                            </div>
-                            <Switch.Group
-                              as="div"
-                              className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5"
-                            >
-                              <Switch.Label
-                                as="dt"
-                                className="text-sm font-medium text-gray-500"
-                                passive
-                              >
-                                Automatic timezone
-                              </Switch.Label>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <Switch
-                                  checked={automaticTimezoneEnabled}
-                                  onChange={setAutomaticTimezoneEnabled}
-                                  className={classNames(
-                                    automaticTimezoneEnabled
-                                      ? "bg-purple-600"
-                                      : "bg-gray-200",
-                                    "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-auto"
-                                  )}
-                                >
-                                  <span
-                                    aria-hidden="true"
-                                    className={classNames(
-                                      automaticTimezoneEnabled
-                                        ? "translate-x-5"
-                                        : "translate-x-0",
-                                      "inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
-                                    )}
-                                  />
-                                </Switch>
-                              </dd>
-                            </Switch.Group>
-                            <Switch.Group
-                              as="div"
-                              className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200"
-                            >
-                              <Switch.Label
-                                as="dt"
-                                className="text-sm font-medium text-gray-500"
-                                passive
-                              >
-                                Auto-update applicant data
-                              </Switch.Label>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <Switch
-                                  checked={autoUpdateApplicantDataEnabled}
-                                  onChange={setAutoUpdateApplicantDataEnabled}
-                                  className={classNames(
-                                    autoUpdateApplicantDataEnabled
-                                      ? "bg-purple-600"
-                                      : "bg-gray-200",
-                                    "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-auto"
-                                  )}
-                                >
-                                  <span
-                                    aria-hidden="true"
-                                    className={classNames(
-                                      autoUpdateApplicantDataEnabled
-                                        ? "translate-x-5"
-                                        : "translate-x-0",
-                                      "inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
-                                    )}
-                                  />
-                                </Switch>
-                              </dd>
-                            </Switch.Group>
                           </dl>
                         </div>
                       </div>
