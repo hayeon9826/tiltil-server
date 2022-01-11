@@ -22,17 +22,17 @@ import {
 import { API_URL } from "@config";
 
 const categories = [
-  { name: "Ruby on Rails", href: "#" },
-  { name: "Database", href: "#" },
-  { name: "GraphQL", href: "#" },
-  { name: "Computer Science", href: "#" },
-  { name: "AWS", href: "#" },
-  { name: "Operating Systems", href: "#" },
-  { name: "Network", href: "#" },
-  { name: "Algorithm", href: "#" },
-  { name: "Data Structures", href: "#" },
-  { name: "React.js", href: "#" },
-  { name: "Javascript", href: "#" },
+  { name: "Ruby on Rails", href: "/posts" },
+  { name: "Database", href: "/posts" },
+  { name: "GraphQL", href: "/posts" },
+  { name: "Computer Science", href: "/posts" },
+  { name: "AWS", href: "/posts" },
+  { name: "Operating Systems", href: "/posts" },
+  { name: "Network", href: "/posts" },
+  { name: "Algorithm", href: "/posts" },
+  { name: "Data Structures", href: "/posts" },
+  { name: "React.js", href: "/posts" },
+  { name: "Javascript", href: "/posts" },
 ];
 const tabs = [
   { name: "인기글", href: "/", current: false },
@@ -131,7 +131,7 @@ const RecentPosts = ({ isAuth }: any) => {
                     {categories.map((category) => (
                       <a
                         key={category.name}
-                        href={category.href}
+                        href={category.href + `?category=${category.name}`}
                         className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
                       >
                         <span className="truncate">{category.name}</span>
