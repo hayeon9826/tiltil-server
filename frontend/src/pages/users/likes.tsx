@@ -14,6 +14,45 @@ const tabs = [
   { name: "나의 TIL", href: "/users/posts", current: false },
   { name: "저장한 TIL", href: "#", current: true },
 ];
+
+const posts = [
+  {
+    question:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+    user: "__khy",
+    category: "React",
+    id: "1",
+  },
+  {
+    question:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+    user: "__khy",
+    category: "React",
+    id: "2",
+  },
+  {
+    question:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+    user: "__khy",
+    category: "React",
+    id: "3",
+  },
+  {
+    question:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+    user: "__khy",
+    category: "React",
+    id: "4",
+  },
+  {
+    question:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+    user: "__khy",
+    category: "React",
+    id: "5",
+  },
+];
+
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -94,149 +133,42 @@ export default function mypage() {
                         </div>
                       </div>
 
-                      {/* Description list with inline editing */}
-                      <div className="mt-10 divide-y divide-gray-200">
-                        <div className="space-y-1">
-                          <h3 className="text-lg leading-6 font-medium text-gray-900">
-                            프로필
-                          </h3>
-                          <p className="max-w-2xl text-sm text-gray-500">
-                            프로필 정보를 설정해주세요.
-                          </p>
-                        </div>
-                        <div className="mt-6">
-                          <dl className="divide-y divide-gray-200">
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                              <dt className="text-sm font-medium text-gray-500">
-                                이름
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">
-                                  {currentUser?.name || "-"}
-                                </span>
-                                <span className="ml-4 flex-shrink-0">
-                                  <Link href="/users/edit">
-                                    <button
-                                      type="button"
-                                      className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                    >
-                                      수정
-                                    </button>
-                                  </Link>
-                                </span>
-                              </dd>
-                            </div>
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                              <dt className="text-sm font-medium text-gray-500">
-                                사진
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">
-                                  <img
-                                    className="h-8 w-8 rounded-full"
-                                    src={`${API_URL}/image/profile.png`}
-                                    alt=""
-                                  />
-                                </span>
-                                <span className="ml-4 flex-shrink-0 flex items-start space-x-4">
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      toast("서비스 준비중입니다.")
-                                    }
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    수정
-                                  </button>
-                                </span>
-                              </dd>
-                            </div>
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                              <dt className="text-sm font-medium text-gray-500">
-                                이메일
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">
-                                  {currentUser?.email || "-"}
-                                </span>
-                                {/* <span className="ml-4 flex-shrink-0">
-                                  <button
-                                    type="button"
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    Update
-                                  </button>
-                                </span> */}
-                              </dd>
-                            </div>
-                          </dl>
-                        </div>
-                      </div>
+                      <ul
+                        role="list"
+                        className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 mt-8"
+                      >
+                        {posts.map((post) => (
+                          <li
+                            key={post.id}
+                            className="col-span-1 bg-white rounded-lg border divide-y divide-gray-200"
+                          >
+                            <div className="w-full flex items-center justify-between p-6 space-x-6">
+                              <div className="flex-1">
+                                <p className="mt-1 text-gray-500 text-sm truncate">
+                                  {post.user}
+                                </p>
+                                <div className="flex items-center space-x-3 mt-2">
+                                  <h3 className="text-gray-900 text-sm font-medium whitespace-normal">
+                                    {post.question}
+                                  </h3>
+                                </div>
 
-                      <div className="mt-10 divide-y divide-gray-200">
-                        <div className="space-y-1">
-                          <h3 className="text-lg leading-6 font-medium text-gray-900">
-                            계정
-                          </h3>
-                          <p className="max-w-2xl text-sm text-gray-500">
-                            계정을 관리해주세요.
-                          </p>
-                        </div>
-                        <div className="mt-6">
-                          <dl className="divide-y divide-gray-200">
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                              <dt className="text-sm font-medium text-gray-500">
-                                계정 생성일
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow">
-                                  {currentUser?.created_at
-                                    ? moment(currentUser?.created_at).format(
-                                        "YYYY-MM-DD HH:mm"
-                                      )
-                                    : "-"}
-                                </span>
-                              </dd>
+                                <div className="mt-4">
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                    {post.category}
+                                  </span>
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                    {post.category}
+                                  </span>
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                    {post.category}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                              <dt className="text-sm font-medium text-gray-500">
-                                로그아웃
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow"></span>
-                                <span className="ml-4 flex-shrink-0">
-                                  <button
-                                    type="button"
-                                    onClick={handleLogout}
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    로그아웃
-                                  </button>
-                                </span>
-                              </dd>
-                            </div>
-                            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                              <dt className="text-sm font-medium text-gray-500">
-                                계정 탈퇴
-                              </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                                <span className="flex-grow"></span>
-                                <span className="ml-4 flex-shrink-0">
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      toast("서비스 준비중입니다.")
-                                    }
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                                  >
-                                    탈퇴하기
-                                  </button>
-                                </span>
-                              </dd>
-                            </div>
-                          </dl>
-                        </div>
-                      </div>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </div>
