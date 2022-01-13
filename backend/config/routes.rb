@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :categories 
+      resources :post_categories
+      resources :likes
+      resources :notifications
+      resources :posts
+      resources :users
+
+      root to: "categories#index"
+    end
   # graphql
   post "/graphql", to: "graphql#execute"
   # get '/graphiql', to: 'graphiql#index' if Rails.env.development?

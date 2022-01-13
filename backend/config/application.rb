@@ -28,7 +28,7 @@ module Backend
     config.i18n.default_locale = :ko
     config.time_zone = "Seoul"
     config.encoding = "utf-8"
-    config.api_only = true
+    config.api_only = false
 
     config.to_prepare do
       DeviseController.respond_to :html, :json
