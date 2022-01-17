@@ -267,6 +267,14 @@ const Header = ({ searchBar = false }) => {
                       >
                         마이페이지
                       </a>
+                      <Link href="/posts/new">
+                        <a
+                          key="til"
+                          className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        >
+                          TIL 작성하기
+                        </a>
+                      </Link>
                       <a
                         key="logout_mobile"
                         onClick={handleLogout}

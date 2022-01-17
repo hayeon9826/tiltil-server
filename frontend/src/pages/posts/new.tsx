@@ -1,10 +1,15 @@
 import Header from "@components/Header";
 import dynamic from "next/dynamic";
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor as EditorType, EditorProps } from "@toast-ui/react-editor";
 import { TuiEditorWithForwardedProps } from "./TuiEditorWrapper";
 import Select from "react-select";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { CreatePostQuery, getCategoriesQuery } from "@postsQuery";
+import { postQuery } from "@api";
+import toast from "react-simple-toasts";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
@@ -27,11 +32,55 @@ const EditorWithForwardedRef = React.forwardRef<
 ));
 
 export default function PostNew() {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  const getCategories = async () => {
+    const { data: categories } = await postQuery(getCategoriesQuery);
+    console.log(categories, "###query");
+  };
+
+  // usestate로 담아서 사용하기
+
+  useEffect(() => {
+    setValue("content", "");
+    setValue("title", "");
+    setValue("category", [1, 2, 4]);
+    getCategories();
+    console.log("ss");
+  }, []);
+
+  const router = useRouter();
   return (
     <div className="w-full">
       <Header />
       <div className="lg:max-w-6xl mx-auto flex flex-col md:px-8 sm:px-2 xl:px-0 py-16">
-        <form className="space-y-8 divide-y">
+        <form
+          className="space-y-8 divide-y"
+          onSubmit={handleSubmit(async (data) => {
+            try {
+              const query = CreatePostQuery(data.title, data.content, []);
+              const response = await postQuery(query);
+
+              if (
+                response?.data?.data?.createPost &&
+                response?.data?.data?.createPost?.message
+              ) {
+                await toast(response?.data?.data?.createPost?.message);
+                await router.back();
+              } else {
+                await toast(response?.data?.data?.createPost?.error);
+                await router.back();
+              }
+            } catch (e) {
+              console.log(e);
+            }
+          })}
+        >
           <div className="space-y-8 divide-y">
             <div>
               <div>
@@ -46,7 +95,7 @@ export default function PostNew() {
               <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6 pt-4 border-t">
                 <div className="sm:col-span-6">
                   <label
-                    htmlFor="username"
+                    htmlFor="title"
                     className="block text-base font-medium text-gray-700"
                   >
                     문제
@@ -54,9 +103,11 @@ export default function PostNew() {
                   <div className="mt-1 flex rounded-md ">
                     <input
                       type="text"
-                      name="username"
-                      id="username"
-                      autoComplete="username"
+                      id="title"
+                      autoComplete="title"
+                      {...register("title", {
+                        required: "필수 입력 사항입니다",
+                      })}
                       className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300"
                     />
                   </div>
@@ -64,7 +115,7 @@ export default function PostNew() {
 
                 <div className="sm:col-span-6">
                   <label
-                    htmlFor="about"
+                    htmlFor="content"
                     className="block text-base font-medium text-gray-700"
                   >
                     답변
@@ -74,6 +125,9 @@ export default function PostNew() {
                       initialValue="플래시 카드를 작성해주세요 :)"
                       previewStyle="vertical"
                       height="1000px"
+                      onChange={(e) => {
+                        setValue("content", e);
+                      }}
                       initialEditType="markdown"
                       useCommandShortcut={true}
                     />
@@ -142,8 +196,11 @@ export default function PostNew() {
           <div className="pt-5">
             <div className="flex justify-end">
               <button
+                onClick={() => {
+                  router.back();
+                }}
                 type="button"
-                className="bg-white py-2 px-4 border border-gray-300 rounded-md border text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="bg-white py-2 px-4 border-gray-300 rounded-md border text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 취소
               </button>
