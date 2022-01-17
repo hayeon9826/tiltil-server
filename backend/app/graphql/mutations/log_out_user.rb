@@ -16,6 +16,8 @@ module Mutations
         return  { errors: "사용자 오류입니다. 잠시후 이용해주세요" } unless user.present?
         
         JWTSessions::Session.flush_all
+        # session = JWTSessions::Session.new(payload: payload)
+        # session.flush_by_access_payload
 
         { token: nil, csrf: nil, errors: "잠시 후 로그아웃 됩니다." }
       else

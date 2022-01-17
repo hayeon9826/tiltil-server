@@ -1,4 +1,6 @@
 class GraphqlController < ApplicationController
+   include JWTSessions::RailsAuthorization
+   rescue_from JWTSessions::Errors::Unauthorized, with: :not_authorized
   # before_action :jwt_authenticate_request!
   # before_action :token_authentication
   # If accessing from outside this domain, nullify the session
@@ -23,11 +25,25 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    return nil if request.headers['Authorization'].blank?
-    token = request.headers['Authorization'].split(' ').last
-    return nil if token.blank?
-
+    authorize_access_request!
+    begin
+      current_user ||= User.find(auth_token["user_id"])
+    rescue StandardError => e
+      current_user = nil
+    end
   end
+    
+    ## 헤더에 있는 정보 중, Authorization 내용(토큰) 추출
+    def http_token
+      http_token ||= if request.headers['Authorization'].present?
+        request.headers['Authorization'].split(' ').last
+      end
+    end
+
+    ## 토큰 해석 : 토큰 해석은 lib/json_web_token.rb 내의 decode 메소드에서 진행됩니다.
+    def auth_token
+      auth_token ||= JsonWebToken.decode(http_token)
+    end
 
 
   # Handle variables in form data, JSON body, or a blank value
@@ -55,6 +71,10 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+  end
+
+  def not_authorized
+    render json: { error: "Not authorized" }, status: :unauthorized
   end
 
 end

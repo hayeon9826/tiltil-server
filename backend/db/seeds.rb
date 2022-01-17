@@ -8,7 +8,7 @@
 
 # 
 
-CATEGORIES = ["Ruby on Rails", "Database", "GraphQL", "Computer Science", "AWS", "Operating Systems", "Network", "Algorithm", "Data Structures", "React.js", "Javascript"]
+CATEGORIES = ["Ruby on Rails", "Database", "GraphQL", "Computer Science", "AWS", "Operating Systems", "Network", "Algorithm", "Data Structures", "React.js", "Javascript", "OOP (Ruby)"]
 
 def createUsers
   10.times do |index|

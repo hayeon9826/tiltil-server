@@ -22,6 +22,11 @@ interface SignUpAttribute {
   password_confirmation: string;
 }
 
+export interface categoryProps {
+  id: string;
+  title: string;
+}
+
 interface Category {
   name: string;
   description: string;

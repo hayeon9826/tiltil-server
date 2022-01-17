@@ -1,32 +1,15 @@
 import Header from "@components/Header";
-import { API_URL } from "@config";
 import useAuth from "@auth";
-import moment from "moment";
-import { LogOutUserQuery } from "src/core/query/user";
 import { postQuery } from "@api";
 import { useRouter } from "next/router";
-import toast from "react-simple-toasts";
-import { sleep } from "@utils";
-import Link from "next/link";
+import { categoryProps } from "@interface";
+import { useState, useEffect } from "react";
+import { getCategoriesQuery } from "@postsQuery";
 
 const tabs = [
   { name: "계정 설정", href: "/users/mypage", current: false },
   { name: "나의 TIL", href: "#", current: true },
   { name: "저장한 TIL", href: "/users/likes", current: false },
-];
-
-const categories = [
-  { name: "Ruby on Rails", href: "/posts" },
-  { name: "Database", href: "/posts" },
-  { name: "GraphQL", href: "/posts" },
-  { name: "Computer Science", href: "/posts" },
-  { name: "AWS", href: "/posts" },
-  { name: "Operating Systems", href: "/posts" },
-  { name: "Network", href: "/posts" },
-  { name: "Algorithm", href: "/posts" },
-  { name: "Data Structures", href: "/posts" },
-  { name: "React.js", href: "/posts" },
-  { name: "Javascript", href: "/posts" },
 ];
 
 const posts = [
@@ -103,10 +86,22 @@ const posts = [
 ];
 
 export default function PostIndex() {
+  const [categories, setCategories] = useState<categoryProps[]>([]);
+
+  const getCategories = async () => {
+    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    await setCategories(
+      categoryData && categoryData?.data && categoryData?.data?.categories
+    );
+  };
   const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
     useAuth();
   const router = useRouter();
   const { category } = router.query;
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return (
     <>
@@ -135,11 +130,11 @@ export default function PostIndex() {
                   >
                     {categories.map((category) => (
                       <a
-                        key={category.name}
-                        href={category.href + `?category=${category.name}`}
+                        key={category?.title}
+                        href={`/posts?category=${category?.title}`}
                         className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
                       >
-                        <span className="truncate">{category.name}</span>
+                        <span className="truncate">{category?.title}</span>
                       </a>
                     ))}
                   </div>

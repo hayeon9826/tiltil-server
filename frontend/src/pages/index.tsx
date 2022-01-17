@@ -18,27 +18,16 @@ import {
   StarIcon,
   ThumbUpIcon,
 } from "@heroicons/react/solid";
-
+import { getCategoriesQuery } from "@postsQuery";
 import { API_URL } from "@config";
+import { categoryProps } from "@interface";
 
-const categories = [
-  { name: "Ruby on Rails", href: "/posts" },
-  { name: "Database", href: "/posts" },
-  { name: "GraphQL", href: "/posts" },
-  { name: "Computer Science", href: "/posts" },
-  { name: "AWS", href: "/posts" },
-  { name: "Operating Systems", href: "/posts" },
-  { name: "Network", href: "/posts" },
-  { name: "Algorithm", href: "/posts" },
-  { name: "Data Structures", href: "/posts" },
-  { name: "React.js", href: "/posts" },
-  { name: "Javascript", href: "/posts" },
-];
 const tabs = [
   { name: "인기글", href: "#", current: true },
   { name: "최신글", href: "/posts/recent", current: false },
   { name: "저장됨", href: "/posts/saved", current: false },
 ];
+
 const questions = [
   {
     id: "81614",
@@ -154,6 +143,15 @@ const Home = ({ isAuth }: any) => {
   const { currentUser, isAuthenticated } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
 
+  const [categories, setCategories] = useState<categoryProps[]>([]);
+
+  const getCategories = async () => {
+    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    await setCategories(
+      categoryData && categoryData?.data && categoryData?.data?.categories
+    );
+  };
+
   const requestTest = async () => {
     const query = getUsersQuery;
     const { data } = await postQuery(query);
@@ -164,7 +162,8 @@ const Home = ({ isAuth }: any) => {
     if (isAuthenticated) {
       console.log("isAuthenticated");
     }
-  });
+    getCategories();
+  }, []);
 
   return (
     <>
@@ -188,15 +187,16 @@ const Home = ({ isAuth }: any) => {
                     className="mt-3 space-y-2"
                     aria-labelledby="communities-headline"
                   >
-                    {categories.map((category) => (
-                      <a
-                        key={category.name}
-                        href={category.href + `?category=${category.name}`}
-                        className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
-                      >
-                        <span className="truncate">{category.name}</span>
-                      </a>
-                    ))}
+                    {categories &&
+                      categories.map((category) => (
+                        <a
+                          key={category?.title}
+                          href={`/posts?category=${category?.title}`}
+                          className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
+                        >
+                          <span className="truncate">{category?.title}</span>
+                        </a>
+                      ))}
                   </div>
                 </div>
               </nav>

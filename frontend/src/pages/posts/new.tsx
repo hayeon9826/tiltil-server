@@ -20,6 +20,11 @@ interface EditorPropsWithHandlers extends EditorProps {
   onChange?(value: string): void;
 }
 
+interface dictionaryProps {
+  value?: number | null;
+  label: string;
+}
+
 const Editor = dynamic<TuiEditorWithForwardedProps>(
   () => import("./TuiEditorWrapper"),
   { ssr: false }
@@ -32,6 +37,12 @@ const EditorWithForwardedRef = React.forwardRef<
 ));
 
 export default function PostNew() {
+  const [categories, setCategories] = useState<dictionaryProps[]>([
+    {
+      value: null,
+      label: "",
+    },
+  ]);
   const {
     register,
     handleSubmit,
@@ -40,16 +51,33 @@ export default function PostNew() {
   } = useForm();
 
   const getCategories = async () => {
-    const { data: categories } = await postQuery(getCategoriesQuery);
-    console.log(categories, "###query");
+    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    await setCategories(
+      categoryData &&
+        categoryData?.data &&
+        categoryData?.data?.categories.map((category: any) => {
+          const container: dictionaryProps = {};
+          container.value = parseInt(category.id);
+          container.label = category.title;
+
+          return container;
+        })
+    );
   };
+
+  const handleSelect = (values: number[]) => {
+    console.log(values);
+    setValue("category", values);
+  };
+
+  const [selected, setSelected] = useState<object[]>([]);
 
   // usestate로 담아서 사용하기
 
   useEffect(() => {
     setValue("content", "");
     setValue("title", "");
-    setValue("category", [1, 2, 4]);
+    // setValue("category", [1, 2, 4]);
     getCategories();
     console.log("ss");
   }, []);
@@ -63,7 +91,11 @@ export default function PostNew() {
           className="space-y-8 divide-y"
           onSubmit={handleSubmit(async (data) => {
             try {
-              const query = CreatePostQuery(data.title, data.content, []);
+              const query = CreatePostQuery(
+                data.title,
+                data.content,
+                data.category.map((cat) => cat.value)
+              );
               const response = await postQuery(query);
 
               if (
@@ -73,7 +105,10 @@ export default function PostNew() {
                 await toast(response?.data?.data?.createPost?.message);
                 await router.back();
               } else {
-                await toast(response?.data?.data?.createPost?.error);
+                await toast(
+                  response?.data?.data?.createPost?.error ||
+                    "문제가 발생했습니다. 다시 시도해주세요."
+                );
                 await router.back();
               }
             } catch (e) {
@@ -142,7 +177,11 @@ export default function PostNew() {
                     카테고리
                   </label>
                   <div className="mt-1">
-                    <Select options={options} isMulti={true} />
+                    <Select
+                      options={categories}
+                      isMulti
+                      onChange={(e) => setValue("category", e)}
+                    />
                   </div>
                 </div>
 

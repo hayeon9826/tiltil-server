@@ -13,15 +13,19 @@ module Mutations
     field :error, String, null: true
 
     def resolve(**attributes)
-      if attributes && current_user
-        post = Post.new(title: attributes[:title], content: attributes[:content], user_id: context[:current_user].id, category_ids: attributes[:category])
-        if post.save
-          { message: "게시글을 생성했습니다." }
+      if attributes 
+        if context[:current_user].present?
+          post = Post.create(title: attributes[:title], content: attributes[:content], user_id: context[:current_user].id, category_ids: attributes[:category])
+          if post
+            { message: "게시글을 생성했습니다." }
+          else
+            { error: "게시글 생성도중 문제가 생겼습니다. 다시 시도해주세요." }
+          end
         else
-          { error: "문제가 생겼습니다. 다시 시도해주세요." }
+          { error: "유저 세션이 만료되었습니다. 다시 로그인 후 시도해주세요." }
         end
       else
-        { error: "문제가 생겼습니다. 다시 시도해주세요." }
+        { error: "생성 항목이 없습니다. 다시 시도해주세요." }
       end
     end
   end
