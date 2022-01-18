@@ -25,8 +25,8 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    authorize_access_request!
     begin
+      authorize_access_request!
       current_user ||= User.find(auth_token["user_id"])
     rescue StandardError => e
       current_user = nil
