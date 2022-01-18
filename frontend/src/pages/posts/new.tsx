@@ -1,6 +1,6 @@
 import Header from "@components/Header";
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor as EditorType, EditorProps } from "@toast-ui/react-editor";
 import { TuiEditorWithForwardedProps } from "./TuiEditorWrapper";
@@ -47,6 +47,7 @@ export default function PostNew() {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -70,6 +71,8 @@ export default function PostNew() {
     setValue("category", values);
   };
 
+  const editorRef: any = useRef(null);
+
   const [selected, setSelected] = useState<object[]>([]);
 
   // usestate로 담아서 사용하기
@@ -89,10 +92,17 @@ export default function PostNew() {
         <form
           className="space-y-8 divide-y"
           onSubmit={handleSubmit(async (data) => {
+            if (!editorRef.current) {
+              return;
+            }
+            const editorInstance = editorRef.current.getInstance();
+            // const editorHtml = editorInstance?.getHtml();
+            const editorMarkdown = editorInstance?.getMarkdown();
+
             try {
               const query = CreatePostQuery(
                 data.title,
-                data.content,
+                editorMarkdown,
                 data.category.map((cat) => cat.value)
               );
               const response = await postQuery(query);
@@ -155,15 +165,17 @@ export default function PostNew() {
                     답변
                   </label>
                   <div className="mt-1">
-                    <Editor
-                      initialValue="플래시 카드를 작성해주세요 :)"
+                    <EditorWithForwardedRef
+                      placeholder="플래시 카드를 작성해주세요 :)"
                       previewStyle="vertical"
+                      ref={editorRef}
                       height="1000px"
                       onChange={(e) => {
                         setValue("content", e);
                       }}
                       initialEditType="markdown"
                       useCommandShortcut={true}
+                      usageStatistics={false}
                     />
                   </div>
                 </div>
