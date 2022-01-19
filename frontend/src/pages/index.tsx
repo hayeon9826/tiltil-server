@@ -18,7 +18,7 @@ import {
   StarIcon,
   ThumbUpIcon,
 } from "@heroicons/react/solid";
-import { getCategoriesQuery } from "@postsQuery";
+import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { API_URL } from "@config";
 import { categoryProps } from "@interface";
 
@@ -153,9 +153,10 @@ const Home = ({ isAuth }: any) => {
   };
 
   const requestTest = async () => {
-    const query = getUsersQuery;
+    const query = getPostsQuery;
     const { data } = await postQuery(query);
-    setUsers(data && data["data"] && data["data"]["users"]);
+    console.log(data);
+    setUsers(data && data["data"] && data["data"]["posts"]);
   };
 
   useEffect(() => {

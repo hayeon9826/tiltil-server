@@ -1,10 +1,10 @@
 module Types
   class QueryType < Types::BaseObject
 
-    field :all_posts, [PostType], null: false
+    field :posts, [PostType], null: false
     field :categories, [CategoryType], null: false
 
-    def all_posts
+    def posts
       Post.all
     end
 

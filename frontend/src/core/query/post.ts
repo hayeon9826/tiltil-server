@@ -5,6 +5,14 @@ export const getCategoriesQuery = `query {
   }
 }`;
 
+export const getPostsQuery = `query {
+  posts{
+    id
+    title
+    content
+  }
+}`;
+
 export const CreatePostQuery = (
   title: string,
   content: string,
