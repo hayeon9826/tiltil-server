@@ -20,7 +20,7 @@ import {
 } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { API_URL } from "@config";
-import { categoryProps } from "@interface";
+import { categoryProps, postProps } from "@interface";
 
 const tabs = [
   { name: "인기글", href: "#", current: true },
@@ -144,12 +144,16 @@ const Home = ({ isAuth }: any) => {
   const [users, setUsers] = useState<User[]>([]);
 
   const [categories, setCategories] = useState<categoryProps[]>([]);
+  const [posts, setPosts] = useState<postProps[]>([]);
 
-  const getCategories = async () => {
+  const getData = async () => {
     const { data: categoryData } = await postQuery(getCategoriesQuery);
+    const { data: postsData } = await postQuery(getPostsQuery);
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
+    await setPosts(postsData && postsData?.data && postsData?.data?.posts);
+    console.log(postsData);
   };
 
   const requestTest = async () => {
@@ -163,7 +167,7 @@ const Home = ({ isAuth }: any) => {
     if (isAuthenticated) {
       console.log("isAuthenticated");
     }
-    getCategories();
+    getData();
   }, []);
 
   return (
@@ -204,51 +208,6 @@ const Home = ({ isAuth }: any) => {
             </div>
             <main className="lg:col-span-9 xl:col-span-6">
               <div className="px-4 sm:px-0">
-                {/* <div className="sm:hidden">
-                  <label htmlFor="question-tabs" className="sr-only">
-                    Select a tab
-                  </label>
-                  <select
-                    id="question-tabs"
-                    className="block w-full rounded-md border-gray-300 text-base font-medium text-gray-900 focus:border-purple-500 focus:ring-purple-500"
-                    defaultValue={tabs.find((tab) => tab.current).name}
-                  >
-                    {tabs.map((tab) => (
-                      <option key={tab.name}>{tab.name}</option>
-                    ))}
-                  </select>
-                </div> */}
-                {/* <div className="sm:block">
-                  <nav
-                    className="relative z-0 rounded-sm border flex divide-x divide-gray-200"
-                    aria-label="Tabs"
-                  >
-                    {tabs.map((tab, tabIdx) => (
-                      <a
-                        key={tab.name}
-                        href={tab.href}
-                        aria-current={tab.current ? "page" : undefined}
-                        className={classNames(
-                          tab.current
-                            ? "text-gray-900"
-                            : "text-gray-500 hover:text-gray-700",
-                          tabIdx === 0 ? "rounded-l-lg" : "",
-                          tabIdx === tabs.length - 1 ? "rounded-r-lg" : "",
-                          "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10"
-                        )}
-                      >
-                        <span>{tab.name}</span>
-                        <span
-                          aria-hidden="true"
-                          className={classNames(
-                            tab.current ? "bg-rose-500" : "bg-transparent",
-                            "absolute inset-x-0 bottom-0 h-0.5"
-                          )}
-                        />
-                      </a>
-                    ))}
-                  </nav>
-                </div> */}
                 <div className=" lg:block">
                   <div className="border-b border-gray-200">
                     <nav className="-mb-px flex space-x-8">
@@ -293,16 +252,16 @@ const Home = ({ isAuth }: any) => {
                       목록 리셋
                     </button>
                   </div>
-                  {users &&
-                    users.length > 0 &&
-                    users.map((user) => (
+                  {posts &&
+                    posts.length > 0 &&
+                    posts.map((post) => (
                       <>
                         <li
-                          key={user.id}
+                          key={post.id}
                           className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg mt-4"
                         >
                           <article
-                            aria-labelledby={"question-title-" + user.id}
+                            aria-labelledby={"question-title-" + post.id}
                           >
                             <div>
                               <div className="flex space-x-3">
@@ -314,20 +273,12 @@ const Home = ({ isAuth }: any) => {
                                   />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <p className="text-sm font-medium text-gray-900">
-                                    <a href={"#"} className="hover:underline">
-                                      {user.name}
-                                    </a>
-                                  </p>
-                                  <p className="text-sm text-gray-500">
-                                    <a
-                                      href={"#"}
-                                      className="hover:underline"
-                                    ></a>
+                                  <p className="text-sm font-medium text-gray-900 m-auto mt-2">
+                                    {post?.userName}
                                   </p>
                                 </div>
                                 <div className="flex-shrink-0 self-center flex">
-                                  <Menu
+                                  {/* <Menu
                                     as="div"
                                     className="relative inline-block text-left"
                                   >
@@ -414,23 +365,29 @@ const Home = ({ isAuth }: any) => {
                                         </div>
                                       </Menu.Items>
                                     </Transition>
-                                  </Menu>
+                                  </Menu> */}
                                 </div>
                               </div>
-                              <h2
-                                id={"question-title-" + user.id}
+                              {/* <h2
+                                id={"question-content-" + post.id}
                                 className="mt-4 text-base font-medium text-gray-900"
                               >
-                                {user.email}
-                              </h2>
+                                {post?.content}
+                              </h2> */}
                             </div>
                             <div
                               className="mt-2 text-sm text-gray-700 space-y-4"
                               dangerouslySetInnerHTML={{
-                                __html: user.email,
+                                __html: post?.title,
                               }}
                             />
-                            <div className="mt-6 flex justify-between space-x-8">
+                            {/* mapping 해야함. */}
+                            <div className="mt-4">
+                              <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                {post?.categoryTitles}
+                              </span>
+                            </div>
+                            {/* <div className="mt-6 flex justify-between space-x-8">
                               <div className="flex space-x-6">
                                 <span className="inline-flex items-center text-sm">
                                   <button
@@ -442,7 +399,7 @@ const Home = ({ isAuth }: any) => {
                                       aria-hidden="true"
                                     />
                                     <span className="font-medium text-gray-900">
-                                      {user.id}
+                                      {post.id}
                                     </span>
                                     <span className="sr-only">likes</span>
                                   </button>
@@ -457,7 +414,7 @@ const Home = ({ isAuth }: any) => {
                                       aria-hidden="true"
                                     />
                                     <span className="font-medium text-gray-900">
-                                      {user.id}
+                                      {post.id}
                                     </span>
                                     <span className="sr-only">replies</span>
                                   </button>
@@ -472,7 +429,7 @@ const Home = ({ isAuth }: any) => {
                                       aria-hidden="true"
                                     />
                                     <span className="font-medium text-gray-900">
-                                      {user.id}
+                                      {post.id}
                                     </span>
                                     <span className="sr-only">views</span>
                                   </button>
@@ -494,13 +451,13 @@ const Home = ({ isAuth }: any) => {
                                   </button>
                                 </span>
                               </div>
-                            </div>
+                            </div> */}
                           </article>
                         </li>
                       </>
                     ))}
 
-                  {questions.map((question) => (
+                  {/* {questions.map((question) => (
                     <li
                       key={question.id}
                       className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg"
@@ -551,7 +508,7 @@ const Home = ({ isAuth }: any) => {
                         />
                       </article>
                     </li>
-                  ))}
+                  ))} */}
                 </ul>
               </div>
             </main>

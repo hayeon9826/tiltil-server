@@ -13,6 +13,7 @@ export const getPostsQuery = `query {
     userId
     categoryIds
     categoryTitles
+    userName
   }
 }`;
 

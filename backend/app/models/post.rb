@@ -7,4 +7,8 @@ class Post < ApplicationRecord
   def category_titles
     return self.categories.pluck(:title)
   end
+
+  def user_name
+    return self&.user&.name
+  end
 end

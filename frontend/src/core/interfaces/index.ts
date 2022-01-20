@@ -27,6 +27,16 @@ export interface categoryProps {
   title: string;
 }
 
+export interface postProps {
+  id: string;
+  title: string;
+  content: string;
+  userId: number;
+  categoryIds?: number[];
+  categoryTitles?: string[];
+  userName?: string;
+}
+
 interface Category {
   name: string;
   description: string;

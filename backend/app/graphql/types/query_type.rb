@@ -5,7 +5,7 @@ module Types
     field :categories, [CategoryType], null: false
 
     def posts
-      Post.all
+      Post.all.order(created_at: :desc)
     end
 
     def categories

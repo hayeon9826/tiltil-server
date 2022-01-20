@@ -6,5 +6,6 @@ module Types
     field :user_id, ID, null: true
     field :category_ids, [Integer], null: true
     field :category_titles, [String], null: true
+    field :user_name, String, null: true
   end
 end
