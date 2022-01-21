@@ -35,6 +35,7 @@ export interface postProps {
   categoryIds?: number[];
   categoryTitles?: string[];
   userName?: string;
+  createdAt: string;
 }
 
 interface Category {

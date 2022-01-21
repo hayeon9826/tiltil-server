@@ -5,8 +5,8 @@ export const getCategoriesQuery = `query {
   }
 }`;
 
-export const getPostsQuery = `query {
-  posts{
+export const getPostsQuery = (random?: boolean) => `query {
+  posts(random: ${random}){
     id
     title
     content
@@ -14,6 +14,18 @@ export const getPostsQuery = `query {
     categoryIds
     categoryTitles
     userName
+    createdAt
+  }
+}`;
+
+export const getPostQuery = (id: any) => `query {
+  posts(id: ${id}){
+    id
+    title
+    content
+    categoryTitles
+    userName
+    createdAt
   }
 }`;
 

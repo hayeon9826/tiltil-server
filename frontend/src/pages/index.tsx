@@ -148,7 +148,7 @@ const Home = ({ isAuth }: any) => {
 
   const getData = async () => {
     const { data: categoryData } = await postQuery(getCategoriesQuery);
-    const { data: postsData } = await postQuery(getPostsQuery);
+    const { data: postsData } = await postQuery(getPostsQuery(true));
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
@@ -156,10 +156,9 @@ const Home = ({ isAuth }: any) => {
     console.log(postsData);
   };
 
-  const requestTest = async () => {
+  const getPosts = async () => {
     const query = getPostsQuery;
     const { data } = await postQuery(query);
-    console.log(data);
     setUsers(data && data["data"] && data["data"]["posts"]);
   };
 
@@ -238,11 +237,11 @@ const Home = ({ isAuth }: any) => {
                     </div> */}
                     <button
                       className="inline-flex items-center px-2.5 py-1.5 m-2 border border-gray-300 text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                      onClick={() => requestTest()}
+                      onClick={() => getData()}
                     >
-                      목록 가져오기
+                      랜덤 목록
                     </button>
-                    <button
+                    {/* <button
                       type="button"
                       className="ml-2 inline-flex items-center px-2.5 py-1.5 m-2 border border-transparent text-xs font-medium rounded text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                       onClick={() => {
@@ -250,35 +249,36 @@ const Home = ({ isAuth }: any) => {
                       }}
                     >
                       목록 리셋
-                    </button>
+                    </button> */}
                   </div>
                   {posts &&
                     posts.length > 0 &&
                     posts.map((post) => (
                       <>
-                        <li
-                          key={post.id}
-                          className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg mt-4"
-                        >
-                          <article
-                            aria-labelledby={"question-title-" + post.id}
+                        <Link href={`/posts/${post.id}`}>
+                          <li
+                            key={post.id}
+                            className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg mt-4"
                           >
-                            <div>
-                              <div className="flex space-x-3">
-                                <div className="flex-shrink-0">
-                                  <img
-                                    className="h-10 w-10 rounded-full"
-                                    src={`${API_URL}/image/profile.png`}
-                                    alt=""
-                                  />
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                  <p className="text-sm font-medium text-gray-900 m-auto mt-2">
-                                    {post?.userName}
-                                  </p>
-                                </div>
-                                <div className="flex-shrink-0 self-center flex">
-                                  {/* <Menu
+                            <article
+                              aria-labelledby={"question-title-" + post.id}
+                            >
+                              <div>
+                                <div className="flex space-x-3">
+                                  <div className="flex-shrink-0">
+                                    <img
+                                      className="h-10 w-10 rounded-full"
+                                      src={`${API_URL}/image/profile.png`}
+                                      alt=""
+                                    />
+                                  </div>
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-sm font-medium text-gray-900 m-auto mt-2">
+                                      {post?.userName}
+                                    </p>
+                                  </div>
+                                  <div className="flex-shrink-0 self-center flex">
+                                    {/* <Menu
                                     as="div"
                                     className="relative inline-block text-left"
                                   >
@@ -366,28 +366,35 @@ const Home = ({ isAuth }: any) => {
                                       </Menu.Items>
                                     </Transition>
                                   </Menu> */}
+                                  </div>
                                 </div>
-                              </div>
-                              {/* <h2
+                                {/* <h2
                                 id={"question-content-" + post.id}
                                 className="mt-4 text-base font-medium text-gray-900"
                               >
                                 {post?.content}
                               </h2> */}
-                            </div>
-                            <div
-                              className="mt-2 text-sm text-gray-700 space-y-4"
-                              dangerouslySetInnerHTML={{
-                                __html: post?.title,
-                              }}
-                            />
-                            {/* mapping 해야함. */}
-                            <div className="mt-4">
-                              <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
-                                {post?.categoryTitles}
-                              </span>
-                            </div>
-                            {/* <div className="mt-6 flex justify-between space-x-8">
+                              </div>
+                              <div
+                                className="mt-2 text-sm text-gray-700 space-y-4"
+                                dangerouslySetInnerHTML={{
+                                  __html: post?.title,
+                                }}
+                              />
+                              {/* mapping 해야함. */}
+                              <div className="mt-4">
+                                {post?.categoryTitles?.map(
+                                  (category, index) => (
+                                    <span
+                                      key={index}
+                                      className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2"
+                                    >
+                                      {category}
+                                    </span>
+                                  )
+                                )}
+                              </div>
+                              {/* <div className="mt-6 flex justify-between space-x-8">
                               <div className="flex space-x-6">
                                 <span className="inline-flex items-center text-sm">
                                   <button
@@ -452,8 +459,9 @@ const Home = ({ isAuth }: any) => {
                                 </span>
                               </div>
                             </div> */}
-                          </article>
-                        </li>
+                            </article>
+                          </li>
+                        </Link>
                       </>
                     ))}
 
