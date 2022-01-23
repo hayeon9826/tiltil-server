@@ -61,20 +61,20 @@ const messages = [
 
 export default function NotificationPage() {
   return (
-    <div className="w-full">
+    <div className="w-full min-h-full bg-gray-900">
       <Header />
       <div className="max-w-4xl mx-auto flex flex-col md:px-8 xl:px-0 py-16">
         <ul role="list" className="divide-y divide-gray-200">
           {messages.map((message) => (
             <li
               key={message.id}
-              className="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
+              className="relative bg-gray-900 py-5 px-4 hover:bg-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
             >
               <div className="flex justify-between space-x-3">
                 <div className="min-w-0 flex-1">
                   <a href="#" className="block focus:outline-none">
                     <span className="absolute inset-0" aria-hidden="true" />
-                    <p className="text-sm font-medium text-gray-900 truncate">
+                    <p className="text-sm font-medium text-gray-200 truncate">
                       {message.sender}
                     </p>
                     <p className="text-sm text-gray-500 truncate">

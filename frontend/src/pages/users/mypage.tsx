@@ -45,13 +45,13 @@ export default function mypage() {
 
         {/* Content area */}
         <Header />
-        <div className="w-full">
+        <div className="w-full bg-gray-900">
           <div className="max-w-4xl mx-auto flex flex-col md:px-8 xl:px-0">
             <main className="flex-1">
               <div className="relative max-w-4xl mx-auto md:px-8 xl:px-0">
                 <div className="pt-10 pb-16">
                   <div className="px-4 sm:px-6 md:px-0">
-                    <h1 className="text-3xl font-extrabold text-gray-900">
+                    <h1 className="text-3xl font-extrabold text-gray-200">
                       마이페이지
                     </h1>
                   </div>
@@ -83,7 +83,7 @@ export default function mypage() {
                                   className={classNames(
                                     tab.current
                                       ? "border-purple-500 text-purple-600"
-                                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                                      : "border-transparent text-gray-300 hover:border-gray-300 hover:text-gray-700",
                                     "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
                                   )}
                                 >
@@ -98,20 +98,20 @@ export default function mypage() {
                       {/* Description list with inline editing */}
                       <div className="mt-10 divide-y divide-gray-200">
                         <div className="space-y-1">
-                          <h3 className="text-lg leading-6 font-medium text-gray-900">
+                          <h3 className="text-lg leading-6 font-medium text-gray-200">
                             프로필
                           </h3>
-                          <p className="max-w-2xl text-sm text-gray-500">
+                          <p className="max-w-2xl text-sm text-gray-400">
                             프로필 정보를 설정해주세요.
                           </p>
                         </div>
                         <div className="mt-6">
                           <dl className="divide-y divide-gray-200">
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                              <dt className="text-sm font-medium text-gray-500">
+                              <dt className="text-sm font-medium text-gray-400">
                                 이름
                               </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                              <dd className="mt-1 flex text-sm text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow">
                                   {currentUser?.name || "-"}
                                 </span>
@@ -119,7 +119,7 @@ export default function mypage() {
                                   <Link href="/users/edit">
                                     <button
                                       type="button"
-                                      className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                      className=" rounded-md font-medium text-purple-500 hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                     >
                                       수정
                                     </button>
@@ -128,10 +128,10 @@ export default function mypage() {
                               </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                              <dt className="text-sm font-medium text-gray-500">
+                              <dt className="text-sm font-medium text-gray-400">
                                 사진
                               </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                              <dd className="mt-1 flex text-sm text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow">
                                   <img
                                     className="h-8 w-8 rounded-full"
@@ -145,7 +145,7 @@ export default function mypage() {
                                     onClick={() =>
                                       toast("서비스 준비중입니다.")
                                     }
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                    className=" rounded-md font-medium text-purple-500 hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
                                     수정
                                   </button>
@@ -153,17 +153,17 @@ export default function mypage() {
                               </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                              <dt className="text-sm font-medium text-gray-500">
+                              <dt className="text-sm font-medium text-gray-400">
                                 이메일
                               </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                              <dd className="mt-1 flex text-sm text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow">
                                   {currentUser?.email || "-"}
                                 </span>
                                 {/* <span className="ml-4 flex-shrink-0">
                                   <button
                                     type="button"
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                    className=" rounded-md font-medium text-purple-500 hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
                                     Update
                                   </button>
@@ -176,20 +176,20 @@ export default function mypage() {
 
                       <div className="mt-10 divide-y divide-gray-200">
                         <div className="space-y-1">
-                          <h3 className="text-lg leading-6 font-medium text-gray-900">
+                          <h3 className="text-lg leading-6 font-medium text-gray-200">
                             계정
                           </h3>
-                          <p className="max-w-2xl text-sm text-gray-500">
+                          <p className="max-w-2xl text-sm text-gray-400">
                             계정을 관리해주세요.
                           </p>
                         </div>
                         <div className="mt-6">
                           <dl className="divide-y divide-gray-200">
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                              <dt className="text-sm font-medium text-gray-500">
+                              <dt className="text-sm font-medium text-gray-400">
                                 계정 생성일
                               </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                              <dd className="mt-1 flex text-sm text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow">
                                   {currentUser?.created_at
                                     ? moment(currentUser?.created_at).format(
@@ -200,16 +200,16 @@ export default function mypage() {
                               </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                              <dt className="text-sm font-medium text-gray-500">
+                              <dt className="text-sm font-medium text-gray-400">
                                 로그아웃
                               </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                              <dd className="mt-1 flex text-sm text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow"></span>
                                 <span className="ml-4 flex-shrink-0">
                                   <button
                                     type="button"
                                     onClick={handleLogout}
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                    className=" rounded-md font-medium text-purple-500 hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
                                     로그아웃
                                   </button>
@@ -217,10 +217,10 @@ export default function mypage() {
                               </dd>
                             </div>
                             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                              <dt className="text-sm font-medium text-gray-500">
+                              <dt className="text-sm font-medium text-gray-400">
                                 계정 탈퇴
                               </dt>
-                              <dd className="mt-1 flex text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                              <dd className="mt-1 flex text-sm text-gray-200 sm:mt-0 sm:col-span-2">
                                 <span className="flex-grow"></span>
                                 <span className="ml-4 flex-shrink-0">
                                   <button
@@ -228,7 +228,7 @@ export default function mypage() {
                                     onClick={() =>
                                       toast("서비스 준비중입니다.")
                                     }
-                                    className="bg-white rounded-md font-medium text-purple-600 hover:text-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                                    className=" rounded-md font-medium text-purple-500 hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
                                   >
                                     탈퇴하기
                                   </button>

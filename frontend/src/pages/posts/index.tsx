@@ -105,7 +105,7 @@ export default function PostIndex() {
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-screen bg-gray-900">
         {/* Static sidebar for desktop */}
 
         {/* Content area */}
@@ -119,7 +119,7 @@ export default function PostIndex() {
               >
                 <div className="mt-12">
                   <p
-                    className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                    className="px-3 text-xs font-semibold text-gray-200 uppercase tracking-wider"
                     id="communities-headline"
                   >
                     CATEGORY
@@ -132,7 +132,7 @@ export default function PostIndex() {
                       <a
                         key={category?.title}
                         href={`/posts?category=${category?.title}`}
-                        className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
+                        className="group flex items-center px-3 py-2 text-sm font-medium text-gray-200 rounded-md hover:text-gray-300 hover:bg-gray-50"
                       >
                         <span className="truncate">{category?.title}</span>
                       </a>
@@ -145,7 +145,7 @@ export default function PostIndex() {
               <div className="px-4 sm:px-0">
                 <div className="pt-10 pb-16">
                   <div className="px-4 sm:px-6 md:px-0">
-                    <h1 className="text-3xl font-extrabold text-gray-900">
+                    <h1 className="text-3xl font-extrabold text-gray-300">
                       # {category ? category : "Ruby On Rails"}
                     </h1>
                   </div>
@@ -158,27 +158,27 @@ export default function PostIndex() {
                         {posts.map((post) => (
                           <li
                             key={post.id}
-                            className="col-span-1 bg-white rounded-lg border divide-y divide-gray-200"
+                            className="col-span-1 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200"
                           >
                             <div className="w-full flex items-center justify-between p-6 space-x-6">
                               <div className="flex-1">
-                                <p className="mt-1 text-gray-500 text-sm truncate">
+                                <p className="mt-1 text-gray-200 text-sm truncate">
                                   {post.user}
                                 </p>
                                 <div className="flex items-center space-x-3 mt-2">
-                                  <h3 className="text-gray-900 text-sm font-medium whitespace-normal">
+                                  <h3 className="text-gray-300 text-sm font-medium whitespace-normal">
                                     {post.question}
                                   </h3>
                                 </div>
 
                                 <div className="mt-4">
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
                                     {post.category}
                                   </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
                                     {post.category}
                                   </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
                                     {post.category}
                                   </span>
                                 </div>

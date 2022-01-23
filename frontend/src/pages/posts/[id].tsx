@@ -12,6 +12,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "github-markdown-css";
 import styled from "@emotion/styled";
+import moment from "moment";
 
 const Page = () => {
   const router = useRouter();
@@ -81,7 +82,7 @@ const Page = () => {
           <div className="relative px-4 sm:px-6 lg:px-8">
             <div className="text-lg max-w-prose mx-auto border-b pb-16">
               <h1>
-                <span className="mt-8 block text-xl text-center leading-8 font-bold tracking-tight text-gray-900">
+                <span className="mt-8 block text-xl text-center leading-8 font-bold tracking-tight text-gray-200">
                   {post?.title}
                 </span>
               </h1>
@@ -90,17 +91,19 @@ const Page = () => {
                   {post?.categoryTitles?.map((category, index) => (
                     <span
                       key={index}
-                      className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2"
+                      className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2"
                     >
                       {category}
                     </span>
                   ))}
                 </div>
-                <p className="text-gray-600 text-sm">{post?.createdAt}</p>
+                <p className="text-gray-300 text-sm">
+                  {moment(post?.createdAt).format("YYYY-MM-DD HH:mm")}
+                </p>
               </div>
               {/* <div
                 className={`whitespace-pre-line text-xs pt-8  ${
-                  post?.content ? "text-gray-900" : "text-gray-400"
+                  post?.content ? "text-gray-200" : "text-gray-400"
                 } md:text-sm mt-1 md:mt-2 `}
                 dangerouslySetInnerHTML={{
                   __html: post?.content || "내용이 없습니다.",
@@ -124,7 +127,7 @@ const Page = () => {
             <div className="flex justify-end pt-8 max-w-prose mx-auto text-lg">
               <Link href="/posts">
                 <button
-                  className={`ml-3 inline-flex justify-center py-3 px-16 border border-transparent text-sm font-medium  text-white bg-gray-900 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
+                  className={`ml-3 inline-flex justify-center py-3 px-16 border border-transparent text-sm font-medium  text-white bg-gray-600 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
                 >
                   목록
                 </button>

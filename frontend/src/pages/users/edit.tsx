@@ -43,21 +43,21 @@ const UserEditPage = ({ changeInput, inputData, isAuth }: any) => {
   return (
     <>
       <Header />
-      <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-900">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-200">
             회원 정보 수정
           </h2>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 border sm:rounded-lg sm:px-10">
+          <div className="py-8 px-4 border sm:rounded-lg sm:px-10">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <div className="mt-1">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-300"
                   >
                     이메일
                   </label>
@@ -77,7 +77,7 @@ const UserEditPage = ({ changeInput, inputData, isAuth }: any) => {
               <div className="col-span-6 sm:col-span-3">
                 <label
                   htmlFor="last-name"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-gray-300"
                 >
                   이름
                 </label>

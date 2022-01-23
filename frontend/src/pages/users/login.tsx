@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { postQuery } from "@api";
 import useAuth from "@auth";
 import { SignInUserQuery } from "src/core/query/user";
-import Link from "next/link";
+import { API_URL } from "@config";
 import toast from "react-simple-toasts";
 import { useRouter } from "next/router";
 
@@ -42,21 +42,16 @@ const LoginPage = ({
   return (
     <>
       <Header />
-      <div className="min-h-full flex items-center justify-center py-12 px-12 sm:px-6 lg:px-12">
+      <div className="min-h-screen flex bg-gray-900 items-center justify-center py-12 px-12 sm:px-6 lg:px-12">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-200">
               로그인
             </h2>
           </div>
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            <div className="rounded-md shadow-sm -space-y-px">
+            <div className="rounded-md -space-y-px">
               <div>
                 <label htmlFor="email-address" className="sr-only">
                   이메일
@@ -65,7 +60,7 @@ const LoginPage = ({
                   id="email-address"
                   type="email"
                   {...register("email", { required: true })}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-800 rounded-t-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                   onChange={changeInput}
                   value={inputData?.email}
@@ -81,7 +76,7 @@ const LoginPage = ({
                   {...register("password", { required: true })}
                   autoComplete="current-password"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-800 rounded-b-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
@@ -89,13 +84,13 @@ const LoginPage = ({
             <input
               type="submit"
               value="로그인 하기"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
             />
           </form>
           <div className="text-sm text-center">
             <a
               href="/users/register"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-purple-600 hover:text-purple-500"
             >
               아직 계정이 없으신가요?
             </a>

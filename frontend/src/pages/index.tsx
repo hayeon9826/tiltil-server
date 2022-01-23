@@ -8,6 +8,7 @@ import { ChatAltIcon, PlusSmIcon } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { API_URL } from "@config";
 import { categoryProps, postProps } from "@interface";
+import moment from "moment";
 
 const tabs = [
   { name: "인기글", href: "#", current: true },
@@ -75,7 +76,7 @@ const Home = ({ isAuth }: any) => {
 
   return (
     <>
-      <div className="min-h-full bg-gray-900">
+      <div className="min-h-screen bg-gray-900">
         <Header searchBar={true} />
         <div className="py-10">
           <div className="max-w-3xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
@@ -178,7 +179,7 @@ const Home = ({ isAuth }: any) => {
                                   </div>
                                   <div className="min-w-0 flex-1">
                                     <p className="text-sm font-medium text-gray-300 m-auto mt-2">
-                                      {post?.userName}
+                                      {post?.userName || "익명"}
                                     </p>
                                   </div>
                                   <div className="flex-shrink-0 self-center flex">
@@ -272,12 +273,14 @@ const Home = ({ isAuth }: any) => {
                                   </Menu> */}
                                   </div>
                                 </div>
-                                {/* <h2
-                                id={"question-content-" + post.id}
-                                className="mt-4 text-base font-medium text-gray-900"
-                              >
-                                {post?.content}
-                              </h2> */}
+                                <div
+                                  id={"question-content-" + post.id}
+                                  className="mt-4 text-xs text-gray-400"
+                                >
+                                  {moment(post?.createdAt).format(
+                                    "YYYY-MM-DD HH:mm"
+                                  )}
+                                </div>
                               </div>
                               <div
                                 className="mt-2 text-sm text-gray-300 space-y-4"

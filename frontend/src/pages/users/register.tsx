@@ -7,6 +7,7 @@ import useAuth from "@auth";
 import { SignUpUserQuery } from "src/core/query/user";
 import toast from "react-simple-toasts";
 import { useRouter } from "next/router";
+import { API_URL } from "@config";
 
 const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
   const { authenticateUser } = useAuth();
@@ -40,15 +41,15 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
   return (
     <>
       <Header />
-      <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-200">
             회원가입
           </h2>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="bg-white py-8 px-4  sm:rounded-lg sm:px-10">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="space-y-6"
@@ -126,7 +127,7 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                   />
                   <label
                     htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-900"
+                    className="ml-2 block text-sm text-gray-800"
                   >
                     로그인 정보 기억하기
                   </label>

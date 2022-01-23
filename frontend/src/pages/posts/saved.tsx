@@ -108,7 +108,7 @@ const SavedPosts = ({ isAuth }: any) => {
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-screen bg-gray-900">
         <Header searchBar={true} />
         <div className="py-10">
           <div className="max-w-3xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
@@ -119,7 +119,7 @@ const SavedPosts = ({ isAuth }: any) => {
               >
                 <div className="">
                   <p
-                    className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                    className="px-3 text-xs font-semibold text-gray-300 uppercase tracking-wider"
                     id="communities-headline"
                   >
                     CATEGORY
@@ -132,7 +132,7 @@ const SavedPosts = ({ isAuth }: any) => {
                       <a
                         key={category.name}
                         href={category.href + `?category=${category.name}`}
-                        className="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
+                        className="group flex items-center px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-gray-200 hover:bg-gray-50"
                       >
                         <span className="truncate">{category.name}</span>
                       </a>
@@ -149,7 +149,7 @@ const SavedPosts = ({ isAuth }: any) => {
                   </label>
                   <select
                     id="question-tabs"
-                    className="block w-full rounded-md border-gray-300 text-base font-medium text-gray-900 focus:border-purple-500 focus:ring-purple-500"
+                    className="block w-full rounded-md border-gray-300 text-base font-medium text-gray-200 focus:border-purple-500 focus:ring-purple-500"
                     defaultValue={tabs.find((tab) => tab.current).name}
                   >
                     {tabs.map((tab) => (
@@ -169,8 +169,8 @@ const SavedPosts = ({ isAuth }: any) => {
                         aria-current={tab.current ? "page" : undefined}
                         className={classNames(
                           tab.current
-                            ? "text-gray-900"
-                            : "text-gray-500 hover:text-gray-700",
+                            ? "text-gray-200"
+                            : "text-gray-300 hover:text-gray-700",
                           tabIdx === 0 ? "rounded-l-lg" : "",
                           tabIdx === tabs.length - 1 ? "rounded-r-lg" : "",
                           "group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-6 text-sm font-medium text-center hover:bg-gray-50 focus:z-10"
@@ -197,7 +197,7 @@ const SavedPosts = ({ isAuth }: any) => {
                             className={classNames(
                               tab.current
                                 ? "border-purple-500 text-purple-600"
-                                : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                                : "border-transparent text-gray-300 hover:border-gray-300 hover:text-gray-700",
                               "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
                             )}
                           >
@@ -238,7 +238,7 @@ const SavedPosts = ({ isAuth }: any) => {
                       <>
                         <li
                           key={user.id}
-                          className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg mt-4"
+                          className="bg-gray-900 px-4 py-6 border border-gray-500 sm:p-6 sm:rounded-lg mt-4"
                         >
                           <article
                             aria-labelledby={"question-title-" + user.id}
@@ -253,12 +253,12 @@ const SavedPosts = ({ isAuth }: any) => {
                                   />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                  <p className="text-sm font-medium text-gray-900">
+                                  <p className="text-sm font-medium text-gray-200">
                                     <a href={"#"} className="hover:underline">
                                       {user.name}
                                     </a>
                                   </p>
-                                  <p className="text-sm text-gray-500">
+                                  <p className="text-sm text-gray-300">
                                     <a
                                       href={"#"}
                                       className="hover:underline"
@@ -271,7 +271,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                     className="relative inline-block text-left"
                                   >
                                     <div>
-                                      <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600">
+                                      <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-300">
                                         <span className="sr-only">
                                           Open options
                                         </span>
@@ -299,7 +299,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                                 href="#"
                                                 className={classNames(
                                                   active
-                                                    ? "bg-gray-100 text-gray-900"
+                                                    ? "bg-gray-100 text-gray-200"
                                                     : "text-gray-700",
                                                   "flex px-4 py-2 text-sm"
                                                 )}
@@ -318,7 +318,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                                 href="#"
                                                 className={classNames(
                                                   active
-                                                    ? "bg-gray-100 text-gray-900"
+                                                    ? "bg-gray-100 text-gray-200"
                                                     : "text-gray-700",
                                                   "flex px-4 py-2 text-sm"
                                                 )}
@@ -337,7 +337,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                                 href="#"
                                                 className={classNames(
                                                   active
-                                                    ? "bg-gray-100 text-gray-900"
+                                                    ? "bg-gray-100 text-gray-200"
                                                     : "text-gray-700",
                                                   "flex px-4 py-2 text-sm"
                                                 )}
@@ -358,13 +358,13 @@ const SavedPosts = ({ isAuth }: any) => {
                               </div>
                               <h2
                                 id={"question-title-" + user.id}
-                                className="mt-4 text-base font-medium text-gray-900"
+                                className="mt-4 text-base font-medium text-gray-200"
                               >
                                 {user.email}
                               </h2>
                             </div>
                             <div
-                              className="mt-2 text-sm text-gray-700 space-y-4"
+                              className="mt-2 text-sm text-gray-200 space-y-4"
                               dangerouslySetInnerHTML={{
                                 __html: user.email,
                               }}
@@ -374,13 +374,13 @@ const SavedPosts = ({ isAuth }: any) => {
                                 <span className="inline-flex items-center text-sm">
                                   <button
                                     type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                                   >
                                     <ThumbUpIcon
                                       className="h-5 w-5"
                                       aria-hidden="true"
                                     />
-                                    <span className="font-medium text-gray-900">
+                                    <span className="font-medium text-gray-200">
                                       {user.id}
                                     </span>
                                     <span className="sr-only">likes</span>
@@ -389,13 +389,13 @@ const SavedPosts = ({ isAuth }: any) => {
                                 <span className="inline-flex items-center text-sm">
                                   <button
                                     type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                                   >
                                     <ChatAltIcon
                                       className="h-5 w-5"
                                       aria-hidden="true"
                                     />
-                                    <span className="font-medium text-gray-900">
+                                    <span className="font-medium text-gray-200">
                                       {user.id}
                                     </span>
                                     <span className="sr-only">replies</span>
@@ -404,13 +404,13 @@ const SavedPosts = ({ isAuth }: any) => {
                                 <span className="inline-flex items-center text-sm">
                                   <button
                                     type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                                   >
                                     <EyeIcon
                                       className="h-5 w-5"
                                       aria-hidden="true"
                                     />
-                                    <span className="font-medium text-gray-900">
+                                    <span className="font-medium text-gray-200">
                                       {user.id}
                                     </span>
                                     <span className="sr-only">views</span>
@@ -421,13 +421,13 @@ const SavedPosts = ({ isAuth }: any) => {
                                 <span className="inline-flex items-center text-sm">
                                   <button
                                     type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                                   >
                                     <ShareIcon
                                       className="h-5 w-5"
                                       aria-hidden="true"
                                     />
-                                    <span className="font-medium text-gray-900">
+                                    <span className="font-medium text-gray-200">
                                       Share
                                     </span>
                                   </button>
@@ -442,7 +442,7 @@ const SavedPosts = ({ isAuth }: any) => {
                   {questions.map((question) => (
                     <li
                       key={question.id}
-                      className="bg-white px-4 py-6 border sm:p-6 sm:rounded-lg"
+                      className="bg-gray-900 px-4 py-6 border border-gray-500 sm:p-6 sm:rounded-lg"
                     >
                       <article
                         aria-labelledby={"question-title-" + question.id}
@@ -457,7 +457,7 @@ const SavedPosts = ({ isAuth }: any) => {
                               />
                             </div>
                             <div className="min-w-0 flex-1">
-                              <p className="text-sm font-medium text-gray-900">
+                              <p className="text-sm font-medium text-gray-200">
                                 <a
                                   href={question.author.href}
                                   className="hover:underline"
@@ -465,7 +465,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                   {question.author.name}
                                 </a>
                               </p>
-                              <p className="text-sm text-gray-500">
+                              <p className="text-sm text-gray-300">
                                 <a
                                   href={question.href}
                                   className="hover:underline"
@@ -482,7 +482,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                 className="relative inline-block text-left"
                               >
                                 <div>
-                                  <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-600">
+                                  <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-300">
                                     <span className="sr-only">
                                       Open options
                                     </span>
@@ -510,7 +510,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                             href="#"
                                             className={classNames(
                                               active
-                                                ? "bg-gray-100 text-gray-900"
+                                                ? "bg-gray-100 text-gray-200"
                                                 : "text-gray-700",
                                               "flex px-4 py-2 text-sm"
                                             )}
@@ -529,7 +529,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                             href="#"
                                             className={classNames(
                                               active
-                                                ? "bg-gray-100 text-gray-900"
+                                                ? "bg-gray-100 text-gray-200"
                                                 : "text-gray-700",
                                               "flex px-4 py-2 text-sm"
                                             )}
@@ -548,7 +548,7 @@ const SavedPosts = ({ isAuth }: any) => {
                                             href="#"
                                             className={classNames(
                                               active
-                                                ? "bg-gray-100 text-gray-900"
+                                                ? "bg-gray-100 text-gray-200"
                                                 : "text-gray-700",
                                               "flex px-4 py-2 text-sm"
                                             )}
@@ -569,13 +569,13 @@ const SavedPosts = ({ isAuth }: any) => {
                           </div>
                           <h2
                             id={"question-title-" + question.id}
-                            className="mt-4 text-base font-medium text-gray-900"
+                            className="mt-4 text-base font-medium text-gray-200"
                           >
                             {question.title}
                           </h2>
                         </div>
                         <div
-                          className="mt-2 text-sm text-gray-700 space-y-4"
+                          className="mt-2 text-sm text-gray-200 space-y-4"
                           dangerouslySetInnerHTML={{ __html: question.body }}
                         />
                         <div className="mt-6 flex justify-between space-x-8">
@@ -583,13 +583,13 @@ const SavedPosts = ({ isAuth }: any) => {
                             <span className="inline-flex items-center text-sm">
                               <button
                                 type="button"
-                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                               >
                                 <ThumbUpIcon
                                   className="h-5 w-5"
                                   aria-hidden="true"
                                 />
-                                <span className="font-medium text-gray-900">
+                                <span className="font-medium text-gray-200">
                                   {question.likes}
                                 </span>
                                 <span className="sr-only">likes</span>
@@ -598,13 +598,13 @@ const SavedPosts = ({ isAuth }: any) => {
                             <span className="inline-flex items-center text-sm">
                               <button
                                 type="button"
-                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                               >
                                 <ChatAltIcon
                                   className="h-5 w-5"
                                   aria-hidden="true"
                                 />
-                                <span className="font-medium text-gray-900">
+                                <span className="font-medium text-gray-200">
                                   {question.replies}
                                 </span>
                                 <span className="sr-only">replies</span>
@@ -613,13 +613,13 @@ const SavedPosts = ({ isAuth }: any) => {
                             <span className="inline-flex items-center text-sm">
                               <button
                                 type="button"
-                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                               >
                                 <EyeIcon
                                   className="h-5 w-5"
                                   aria-hidden="true"
                                 />
-                                <span className="font-medium text-gray-900">
+                                <span className="font-medium text-gray-200">
                                   {question.views}
                                 </span>
                                 <span className="sr-only">views</span>
@@ -630,13 +630,13 @@ const SavedPosts = ({ isAuth }: any) => {
                             <span className="inline-flex items-center text-sm">
                               <button
                                 type="button"
-                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                               >
                                 <ShareIcon
                                   className="h-5 w-5"
                                   aria-hidden="true"
                                 />
-                                <span className="font-medium text-gray-900">
+                                <span className="font-medium text-gray-200">
                                   Share
                                 </span>
                               </button>
@@ -652,11 +652,11 @@ const SavedPosts = ({ isAuth }: any) => {
             <aside className="hidden xl:block xl:col-span-4">
               <div className="sticky top-4 space-y-4">
                 <section aria-labelledby="who-to-follow-heading">
-                  <div className="bg-white rounded-sm border">
+                  <div className=" rounded-sm bg-gray-900 border border-gray-500">
                     <div className="p-6">
                       <h2
                         id="who-to-follow-heading"
-                        className="text-base font-medium text-gray-900"
+                        className="text-base font-medium text-gray-200"
                       >
                         Who to follow
                       </h2>
@@ -678,20 +678,20 @@ const SavedPosts = ({ isAuth }: any) => {
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
-                                <p className="text-sm font-medium text-gray-900">
+                                <p className="text-sm font-medium text-gray-200">
                                   <a href={user.href}>{user.name}</a>
                                 </p>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-gray-300">
                                   <a href={user.href}>{"@" + user.handle}</a>
                                 </p>
                               </div>
                               <div className="flex-shrink-0">
                                 <button
                                   type="button"
-                                  className="inline-flex items-center px-3 py-0.5 rounded-full bg-rose-50 text-sm font-medium text-rose-700 hover:bg-rose-100"
+                                  className="inline-flex items-center px-3 py-0.5 rounded-full bg-rose-50 text-sm font-medium text-gray-200 hover:bg-rose-100"
                                 >
                                   <PlusSmIcon
-                                    className="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
+                                    className="-ml-1 mr-0.5 h-5 w-5 text-gray-200"
                                     aria-hidden="true"
                                   />
                                   <span>Follow</span>
@@ -713,11 +713,11 @@ const SavedPosts = ({ isAuth }: any) => {
                   </div>
                 </section>
                 <section aria-labelledby="trending-heading">
-                  <div className="bg-white rounded-sm border">
+                  <div className=" rounded-sm bg-gray-900 border border-gray-500">
                     <div className="p-6">
                       <h2
                         id="trending-heading"
-                        className="text-base font-medium text-gray-900"
+                        className="text-base font-medium text-gray-200"
                       >
                         Trending
                       </h2>
@@ -736,20 +736,20 @@ const SavedPosts = ({ isAuth }: any) => {
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
-                                <p className="text-sm text-gray-800">
+                                <p className="text-sm text-gray-200">
                                   {post.body}
                                 </p>
                                 <div className="mt-2 flex">
                                   <span className="inline-flex items-center text-sm">
                                     <button
                                       type="button"
-                                      className="inline-flex space-x-2 text-gray-400 hover:text-gray-500"
+                                      className="inline-flex space-x-2 text-gray-200 hover:text-gray-300"
                                     >
                                       <ChatAltIcon
                                         className="h-5 w-5"
                                         aria-hidden="true"
                                       />
-                                      <span className="font-medium text-gray-900">
+                                      <span className="font-medium text-gray-200">
                                         {post.comments}
                                       </span>
                                     </button>

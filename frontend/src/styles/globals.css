@@ -15,3 +15,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.toastui-editor-main-container {
+  background: white !important;
+}
+
+.tui-editor-contents {
+  background: white !important;
+}

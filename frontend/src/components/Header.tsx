@@ -74,7 +74,7 @@ const Header = ({ searchBar = false }) => {
                   <a href="/">
                     <img
                       className="block h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=purple&shade=600"
+                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=purple&shade=500"
                       alt="Workflow"
                     />
                   </a>

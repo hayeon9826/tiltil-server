@@ -83,13 +83,13 @@ export default function mypage() {
 
         {/* Content area */}
         <Header />
-        <div className="w-full">
+        <div className="w-full bg-gray-900">
           <div className="max-w-4xl mx-auto flex flex-col md:px-8 xl:px-0">
             <main className="flex-1">
               <div className="relative max-w-4xl mx-auto md:px-8 xl:px-0">
                 <div className="pt-10 pb-16">
                   <div className="px-4 sm:px-6 md:px-0">
-                    <h1 className="text-3xl font-extrabold text-gray-900">
+                    <h1 className="text-3xl font-extrabold text-gray-200">
                       마이페이지
                     </h1>
                   </div>
@@ -121,7 +121,7 @@ export default function mypage() {
                                   className={classNames(
                                     tab.current
                                       ? "border-purple-500 text-purple-600"
-                                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
+                                      : "border-transparent text-gray-300 hover:border-gray-300 hover:text-gray-700",
                                     "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
                                   )}
                                 >
@@ -140,27 +140,27 @@ export default function mypage() {
                         {posts.map((post) => (
                           <li
                             key={post.id}
-                            className="col-span-1 bg-white rounded-lg border divide-y divide-gray-200"
+                            className="col-span-1 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200"
                           >
                             <div className="w-full flex items-center justify-between p-6 space-x-6">
                               <div className="flex-1">
-                                <p className="mt-1 text-gray-500 text-sm truncate">
+                                <p className="mt-1 text-gray-300 text-sm truncate">
                                   {post.user}
                                 </p>
                                 <div className="flex items-center space-x-3 mt-2">
-                                  <h3 className="text-gray-900 text-sm font-medium whitespace-normal">
+                                  <h3 className="text-gray-200 text-sm font-medium whitespace-normal">
                                     {post.question}
                                   </h3>
                                 </div>
 
                                 <div className="mt-4">
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
                                     {post.category}
                                   </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
                                     {post.category}
                                   </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full mr-2">
+                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
                                     {post.category}
                                   </span>
                                 </div>

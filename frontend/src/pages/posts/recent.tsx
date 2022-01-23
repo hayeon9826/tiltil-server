@@ -123,7 +123,7 @@ const RecentPosts = ({ isAuth }: any) => {
 
   return (
     <>
-      <div className="min-h-full bg-gray-900">
+      <div className="min-h-screen bg-gray-900">
         <Header searchBar={true} />
         <div className="py-10">
           <div className="max-w-3xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8">

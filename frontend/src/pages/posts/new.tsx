@@ -86,7 +86,7 @@ export default function PostNew() {
 
   const router = useRouter();
   return (
-    <div className="w-full">
+    <div className="w-full min-h-full bg-gray-900">
       <Header />
       <div className="lg:max-w-6xl mx-auto flex flex-col md:px-8 sm:px-2 xl:px-0 py-16">
         <form
@@ -98,7 +98,6 @@ export default function PostNew() {
             const editorInstance = editorRef.current.getInstance();
             // const editorHtml = editorInstance?.getHtml();
             const editorMarkdown = editorInstance?.getMarkdown();
-
             try {
               const query = CreatePostQuery(
                 data.title,
@@ -118,7 +117,7 @@ export default function PostNew() {
                   response?.data?.data?.createPost?.error ||
                     "문제가 발생했습니다. 다시 시도해주세요."
                 );
-                await router.back();
+                // await router.back();
               }
             } catch (e) {
               console.log(e);
@@ -128,10 +127,10 @@ export default function PostNew() {
           <div className="space-y-8 divide-y">
             <div>
               <div>
-                <h3 className="text-xl leading-6 font-semibold text-gray-900">
+                <h3 className="text-xl leading-6 font-semibold text-gray-200">
                   플래시카드 작성
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-300">
                   문제와 답변을 작성해주세요.
                 </p>
               </div>
@@ -140,7 +139,7 @@ export default function PostNew() {
                 <div className="sm:col-span-6">
                   <label
                     htmlFor="title"
-                    className="block text-base font-medium text-gray-700"
+                    className="block text-base font-medium text-gray-200"
                   >
                     문제
                   </label>
@@ -160,11 +159,11 @@ export default function PostNew() {
                 <div className="sm:col-span-6">
                   <label
                     htmlFor="content"
-                    className="block text-base font-medium text-gray-700"
+                    className="block text-base font-medium text-gray-200"
                   >
                     답변
                   </label>
-                  <div className="mt-1">
+                  <div className="mt-1 bg-white">
                     <EditorWithForwardedRef
                       placeholder="플래시 카드를 작성해주세요 :)"
                       previewStyle="vertical"
@@ -183,7 +182,7 @@ export default function PostNew() {
                 <div className="sm:col-span-6">
                   <label
                     htmlFor="about"
-                    className="block text-base font-medium text-gray-700"
+                    className="block text-base font-medium text-gray-200"
                   >
                     카테고리
                   </label>
@@ -199,7 +198,7 @@ export default function PostNew() {
                 {/* <div className="sm:col-span-6">
                   <label
                     htmlFor="cover-photo"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-gray-200"
                   >
                     이미지 첨부
                   </label>
@@ -233,7 +232,7 @@ export default function PostNew() {
                           />
                         </label>
                       </div>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-300">
                         PNG, JPG, GIF (최대 10MB)
                       </p>
                     </div>
