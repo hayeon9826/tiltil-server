@@ -2,9 +2,11 @@ import Header from "@components/Header";
 import useAuth from "@auth";
 import { postQuery } from "@api";
 import { useRouter } from "next/router";
-import { categoryProps } from "@interface";
-import { useState, useEffect } from "react";
-import { getCategoriesQuery } from "@postsQuery";
+import { categoryProps, postProps } from "@interface";
+import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
+import moment from "moment";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
 
 const tabs = [
   { name: "계정 설정", href: "/users/mypage", current: false },
@@ -87,21 +89,29 @@ const posts = [
 
 export default function PostIndex() {
   const [categories, setCategories] = useState<categoryProps[]>([]);
+  const [posts, setPosts] = useState<postProps[]>([]);
 
-  const getCategories = async () => {
-    const { data: categoryData } = await postQuery(getCategoriesQuery);
-    await setCategories(
-      categoryData && categoryData?.data && categoryData?.data?.categories
-    );
-  };
   const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
     useAuth();
   const router = useRouter();
-  const { category } = router.query;
+  const { category, categoryId } = router.query;
+  console.log(category, categoryId);
+
+  const getData = async () => {
+    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    const { data: postsData } = await postQuery(
+      getPostsQuery(false, categoryId)
+    );
+    await setCategories(
+      categoryData && categoryData?.data && categoryData?.data?.categories
+    );
+    await setPosts(postsData && postsData?.data && postsData?.data?.posts);
+  };
+  console.log(posts);
 
   useEffect(() => {
-    getCategories();
-  }, []);
+    getData();
+  }, [categoryId]);
 
   return (
     <>
@@ -131,7 +141,7 @@ export default function PostIndex() {
                     {categories.map((category) => (
                       <a
                         key={category?.title}
-                        href={`/posts?category=${category?.title}`}
+                        href={`/posts?category=${category?.title}&categoryId=${category?.id}`}
                         className="group flex items-center px-3 py-2 text-sm font-medium text-gray-200 rounded-md hover:text-gray-300 hover:bg-gray-50"
                       >
                         <span className="truncate">{category?.title}</span>
@@ -155,37 +165,50 @@ export default function PostIndex() {
                         role="list"
                         className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8"
                       >
-                        {posts.map((post) => (
-                          <li
-                            key={post.id}
-                            className="col-span-1 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200"
-                          >
-                            <div className="w-full flex items-center justify-between p-6 space-x-6">
-                              <div className="flex-1">
-                                <p className="mt-1 text-gray-200 text-sm truncate">
-                                  {post.user}
-                                </p>
-                                <div className="flex items-center space-x-3 mt-2">
-                                  <h3 className="text-gray-300 text-sm font-medium whitespace-normal">
-                                    {post.question}
-                                  </h3>
-                                </div>
+                        {posts &&
+                          posts.length > 0 &&
+                          posts.map((post) => (
+                            <Link href={`/posts/${post.id}`}>
+                              <li
+                                key={post.id}
+                                className="col-span-1 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200"
+                              >
+                                <div className="w-full flex items-center justify-between p-6 space-x-6">
+                                  <div className="flex-1">
+                                    <div
+                                      id={"question-content-" + post.id}
+                                      className="mt-4 text-xs text-gray-400"
+                                    >
+                                      {moment(post?.createdAt).format(
+                                        "YYYY-MM-DD HH:mm"
+                                      )}
+                                    </div>
+                                    <p className="mt-1 text-gray-300 text-sm truncate">
+                                      {post?.userName || "익명"}
+                                    </p>
+                                    <div className="flex items-center space-x-3 mt-2">
+                                      <h3 className="text-gray-200 text-sm font-medium whitespace-normal">
+                                        {post?.title}
+                                      </h3>
+                                    </div>
 
-                                <div className="mt-4">
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
-                                    {post.category}
-                                  </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
-                                    {post.category}
-                                  </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
-                                    {post.category}
-                                  </span>
+                                    <div className="mt-4">
+                                      {post?.categoryTitles?.map(
+                                        (category, index) => (
+                                          <span
+                                            key={index}
+                                            className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2"
+                                          >
+                                            {category}
+                                          </span>
+                                        )
+                                      )}
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                          </li>
-                        ))}
+                              </li>
+                            </Link>
+                          ))}
                       </ul>
                     </div>
                   </div>

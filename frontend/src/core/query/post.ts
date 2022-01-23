@@ -5,13 +5,27 @@ export const getCategoriesQuery = `query {
   }
 }`;
 
-export const getPostsQuery = (random?: boolean) => `query {
-  posts(random: ${random}){
+export const getPostsQuery = (
+  random?: boolean | null,
+  categoryId?: any | null
+) => `query {
+  posts(random: ${random}, categoryId: ${categoryId}){
     id
     title
     content
     userId
     categoryIds
+    categoryTitles
+    userName
+    createdAt
+  }
+}`;
+
+export const getUserPostsQuery = (id: string) => `query{
+  posts(userId: ${id}){
+    id
+    title
+    content
     categoryTitles
     userName
     createdAt

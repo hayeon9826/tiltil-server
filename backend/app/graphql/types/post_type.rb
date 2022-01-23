@@ -3,7 +3,7 @@ module Types
     field :id, ID, null: false
     field :title, String, null: false
     field :content, String, null: true
-    field :user_id, ID, null: true
+    field :user_id, String, null: true
     field :category_ids, [Integer], null: true
     field :category_titles, [String], null: true
     field :user_name, String, null: true

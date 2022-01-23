@@ -100,7 +100,7 @@ const RecentPosts = ({ isAuth }: any) => {
 
   const getData = async () => {
     const { data: categoryData } = await postQuery(getCategoriesQuery);
-    const { data: postsData } = await postQuery(getPostsQuery(false));
+    const { data: postsData } = await postQuery(getPostsQuery(false, null));
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );

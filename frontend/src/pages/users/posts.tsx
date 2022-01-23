@@ -8,6 +8,9 @@ import { useRouter } from "next/router";
 import toast from "react-simple-toasts";
 import { sleep } from "@utils";
 import Link from "next/link";
+import { getUserPostsQuery } from "@postsQuery";
+import { postProps } from "@interface";
+import { useState, useEffect } from "react";
 
 const tabs = [
   { name: "계정 설정", href: "/users/mypage", current: false },
@@ -15,43 +18,43 @@ const tabs = [
   { name: "저장한 TIL", href: "/users/likes", current: false },
 ];
 
-const posts = [
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "1",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "2",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "3",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "4",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "5",
-  },
-];
+// const posts = [
+//   {
+//     question:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+//     user: "__khy",
+//     category: "React",
+//     id: "1",
+//   },
+//   {
+//     question:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+//     user: "__khy",
+//     category: "React",
+//     id: "2",
+//   },
+//   {
+//     question:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+//     user: "__khy",
+//     category: "React",
+//     id: "3",
+//   },
+//   {
+//     question:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+//     user: "__khy",
+//     category: "React",
+//     id: "4",
+//   },
+//   {
+//     question:
+//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
+//     user: "__khy",
+//     category: "React",
+//     id: "5",
+//   },
+// ];
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
@@ -60,7 +63,19 @@ function classNames(...classes: any[]) {
 export default function myPosts() {
   const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
     useAuth();
+
+  console.log(currentUser);
   const router = useRouter();
+  const [posts, setPosts] = useState<postProps[]>([]);
+
+  const getData = async () => {
+    const { data: postsData } = await postQuery(
+      getUserPostsQuery(currentUser?.user_id)
+    );
+    console.log(postsData);
+
+    await setPosts(postsData && postsData?.data && postsData?.data?.posts);
+  };
 
   const handleLogout = async () => {
     const query = await LogOutUserQuery(currentUser?.email);
@@ -75,6 +90,13 @@ export default function myPosts() {
       toast("로그아웃 오류입니다. 문제가 계속되면 관리자에게 문의해주세요.");
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("isAuthenticated");
+    }
+    getData();
+  }, [currentUser]);
 
   return (
     <>
@@ -137,37 +159,50 @@ export default function myPosts() {
                         role="list"
                         className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 mt-8"
                       >
-                        {posts.map((post) => (
-                          <li
-                            key={post.id}
-                            className="col-span-1 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200"
-                          >
-                            <div className="w-full flex items-center justify-between p-6 space-x-6">
-                              <div className="flex-1">
-                                <p className="mt-1 text-gray-300 text-sm truncate">
-                                  {post.user}
-                                </p>
-                                <div className="flex items-center space-x-3 mt-2">
-                                  <h3 className="text-gray-200 text-sm font-medium whitespace-normal">
-                                    {post.question}
-                                  </h3>
-                                </div>
+                        {posts &&
+                          posts.length > 0 &&
+                          posts.map((post) => (
+                            <Link href={`/posts/${post.id}`}>
+                              <li
+                                key={post.id}
+                                className="col-span-1 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200"
+                              >
+                                <div className="w-full flex items-center justify-between p-6 space-x-6">
+                                  <div className="flex-1">
+                                    <div
+                                      id={"question-content-" + post.id}
+                                      className="mt-4 text-xs text-gray-400"
+                                    >
+                                      {moment(post?.createdAt).format(
+                                        "YYYY-MM-DD HH:mm"
+                                      )}
+                                    </div>
+                                    <p className="mt-1 text-gray-300 text-sm truncate">
+                                      {post?.userName || "익명"}
+                                    </p>
+                                    <div className="flex items-center space-x-3 mt-2">
+                                      <h3 className="text-gray-200 text-sm font-medium whitespace-normal">
+                                        {post?.title}
+                                      </h3>
+                                    </div>
 
-                                <div className="mt-4">
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
-                                    {post.category}
-                                  </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
-                                    {post.category}
-                                  </span>
-                                  <span className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2">
-                                    {post.category}
-                                  </span>
+                                    <div className="mt-4">
+                                      {post?.categoryTitles?.map(
+                                        (category, index) => (
+                                          <span
+                                            key={index}
+                                            className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2"
+                                          >
+                                            {category}
+                                          </span>
+                                        )
+                                      )}
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                          </li>
-                        ))}
+                              </li>
+                            </Link>
+                          ))}
                       </ul>
                     </div>
                   </div>

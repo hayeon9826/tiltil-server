@@ -125,13 +125,14 @@ const Page = () => {
               </div>
             </div>
             <div className="flex justify-end pt-8 max-w-prose mx-auto text-lg">
-              <Link href="/posts">
-                <button
-                  className={`ml-3 inline-flex justify-center py-3 px-16 border border-transparent text-sm font-medium  text-white bg-gray-600 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
-                >
-                  목록
-                </button>
-              </Link>
+              <button
+                onClick={() => {
+                  router.back();
+                }}
+                className={`ml-3 inline-flex justify-center py-3 px-16 border border-transparent text-sm font-medium  text-white bg-gray-600 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
+              >
+                목록
+              </button>
             </div>
           </div>
         </div>

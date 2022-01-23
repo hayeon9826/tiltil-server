@@ -53,7 +53,7 @@ const Home = ({ isAuth }: any) => {
 
   const getData = async () => {
     const { data: categoryData } = await postQuery(getCategoriesQuery);
-    const { data: postsData } = await postQuery(getPostsQuery(true));
+    const { data: postsData } = await postQuery(getPostsQuery(true, null));
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
@@ -62,8 +62,7 @@ const Home = ({ isAuth }: any) => {
   };
 
   const getPosts = async () => {
-    const query = getPostsQuery;
-    const { data } = await postQuery(query);
+    const { data } = await postQuery(getPostsQuery(false));
     setUsers(data && data["data"] && data["data"]["posts"]);
   };
 
@@ -100,7 +99,7 @@ const Home = ({ isAuth }: any) => {
                       categories.map((category) => (
                         <a
                           key={category?.title}
-                          href={`/posts?category=${category?.title}`}
+                          href={`/posts?category=${category?.title}&categoryId=${category?.id}`}
                           className="group flex items-center px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-gray-900 hover:bg-gray-50"
                         >
                           <span className="truncate">{category?.title}</span>
