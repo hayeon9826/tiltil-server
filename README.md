@@ -1,3 +1,13 @@
+## 소개
+TIL (Today I learned) 오늘 배운 내용을 짧게 적을 수 있는 게시판입니다.
+
+## 기술 스택
+- Ruby on Rails, GraphQL
+- React, Next.js
+- Postgresql, Tailwind css
+
+## 적용된/적용 중인 기능들
+
 * [x] jwt 로그인
 * [x] 회원가입, 로그인
 * [x] 다크모드 스타일
