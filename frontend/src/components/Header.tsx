@@ -61,7 +61,7 @@ const Header = ({ searchBar = false }) => {
       className={({ open }) =>
         classNames(
           open ? " inset-0 z-40 overflow-y-auto" : "",
-          "bg-white shadow-sm lg:static lg:overflow-y-visible"
+          "bg-gray-800 shadow-sm lg:static lg:overflow-y-visible"
         )
       }
     >
@@ -97,7 +97,7 @@ const Header = ({ searchBar = false }) => {
                         <input
                           id="search"
                           name="search"
-                          className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 sm:text-sm"
+                          className="block w-full bg-gray-900 border border-gray-400 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-300 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 sm:text-sm"
                           placeholder="제목 및 내용 검색"
                           type="search"
                         />
@@ -108,7 +108,7 @@ const Header = ({ searchBar = false }) => {
               </div>
               <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
                 {/* Mobile menu button */}
-                <Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-500">
+                <Popover.Button className="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-500">
                   <span className="sr-only">Open menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -126,7 +126,7 @@ const Header = ({ searchBar = false }) => {
                 </a> */}
                 <a
                   href="#"
-                  className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  className="ml-5 flex-shrink-0  rounded-full p-1 text-gray-400 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                 >
                   <span className="sr-only">View notifications</span>
                   <Link href="/notifications">
@@ -137,7 +137,7 @@ const Header = ({ searchBar = false }) => {
                 {/* Profile dropdown */}
                 <Menu as="div" className="flex-shrink-0 relative ml-5">
                   <div>
-                    <Menu.Button className="bg-white rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                    <Menu.Button className=" rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
@@ -244,13 +244,13 @@ const Header = ({ searchBar = false }) => {
                   />
                 </div>
                 <div className="ml-3">
-                  <div className="text-sm font-medium text-gray-500">
+                  <div className="text-sm font-medium text-gray-200">
                     {currentUser ? currentUser?.email : ""}
                   </div>
                 </div>
                 <button
                   type="button"
-                  className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  className="ml-auto flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -263,14 +263,14 @@ const Header = ({ searchBar = false }) => {
                       <a
                         key="mypage_mobile"
                         href="/users/mypage"
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-200 hover:bg-gray-50 hover:text-gray-900"
                       >
                         마이페이지
                       </a>
                       <Link href="/posts/new">
                         <a
                           key="til"
-                          className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          className="block rounded-md py-2 px-3 text-base font-medium text-gray-200 hover:bg-gray-50 hover:text-gray-900"
                         >
                           TIL 작성하기
                         </a>
@@ -279,7 +279,7 @@ const Header = ({ searchBar = false }) => {
                         key="logout_mobile"
                         onClick={handleLogout}
                         href="#"
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-200 hover:bg-gray-50 hover:text-gray-900"
                       >
                         로그아웃
                       </a>
@@ -289,14 +289,14 @@ const Header = ({ searchBar = false }) => {
                       <a
                         key="login_mobile"
                         href="/users/login"
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-200 hover:bg-gray-50 hover:text-gray-900"
                       >
                         로그인
                       </a>
                       <a
                         key="register_mobile"
                         href="/users/register"
-                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        className="block rounded-md py-2 px-3 text-base font-medium text-gray-200 hover:bg-gray-50 hover:text-gray-900"
                       >
                         회원가입
                       </a>

@@ -75,9 +75,9 @@ const Page = () => {
 
   return (
     <>
-      <div className="min-h-full ">
+      <div className="h-screen bg-gray-900">
         <Header searchBar={false} />
-        <div className="relative py-16 bg-white overflow-hidden">
+        <div className="relative py-16 bg-gray-900 overflow-hidden">
           <div className="relative px-4 sm:px-6 lg:px-8">
             <div className="text-lg max-w-prose mx-auto border-b pb-16">
               <h1>
