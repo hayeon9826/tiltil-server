@@ -40,6 +40,7 @@ export const getPostQuery = (id: any) => `query {
     categoryTitles
     userName
     createdAt
+    categories
   }
 }`;
 

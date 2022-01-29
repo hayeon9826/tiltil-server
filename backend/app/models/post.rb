@@ -11,4 +11,8 @@ class Post < ApplicationRecord
   def user_name
     return self&.user&.name
   end
+
+  def category_options
+    return self.categories.map{|category| {value: category&.id, label: category&.title}}
+  end
 end

@@ -6,6 +6,7 @@ module Types
     field :user_id, String, null: true
     field :category_ids, [Integer], null: true
     field :category_titles, [String], null: true
+    field :categories, [String], null: true
     field :user_name, String, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false

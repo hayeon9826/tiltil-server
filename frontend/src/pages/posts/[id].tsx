@@ -8,6 +8,7 @@ import { useState } from "react";
 import { postProps } from "@interface";
 import { getPostQuery } from "@postsQuery";
 import { postQuery } from "@api";
+import useAuth from "@auth";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import "github-markdown-css";
@@ -17,7 +18,6 @@ import moment from "moment";
 const Page = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
 
   const [post, setPost] = useState<postProps>();
 
@@ -30,6 +30,8 @@ const Page = () => {
   useEffect(() => {
     getPost();
   }, [id]);
+
+  const { currentUser } = useAuth();
 
   const MarkDownStyle = styled.div`
     font-size: 1rem;
@@ -125,6 +127,16 @@ const Page = () => {
               </div>
             </div>
             <div className="flex justify-end pt-8 max-w-prose mx-auto text-lg">
+              {post?.userId === currentUser?.id && (
+                <Link href={`/posts/${post?.id}/edit`}>
+                  <button
+                    className={`ml-3 inline-flex justify-center py-3 px-16 border border-transparent text-sm font-medium  text-white bg-purple-600 hover:bg-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
+                  >
+                    수정
+                  </button>
+                </Link>
+              )}
+
               <button
                 onClick={() => {
                   router.back();
