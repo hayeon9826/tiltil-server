@@ -6,6 +6,7 @@ import Link from "next/link";
 import useAuth from "@auth";
 import { ChatAltIcon, PlusSmIcon } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
+import { getUsersQuery } from "@usersQuery";
 import { API_URL } from "@config";
 import { categoryProps, postProps } from "@interface";
 import moment from "moment";
@@ -14,30 +15,6 @@ const tabs = [
   { name: "인기글", href: "#", current: true },
   { name: "최신글", href: "/posts/recent", current: false },
   { name: "저장됨", href: "/posts/saved", current: false },
-];
-
-const whoToFollow = [
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    href: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  // More people...
-];
-const trendingPosts = [
-  {
-    id: 1,
-    user: {
-      name: "Floyd Miles",
-      imageUrl:
-        "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    body: "What books do you have on your bookshelf just to look smarter than you actually are?",
-    comments: 291,
-  },
-  // More posts...
 ];
 
 function classNames(...classes: string[]) {
@@ -54,17 +31,16 @@ const Home = ({ isAuth }: any) => {
   const getData = async () => {
     const { data: categoryData } = await postQuery(getCategoriesQuery);
     const { data: postsData } = await postQuery(getPostsQuery(true, null));
+    const { data: usersData } = await postQuery(getUsersQuery(true));
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
     await setPosts(postsData && postsData?.data && postsData?.data?.posts);
-    console.log(postsData);
+
+    await setUsers(usersData && usersData?.data && usersData?.data?.users);
   };
 
-  const getPosts = async () => {
-    const { data } = await postQuery(getPostsQuery(false));
-    setUsers(data && data["data"] && data["data"]["posts"]);
-  };
+  console.log(users, "@#user");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -435,31 +411,35 @@ const Home = ({ isAuth }: any) => {
                         id="who-to-follow-heading"
                         className="text-base font-medium text-gray-200"
                       >
-                        Who to follow
+                        사용자 추천
                       </h2>
                       <div className="mt-6 flow-root">
                         <ul
                           role="list"
                           className="-my-4 divide-y divide-gray-200"
                         >
-                          {whoToFollow.map((user) => (
+                          {users.map((user) => (
                             <li
-                              key={user.handle}
+                              key={user.id}
                               className="flex items-center py-4 space-x-3"
                             >
                               <div className="flex-shrink-0">
                                 <img
                                   className="h-8 w-8 rounded-full"
-                                  src={user.imageUrl}
+                                  src={`${API_URL}/image/profile.png`}
                                   alt=""
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
                                 <p className="text-sm font-medium text-gray-200">
-                                  <a href={user.href}>{user.name}</a>
+                                  <a href={`/posts?userId=${user.id}`}>
+                                    {user?.name || `사용자 #${user.id}`}
+                                  </a>
                                 </p>
                                 <p className="text-sm text-gray-300">
-                                  <a href={user.href}>{"@" + user.handle}</a>
+                                  <a href={`/posts?userId=${user.id}`}>
+                                    {"@" + user?.email}
+                                  </a>
                                 </p>
                               </div>
                               <div className="flex-shrink-0">
@@ -471,7 +451,7 @@ const Home = ({ isAuth }: any) => {
                                     className="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
                                     aria-hidden="true"
                                   />
-                                  <span>Follow</span>
+                                  <span>팔로우</span>
                                 </button>
                               </div>
                             </li>
@@ -480,23 +460,23 @@ const Home = ({ isAuth }: any) => {
                       </div>
                       <div className="mt-6">
                         <a
-                          href="#"
+                          href="/users"
                           className="w-full block text-center px-4 py-2 border border-gray-300  text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                         >
-                          View all
+                          더보기
                         </a>
                       </div>
                     </div>
                   </div>
                 </section>
-                <section aria-labelledby="trending-heading">
+                {/* <section aria-labelledby="trending-heading">
                   <div className=" rounded-sm bg-gray-900 border border-gray-500">
                     <div className="p-6">
                       <h2
                         id="trending-heading"
                         className="text-base font-medium text-gray-200"
                       >
-                        Trending
+                        게시글 추천
                       </h2>
                       <div className="mt-6 flow-root">
                         <ul
@@ -547,7 +527,7 @@ const Home = ({ isAuth }: any) => {
                       </div>
                     </div>
                   </div>
-                </section>
+                </section> */}
               </div>
             </aside>
           </div>

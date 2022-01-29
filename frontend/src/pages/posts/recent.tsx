@@ -4,65 +4,18 @@ import Header from "@components/Header";
 import { User } from "@interface";
 import Link from "next/link";
 import { getUsersQuery } from "@usersQuery";
-import { Fragment } from "react";
 import useAuth from "@auth";
-import { Menu, Transition } from "@headlessui/react";
-import {
-  ChatAltIcon,
-  CodeIcon,
-  DotsVerticalIcon,
-  EyeIcon,
-  FlagIcon,
-  PlusSmIcon,
-  ShareIcon,
-  StarIcon,
-  ThumbUpIcon,
-} from "@heroicons/react/solid";
+import { ChatAltIcon, PlusSmIcon } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { categoryProps, postProps } from "@interface";
 import { API_URL } from "@config";
 
-const categories = [
-  { name: "Ruby on Rails", href: "/posts" },
-  { name: "Database", href: "/posts" },
-  { name: "GraphQL", href: "/posts" },
-  { name: "Computer Science", href: "/posts" },
-  { name: "AWS", href: "/posts" },
-  { name: "Operating Systems", href: "/posts" },
-  { name: "Network", href: "/posts" },
-  { name: "Algorithm", href: "/posts" },
-  { name: "Data Structures", href: "/posts" },
-  { name: "React.js", href: "/posts" },
-  { name: "Javascript", href: "/posts" },
-];
 const tabs = [
   { name: "인기글", href: "/", current: false },
   { name: "최신글", href: "#", current: true },
   { name: "저장됨", href: "/posts/saved", current: false },
 ];
-const questions = [
-  {
-    id: "81614",
-    likes: "29",
-    replies: "11",
-    views: "2.7k",
-    author: {
-      name: "Dries Vincent",
-      imageUrl:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      href: "#",
-    },
-    date: "December 9 at 11:43 AM",
-    datetime: "2020-12-09T11:43:00",
-    href: "#",
-    title: "What would you have done differently if you ran Jurassic Park?",
-    body: `
-      <p>Jurassic Park was an incredible idea and a magnificent feat of engineering, but poor protocols and a disregard for human safety killed what could have otherwise been one of the best businesses of our generation.</p>
-      <p>Ultimately, I think that if you wanted to run the park successfully and keep visitors safe, the most important thing to prioritize would be&hellip;</p>
-    `,
-  },
-  // More questions...
-];
+
 const whoToFollow = [
   {
     name: "Leonard Krasner",
@@ -101,17 +54,12 @@ const RecentPosts = ({ isAuth }: any) => {
   const getData = async () => {
     const { data: categoryData } = await postQuery(getCategoriesQuery);
     const { data: postsData } = await postQuery(getPostsQuery(false, null));
+    const { data: usersData } = await postQuery(getUsersQuery(true));
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
     await setPosts(postsData && postsData?.data && postsData?.data?.posts);
-    console.log(postsData);
-  };
-
-  const requestTest = async () => {
-    const query = getUsersQuery;
-    const { data } = await postQuery(query);
-    setUsers(data && data["data"] && data["data"]["users"]);
+    await setUsers(usersData && usersData?.data && usersData?.data?.users);
   };
 
   useEffect(() => {
@@ -288,37 +236,41 @@ const RecentPosts = ({ isAuth }: any) => {
             <aside className="hidden xl:block xl:col-span-4">
               <div className="sticky top-4 space-y-4">
                 <section aria-labelledby="who-to-follow-heading">
-                  <div className=" rounded-sm bg-gray-900 border border-gray-500">
+                  <div className="rounded-sm  bg-gray-900 border border-gray-500">
                     <div className="p-6">
                       <h2
                         id="who-to-follow-heading"
                         className="text-base font-medium text-gray-200"
                       >
-                        Who to follow
+                        사용자 추천
                       </h2>
                       <div className="mt-6 flow-root">
                         <ul
                           role="list"
                           className="-my-4 divide-y divide-gray-200"
                         >
-                          {whoToFollow.map((user) => (
+                          {users.map((user) => (
                             <li
-                              key={user.handle}
+                              key={user.id}
                               className="flex items-center py-4 space-x-3"
                             >
                               <div className="flex-shrink-0">
                                 <img
                                   className="h-8 w-8 rounded-full"
-                                  src={user.imageUrl}
+                                  src={`${API_URL}/image/profile.png`}
                                   alt=""
                                 />
                               </div>
                               <div className="min-w-0 flex-1">
                                 <p className="text-sm font-medium text-gray-200">
-                                  <a href={user.href}>{user.name}</a>
+                                  <a href={`/posts?userId=${user.id}`}>
+                                    {user?.name || `사용자 #${user.id}`}
+                                  </a>
                                 </p>
                                 <p className="text-sm text-gray-300">
-                                  <a href={user.href}>{"@" + user.handle}</a>
+                                  <a href={`/posts?userId=${user.id}`}>
+                                    {"@" + user?.email}
+                                  </a>
                                 </p>
                               </div>
                               <div className="flex-shrink-0">
@@ -327,10 +279,10 @@ const RecentPosts = ({ isAuth }: any) => {
                                   className="inline-flex items-center px-3 py-0.5 rounded-full bg-rose-50 text-sm font-medium text-gray-400 hover:bg-rose-100"
                                 >
                                   <PlusSmIcon
-                                    className="-ml-1 mr-0.5 h-5 w-5 text-gray-400"
+                                    className="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
                                     aria-hidden="true"
                                   />
-                                  <span>Follow</span>
+                                  <span>팔로우</span>
                                 </button>
                               </div>
                             </li>
@@ -339,69 +291,10 @@ const RecentPosts = ({ isAuth }: any) => {
                       </div>
                       <div className="mt-6">
                         <a
-                          href="#"
+                          href="/users"
                           className="w-full block text-center px-4 py-2 border border-gray-300  text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                         >
-                          View all
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section aria-labelledby="trending-heading">
-                  <div className="rounded-sm bg-gray-900 border border-gray-500">
-                    <div className="p-6">
-                      <h2
-                        id="trending-heading"
-                        className="text-base font-medium text-gray-200"
-                      >
-                        Trending
-                      </h2>
-                      <div className="mt-6 flow-root">
-                        <ul
-                          role="list"
-                          className="-my-4 divide-y divide-gray-200"
-                        >
-                          {trendingPosts.map((post) => (
-                            <li key={post.id} className="flex py-4 space-x-3">
-                              <div className="flex-shrink-0">
-                                <img
-                                  className="h-8 w-8 rounded-full"
-                                  src={post.user.imageUrl}
-                                  alt={post.user.name}
-                                />
-                              </div>
-                              <div className="min-w-0 flex-1">
-                                <p className="text-sm text-gray-200">
-                                  {post.body}
-                                </p>
-                                <div className="mt-2 flex">
-                                  <span className="inline-flex items-center text-sm">
-                                    <button
-                                      type="button"
-                                      className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
-                                    >
-                                      <ChatAltIcon
-                                        className="h-5 w-5"
-                                        aria-hidden="true"
-                                      />
-                                      <span className="font-medium text-gray-200">
-                                        {post.comments}
-                                      </span>
-                                    </button>
-                                  </span>
-                                </div>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="mt-6">
-                        <a
-                          href="#"
-                          className="w-full block text-center px-4 py-2 border border-gray-300  text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-                        >
-                          View all
+                          더보기
                         </a>
                       </div>
                     </div>

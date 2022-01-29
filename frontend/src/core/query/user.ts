@@ -1,9 +1,10 @@
 // user model queries
 
-export const getUsersQuery = `query {
-  users{
+export const getUsersQuery = (random?: boolean | null) => `query {
+  users(random: ${random}){
     id
     email
+    name
   }
 }`;
 
