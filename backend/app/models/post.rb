@@ -8,6 +8,10 @@ class Post < ApplicationRecord
     return self.categories.pluck(:title)
   end
 
+  # def categories
+  #   return self.categories.map{|cat| {label: cat.title, value: cat.id}}
+  # end
+
   def user_name
     return self&.user&.name
   end
