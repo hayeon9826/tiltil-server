@@ -1,5 +1,5 @@
-export const getCategoriesQuery = `query {
-  categories{
+export const getCategoriesQuery = (postId?: any | null) => `query {
+  categories(postId: ${postId}){
     id
     title
   }
@@ -40,7 +40,7 @@ export const getPostQuery = (id: any) => `query {
     categoryTitles
     userName
     createdAt
-    categories
+    categoryIds
   }
 }`;
 
@@ -50,6 +50,17 @@ export const CreatePostQuery = (
   category: number[]
 ) => `mutation {
   createPost(title: "${title}", content: "${content}", category: [${category}]) {
+    message
+  }
+}`;
+
+export const UpdatePostQuery = (
+  id: string,
+  title: string,
+  content: string,
+  category: number[]
+) => `mutation {
+  updatePost(id: ${id}, title: "${title}", content: "${content}", category: [${category}]) {
     message
   }
 }`;

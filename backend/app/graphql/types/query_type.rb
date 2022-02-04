@@ -12,7 +12,9 @@ module Types
       argument :random, Boolean, required: false
     end
 
-    field :categories, [CategoryType], null: false
+    field :categories, [CategoryType], null: false do 
+      argument :postId, Integer, required: false
+    end
 
     def posts(**args)
       if args[:id]
@@ -28,8 +30,13 @@ module Types
       end
     end
 
-    def categories
-      Category.all
+    def categories(**args)
+      if args[:postId]
+        Post.find_by_id(args[:postId])&.categories
+      else
+        Category.all
+      end
+      
     end
 
    

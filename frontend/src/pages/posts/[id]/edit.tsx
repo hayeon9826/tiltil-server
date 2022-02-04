@@ -7,7 +7,7 @@ import { TuiEditorWithForwardedProps } from "../TuiEditorWrapper";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { CreatePostQuery, getCategoriesQuery, getPostQuery } from "@postsQuery";
+import { UpdatePostQuery, getCategoriesQuery, getPostQuery } from "@postsQuery";
 import { postQuery } from "@api";
 import { postProps } from "@interface";
 import toast from "react-simple-toasts";
@@ -52,8 +52,10 @@ export default function PostEdit() {
     formState: { errors },
   } = useForm();
 
+  const [postCategories, setPostCategories] = useState<any>([]);
+
   const router = useRouter();
-  const [post, setPost] = useState<postProps>();
+  const [post, setPost] = useState<any>();
 
   const { id } = router.query;
 
@@ -63,7 +65,7 @@ export default function PostEdit() {
   };
 
   const getCategories = async () => {
-    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    const { data: categoryData } = await postQuery(getCategoriesQuery(null));
     await setCategories(
       categoryData &&
         categoryData?.data &&
@@ -92,12 +94,24 @@ export default function PostEdit() {
   }, [id]);
 
   useEffect(() => {
-    setValue("content", post?.content);
-    setValue("title", post?.title);
-    getCategories();
+    if (post) {
+      setValue("content", post?.content);
+      setValue("title", post?.title);
+      getCategories();
+    }
   }, [post]);
 
-  console.log(post);
+  // console.log(postCategories);
+
+  useEffect(() => {
+    setPostCategories(
+      categories.filter((category) =>
+        post?.categoryIds.includes(category?.value)
+      )
+    );
+  }, [categories]);
+
+  console.log(postCategories, "@@@postCategories");
 
   return (
     <div className="w-full min-h-full bg-gray-900">
@@ -113,7 +127,8 @@ export default function PostEdit() {
             // const editorHtml = editorInstance?.getHtml();
             const editorMarkdown = editorInstance?.getMarkdown();
             try {
-              const query = CreatePostQuery(
+              const query = UpdatePostQuery(
+                post.id,
                 data.title,
                 editorMarkdown,
                 data.category.map((cat) => cat.value)
@@ -121,14 +136,16 @@ export default function PostEdit() {
               const response = await postQuery(query);
 
               if (
-                response?.data?.data?.createPost &&
-                response?.data?.data?.createPost?.message
+                response?.data?.data?.updatePost &&
+                response?.data?.data?.updatePost?.message
               ) {
-                await toast(response?.data?.data?.createPost?.message);
+                await toast(response?.data?.data?.updatePost?.message);
                 await router.back();
+                console.log(response);
               } else {
+                console.log(response);
                 await toast(
-                  response?.data?.data?.createPost?.error ||
+                  response?.data?.data?.updatePost?.error ||
                     "문제가 발생했습니다. 다시 시도해주세요."
                 );
                 // await router.back();
@@ -177,21 +194,23 @@ export default function PostEdit() {
                   >
                     답변
                   </label>
-                  <div className="mt-1 bg-white">
-                    <EditorWithForwardedRef
-                      placeholder="플래시 카드를 작성해주세요 :)"
-                      previewStyle="vertical"
-                      ref={editorRef}
-                      height="1000px"
-                      onChange={(e) => {
-                        setValue("content", e);
-                      }}
-                      initialValue={post?.content}
-                      initialEditType="markdown"
-                      useCommandShortcut={true}
-                      usageStatistics={false}
-                    />
-                  </div>
+                  {post && post?.content && (
+                    <div className="mt-1 bg-white">
+                      <EditorWithForwardedRef
+                        placeholder="플래시 카드를 작성해주세요 :)"
+                        previewStyle="vertical"
+                        ref={editorRef}
+                        height="1000px"
+                        onChange={(e) => {
+                          setValue("content", e);
+                        }}
+                        initialValue={post?.content}
+                        initialEditType="markdown"
+                        useCommandShortcut={true}
+                        usageStatistics={false}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="sm:col-span-6">
@@ -201,14 +220,16 @@ export default function PostEdit() {
                   >
                     카테고리
                   </label>
-                  <div className="mt-1">
-                    <Select
-                      options={categories}
-                      defaultValue={post?.categories}
-                      isMulti
-                      onChange={(e) => setValue("category", e)}
-                    />
-                  </div>
+                  {postCategories && postCategories?.length > 0 && (
+                    <div className="mt-1">
+                      <Select
+                        options={categories}
+                        defaultValue={postCategories}
+                        isMulti
+                        onChange={(e) => setValue("category", e)}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* <div className="sm:col-span-6">

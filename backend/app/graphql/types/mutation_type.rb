@@ -6,6 +6,7 @@ module Types
     field :log_out_user, mutation: Mutations::LogOutUser
     field :update_user, mutation: Mutations::UpdateUser
     field :create_post, mutation: Mutations::CreatePost
+    field :update_post, mutation: Mutations::UpdatePost
     # field :create_link, mutation: Mutations::CreateLink
 
   end
