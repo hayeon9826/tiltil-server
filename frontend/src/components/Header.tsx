@@ -97,7 +97,7 @@ const Header = ({ searchBar = false }) => {
                         <input
                           id="search"
                           name="search"
-                          className="block w-full bg-gray-900 border border-gray-400 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-300 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 sm:text-sm"
+                          className="block w-full bg-gray-900 border border-gray-400 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-300 focus:outline-none focus:text-white focus:placeholder-gray-400 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 sm:text-sm"
                           placeholder="제목 및 내용 검색"
                           type="search"
                         />
@@ -117,6 +117,7 @@ const Header = ({ searchBar = false }) => {
                   )}
                 </Popover.Button>
               </div>
+
               <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
                 {/* <a
                   href="#"
@@ -124,15 +125,17 @@ const Header = ({ searchBar = false }) => {
                 >
                   Go Premium
                 </a> */}
-                <a
-                  href="#"
-                  className="ml-5 flex-shrink-0  rounded-full p-1 text-gray-400 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <Link href="/notifications">
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </Link>
-                </a>
+                {isAuthenticated && (
+                  <a
+                    href="#"
+                    className="ml-5 flex-shrink-0  rounded-full p-1 text-gray-400 hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                  >
+                    <span className="sr-only">View notifications</span>
+                    <Link href="/notifications">
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </Link>
+                  </a>
+                )}
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="flex-shrink-0 relative ml-5">
@@ -225,11 +228,13 @@ const Header = ({ searchBar = false }) => {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                <Link href="/posts/new">
-                  <a className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                    TIL 작성하기
-                  </a>
-                </Link>
+                {isAuthenticated && (
+                  <Link href="/posts/new">
+                    <a className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                      TIL 작성하기
+                    </a>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

@@ -22,14 +22,16 @@ TIL (Today I learned) 오늘 배운 내용을 짧게 적을 수 있는 게시판
 - [x] 우측 sidebar 게시글
 - [x] 우측 sidebar 사용자
 
+- [x] Graphql 폴더 정리
+- [x] 게시글 수정
+
 #### 적용 예정
 
-- [ ] Graphql 폴더 정리
 - [ ] Refresh API 작업
 
 - [ ] 검색 기능
 - [ ] 좋아요 기능
-- [x] 게시글 수정
+
 - [ ] 게시글 삭제
 
 - [ ] 이미지 업로드
