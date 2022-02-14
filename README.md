@@ -4,9 +4,9 @@ TIL (Today I learned) 오늘 배운 내용을 짧게 적을 수 있는 게시판
 
 ## 기술 스택
 
-- Ruby on Rails, GraphQL
-- React, Next.js
-- Postgresql, Tailwind css
+- 백엔드: Ruby on Rails, GraphQL
+- 프론트엔드: React, Next.js
+- 기타: Postgresql, Tailwind css
 
 ## 적용된/적용 중인 기능들
 
