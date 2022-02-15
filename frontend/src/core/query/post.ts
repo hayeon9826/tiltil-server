@@ -65,7 +65,7 @@ export const UpdatePostQuery = (
   }
 }`;
 
-export const DeletePostQuery = (id: string) => `mutation {
+export const DeletePostQuery = (id: any) => `mutation {
   deletePost(id: ${id}) {
     message
   }

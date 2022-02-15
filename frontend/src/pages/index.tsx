@@ -72,7 +72,8 @@ const Home = ({ isAuth }: any) => {
                     aria-labelledby="communities-headline"
                   >
                     {categories &&
-                      categories.map((category) => (
+                      categories?.length > 0 &&
+                      categories?.map((category) => (
                         <a
                           key={category?.title}
                           href={`/posts?category=${category?.title}&categoryId=${category?.id}`}

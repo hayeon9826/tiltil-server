@@ -138,15 +138,17 @@ export default function PostIndex() {
                     className="mt-3 space-y-2"
                     aria-labelledby="communities-headline"
                   >
-                    {categories.map((category) => (
-                      <a
-                        key={category?.title}
-                        href={`/posts?category=${category?.title}&categoryId=${category?.id}`}
-                        className="group flex items-center px-3 py-2 text-sm font-medium text-gray-200 rounded-md hover:text-gray-300 hover:bg-gray-50"
-                      >
-                        <span className="truncate">{category?.title}</span>
-                      </a>
-                    ))}
+                    {categories &&
+                      categories?.length > 0 &&
+                      categories?.map((category) => (
+                        <a
+                          key={category?.title}
+                          href={`/posts?category=${category?.title}&categoryId=${category?.id}`}
+                          className="group flex items-center px-3 py-2 text-sm font-medium text-gray-200 rounded-md hover:text-gray-300 hover:bg-gray-50"
+                        >
+                          <span className="truncate">{category?.title}</span>
+                        </a>
+                      ))}
                   </div>
                 </div>
               </nav>

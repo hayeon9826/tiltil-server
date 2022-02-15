@@ -14,6 +14,7 @@ import remarkGfm from "remark-gfm";
 import "github-markdown-css";
 import styled from "@emotion/styled";
 import moment from "moment";
+import toast from "react-simple-toasts";
 
 const Page = () => {
   const router = useRouter();
@@ -110,8 +111,16 @@ const Page = () => {
                     className={`text-white text-xs underline text-right p-2`}
                   >
                     <a
-                      onClick={() => {
-                        confirm("게시글을 삭제하시겠습니까?");
+                      onClick={async () => {
+                        try {
+                          if (confirm("게시글을 삭제하시겠습니까?")) {
+                            const result = await postQuery(DeletePostQuery(id));
+                            console.log(result);
+                            router.replace("/");
+                          }
+                        } catch (e) {
+                          console.log(e);
+                        }
                       }}
                     >
                       삭제
