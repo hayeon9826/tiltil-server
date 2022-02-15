@@ -64,3 +64,9 @@ export const UpdatePostQuery = (
     message
   }
 }`;
+
+export const DeletePostQuery = (id: string) => `mutation {
+  deletePost(id: ${id}) {
+    message
+  }
+}`;

@@ -6,7 +6,7 @@ import Link from "next/link";
 import Header from "@components/Header";
 import { useState } from "react";
 import { postProps } from "@interface";
-import { getPostQuery } from "@postsQuery";
+import { getPostQuery, DeletePostQuery } from "@postsQuery";
 import { postQuery } from "@api";
 import useAuth from "@auth";
 import ReactMarkdown from "react-markdown";
@@ -104,6 +104,21 @@ const Page = () => {
                   {moment(post?.createdAt).format("YYYY-MM-DD HH:mm")}
                 </p>
               </div>
+              {currentUser && post?.userId === currentUser?.id && (
+                <>
+                  <div
+                    className={`text-white text-xs underline text-right p-2`}
+                  >
+                    <a
+                      onClick={() => {
+                        confirm("게시글을 삭제하시겠습니까?");
+                      }}
+                    >
+                      삭제
+                    </a>
+                  </div>
+                </>
+              )}
               {/* <div
                 className={`whitespace-pre-line text-xs pt-8  ${
                   post?.content ? "text-gray-200" : "text-gray-400"
@@ -129,13 +144,15 @@ const Page = () => {
             </div>
             <div className="flex justify-end pt-8 max-w-prose mx-auto text-lg">
               {currentUser && post?.userId === currentUser?.id && (
-                <Link href={`/posts/${post?.id}/edit`}>
-                  <button
-                    className={`ml-3 inline-flex justify-center py-3 px-16 border border-transparent text-sm font-medium  text-white bg-purple-600 hover:bg-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
-                  >
-                    수정
-                  </button>
-                </Link>
+                <>
+                  <Link href={`/posts/${post?.id}/edit`}>
+                    <button
+                      className={`ml-3 inline-flex justify-center py-3 px-16 border border-transparent text-sm font-medium  text-white bg-purple-600 hover:bg-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500`}
+                    >
+                      수정
+                    </button>
+                  </Link>
+                </>
               )}
 
               <button
