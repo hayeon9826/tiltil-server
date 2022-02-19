@@ -5,7 +5,7 @@ import { User } from "@interface";
 import Link from "next/link";
 import { getUsersQuery } from "@usersQuery";
 import useAuth from "@auth";
-import { ChatAltIcon, PlusSmIcon } from "@heroicons/react/solid";
+import { PlusSmIcon } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { categoryProps, postProps } from "@interface";
 import { API_URL } from "@config";
@@ -14,30 +14,6 @@ const tabs = [
   { name: "인기글", href: "/", current: false },
   { name: "최신글", href: "#", current: true },
   { name: "저장됨", href: "/posts/saved", current: false },
-];
-
-const whoToFollow = [
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    href: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  // More people...
-];
-const trendingPosts = [
-  {
-    id: 1,
-    user: {
-      name: "Floyd Miles",
-      imageUrl:
-        "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-    body: "What books do you have on your bookshelf just to look smarter than you actually are?",
-    comments: 291,
-  },
-  // More posts...
 ];
 
 function classNames(...classes: string[]) {
@@ -52,7 +28,7 @@ const RecentPosts = ({ isAuth }: any) => {
   const [posts, setPosts] = useState<postProps[]>([]);
 
   const getData = async () => {
-    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    const { data: categoryData } = await postQuery(getCategoriesQuery(null));
     const { data: postsData } = await postQuery(getPostsQuery(false, null));
     const { data: usersData } = await postQuery(getUsersQuery(true));
     await setCategories(
@@ -92,7 +68,6 @@ const RecentPosts = ({ isAuth }: any) => {
                     aria-labelledby="communities-headline"
                   >
                     {categories &&
-                      categories?.length > 0 &&
                       categories?.map((category) => (
                         <a
                           key={category.title}

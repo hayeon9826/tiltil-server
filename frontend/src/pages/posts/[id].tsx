@@ -116,6 +116,10 @@ const Page = () => {
                           if (confirm("게시글을 삭제하시겠습니까?")) {
                             const result = await postQuery(DeletePostQuery(id));
                             console.log(result);
+                            toast(
+                              result?.data?.data?.deletePost?.message ||
+                                "다시 시도해주세요."
+                            );
                             router.replace("/");
                           }
                         } catch (e) {

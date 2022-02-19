@@ -52,7 +52,7 @@ export default function PostNew() {
   } = useForm();
 
   const getCategories = async () => {
-    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    const { data: categoryData } = await postQuery(getCategoriesQuery(null));
     await setCategories(
       categoryData &&
         categoryData?.data &&

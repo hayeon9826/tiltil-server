@@ -34,6 +34,7 @@ const categories = [
   { name: "React.js", href: "/posts" },
   { name: "Javascript", href: "/posts" },
 ];
+
 const tabs = [
   { name: "인기글", href: "/", current: false },
   { name: "최신글", href: "/posts/recent", current: false },
@@ -106,6 +107,8 @@ const SavedPosts = ({ isAuth }: any) => {
     }
   });
 
+  console.log(categories);
+
   return (
     <>
       <div className="min-h-screen bg-gray-900">
@@ -129,7 +132,6 @@ const SavedPosts = ({ isAuth }: any) => {
                     aria-labelledby="communities-headline"
                   >
                     {categories &&
-                      categories?.length > 0 &&
                       categories?.map((category) => (
                         <a
                           key={category.name}

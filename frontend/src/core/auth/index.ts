@@ -19,6 +19,8 @@ const useAuth = () => {
 
   const [currentUser, setCurrentUser] = useRecoilState<AuthState>(authSelector);
 
+  console.log(currentUser);
+
   const authenticateUser = ({ token, csrf }: Token) => {
     saveToken({ token, csrf });
     setCurrentUser({

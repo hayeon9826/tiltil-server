@@ -14,79 +14,6 @@ const tabs = [
   { name: "저장한 TIL", href: "/users/likes", current: false },
 ];
 
-const posts = [
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "1",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "2",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "3",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "4",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "5",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "11",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "12",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "13",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "14",
-  },
-  {
-    question:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-    user: "__khy",
-    category: "React",
-    id: "15",
-  },
-];
-
 export default function PostIndex() {
   const [categories, setCategories] = useState<categoryProps[]>([]);
   const [posts, setPosts] = useState<postProps[]>([]);
@@ -98,7 +25,7 @@ export default function PostIndex() {
   console.log(category, categoryId);
 
   const getData = async () => {
-    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    const { data: categoryData } = await postQuery(getCategoriesQuery(null));
     const { data: postsData } = await postQuery(
       getPostsQuery(false, categoryId)
     );
@@ -107,7 +34,6 @@ export default function PostIndex() {
     );
     await setPosts(postsData && postsData?.data && postsData?.data?.posts);
   };
-  console.log(posts);
 
   useEffect(() => {
     getData();
@@ -139,7 +65,6 @@ export default function PostIndex() {
                     aria-labelledby="communities-headline"
                   >
                     {categories &&
-                      categories?.length > 0 &&
                       categories?.map((category) => (
                         <a
                           key={category?.title}

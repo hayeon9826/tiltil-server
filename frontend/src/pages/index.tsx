@@ -29,7 +29,7 @@ const Home = ({ isAuth }: any) => {
   const [posts, setPosts] = useState<postProps[]>([]);
 
   const getData = async () => {
-    const { data: categoryData } = await postQuery(getCategoriesQuery);
+    const { data: categoryData } = await postQuery(getCategoriesQuery(null));
     const { data: postsData } = await postQuery(getPostsQuery(true, null));
     const { data: usersData } = await postQuery(getUsersQuery(true));
     await setCategories(
@@ -39,8 +39,6 @@ const Home = ({ isAuth }: any) => {
 
     await setUsers(usersData && usersData?.data && usersData?.data?.users);
   };
-
-  console.log(users, "@#user");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -72,7 +70,6 @@ const Home = ({ isAuth }: any) => {
                     aria-labelledby="communities-headline"
                   >
                     {categories &&
-                      categories?.length > 0 &&
                       categories?.map((category) => (
                         <a
                           key={category?.title}
