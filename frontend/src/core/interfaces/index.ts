@@ -56,10 +56,12 @@ interface Item {
 /** 리터럴 혹은 불변 객체 */
 export const TOKEN_KEY = `${packageJson.name}_TOKEN`;
 export const CSRF_KEY = `${packageJson.name}_CSRF`;
+export const REFRESH_KEY = `${packageJson.name}_REFRESH`;
 
 export interface Token {
   token: null | string;
   csrf: null | string;
+  refresh: null | string;
 }
 
 export interface AuthState extends Token {

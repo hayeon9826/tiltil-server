@@ -9,6 +9,7 @@ module Mutations
 
       # return type from the mutation
       field :token, String, null: true
+      field :refresh, String, null: true
       field :csrf, String, null: true
       field :errors, String, null: true
 
@@ -20,11 +21,11 @@ module Mutations
           user = User.new(email: attributes[:email], password: attributes[:password], password_confirmation: attributes[:passwordConfirmation])
 
           if user.save
-            payload = { user_id: user.id, email: user.email, name: user.name, refresh_by_access_allowed: true }
-            session =  JWTSessions::Session.new(payload: payload)
+            payload = { user_id: user.id, email: user.email, name: user.name, refresh_by_access_allowed: true, access_exp: 1.hour.from_now.to_i, refresh_exp: 2.weeks.from_now.to_i }
+            session =  JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
             tokens = session.login
 
-            { token: tokens[:access], csrf: tokens[:csrf], errors: "성공적으로 가입이 되었습니다." }
+            { token: tokens[:access], csrf: tokens[:csrf], errors: "성공적으로 가입이 되었습니다.", refresh: tokens[:refresh] }
           else
             { errors: "비밀번호를 다시 확인해주세요." }
           end

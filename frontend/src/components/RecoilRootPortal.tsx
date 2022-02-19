@@ -11,8 +11,9 @@ import { getCurrentUserFromToken } from "@utils";
 import { Token } from "@interface";
 import { authState } from "@atoms";
 
-export let getRecoilRootState: <T>(recoilValue: RecoilValue<T>) => Loadable<T> =
-  () => null as any;
+export let getRecoilRootState: <T>(
+  recoilValue: RecoilValue<T>
+) => Loadable<T> = () => null as any;
 
 export let setRecoilRootState: <T>(
   recoilState: RecoilState<T>,
@@ -34,15 +35,25 @@ export function RecoilRootPortal() {
 
 export const unAuthenticateUserThroughPortal = () => {
   destroyToken();
-  setRecoilRootState(authState, { token: null, csrf: null, currentUser: null });
+  setRecoilRootState(authState, {
+    token: null,
+    csrf: null,
+    currentUser: null,
+    refresh: null,
+  });
 };
 
-export const authenticateUserThroughPortal = ({ token, csrf }: Token) => {
+export const authenticateUserThroughPortal = ({
+  token,
+  csrf,
+  refresh,
+}: Token) => {
   try {
-    saveToken({ token, csrf });
+    saveToken({ token, csrf, refresh });
     setRecoilRootState(authState, {
       token,
       csrf,
+      refresh,
       currentUser: getCurrentUserFromToken(token),
     });
   } catch (err) {

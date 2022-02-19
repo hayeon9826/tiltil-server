@@ -5,6 +5,7 @@ const initialAuthState: AuthState = {
   token: null,
   csrf: null,
   currentUser: null,
+  refresh: null,
 };
 
 export const authState = atom({

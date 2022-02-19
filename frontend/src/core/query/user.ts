@@ -17,6 +17,7 @@ export const getUserQuery = (id: number) => `query {
 
 export const SignInUserQuery = (email: string, password: string) => `mutation {
   signInUser(email: "${email}", password: "${password}") {
+    refresh
     token
     csrf
     errors
@@ -29,6 +30,7 @@ export const SignUpUserQuery = (
   password_confirmation: string
 ) => `mutation {
   signUpUser(email: "${email}", password: "${password}", passwordConfirmation: "${password_confirmation}") {
+    refresh
     token
     csrf
     errors
@@ -37,6 +39,7 @@ export const SignUpUserQuery = (
 
 export const UpdateUserQuery = (email: string, name: string) => `mutation {
   updateUser(email: "${email}", name: "${name}") {
+    refresh
     token
     csrf
     errors

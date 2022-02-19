@@ -25,7 +25,6 @@ const Header = ({ searchBar = false }) => {
 
   useEffect(() => {
     (async function checkToken() {
-      // console.log(getToken, "@@@getToken header");
       try {
         // TODO Check Token 구현 필요
 

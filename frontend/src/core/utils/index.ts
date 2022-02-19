@@ -21,7 +21,12 @@ export const getCurrentUserFromToken = (token: string | null) => {
   return user;
 };
 
-export const checkTokenExpired = (token: string): boolean => {
+export const checkTokenValid = (token: string): boolean => {
   const { exp } = jwt_decode(token) as JwtPayload;
-  return !(Date.now() <= exp * 1000);
+  return !!(Date.now() <= exp * 1000);
+};
+
+export const checkRefreshValid = (refresh: string): boolean => {
+  const { exp } = jwt_decode(refresh) as JwtPayload;
+  return !!(Date.now() <= exp * 1000);
 };

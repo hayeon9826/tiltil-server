@@ -65,14 +65,18 @@ export default function PostIndex() {
                     aria-labelledby="communities-headline"
                   >
                     {categories &&
-                      categories?.map((category) => (
-                        <a
-                          key={category?.title}
+                      categories?.map((category, index) => (
+                        <Link
+                          key={index}
                           href={`/posts?category=${category?.title}&categoryId=${category?.id}`}
-                          className="group flex items-center px-3 py-2 text-sm font-medium text-gray-200 rounded-md hover:text-gray-300 hover:bg-gray-50"
                         >
-                          <span className="truncate">{category?.title}</span>
-                        </a>
+                          <a
+                            key={category?.title}
+                            className="group flex items-center px-3 py-2 text-sm font-medium text-gray-200 rounded-md hover:text-gray-300 hover:bg-gray-50"
+                          >
+                            <span className="truncate">{category?.title}</span>
+                          </a>
+                        </Link>
                       ))}
                   </div>
                 </div>
@@ -92,8 +96,7 @@ export default function PostIndex() {
                         role="list"
                         className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8"
                       >
-                        {posts &&
-                          posts.length > 0 &&
+                        {posts && posts.length > 0 ? (
                           posts.map((post) => (
                             <Link href={`/posts/${post.id}`}>
                               <li
@@ -135,7 +138,20 @@ export default function PostIndex() {
                                 </div>
                               </li>
                             </Link>
-                          ))}
+                          ))
+                        ) : (
+                          <li className="lg:col-span-3 sm:col-span-2 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200">
+                            <div className="w-full flex items-center justify-between p-6 space-x-6">
+                              <div className="flex-1">
+                                <div className="flex items-center space-x-3 mt-2">
+                                  <h3 className="text-gray-200 text-sm font-medium whitespace-normal">
+                                    게시글이 없습니다.
+                                  </h3>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </div>

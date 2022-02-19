@@ -45,7 +45,7 @@ const refreshInterceptor = (axiosInstance: any) => (error: any) => {
     isRefreshing = true;
 
     return new Promise((resolve, reject) => {
-      const { token: oldToken, csrf: oldCsrf } = getToken();
+      const { token: oldToken, csrf: oldCsrf, refresh } = getToken();
       axios
         .post(
           `${API_URL}/token`,
@@ -59,7 +59,7 @@ const refreshInterceptor = (axiosInstance: any) => (error: any) => {
         )
         .then((res) => {
           const { csrf, token } = res.data;
-          authenticateUserThroughPortal({ csrf, token });
+          authenticateUserThroughPortal({ csrf, token, refresh });
           _axios.defaults.headers.common.Authorization = `Bearer ${token}`;
           originalRequest.headers.Authorization = `Bearer ${token}`;
           processQueue(null, token);
@@ -82,7 +82,7 @@ const refreshInterceptor = (axiosInstance: any) => (error: any) => {
 const headerTokenConfig = (config: any) => {
   const method = config.method.toUpperCase();
   if (method !== "OPTIONS") {
-    const { csrf, token } = getToken();
+    const { csrf, token, refresh } = getToken();
     config.headers = {
       ...config.headers,
       "X-CSRF-TOKEN": csrf,
