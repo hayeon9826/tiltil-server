@@ -4,7 +4,7 @@ import Header from "@components/Header";
 import { User } from "@interface";
 import Link from "next/link";
 import useAuth from "@auth";
-import { ChatAltIcon, PlusSmIcon } from "@heroicons/react/solid";
+import { ChatAltIcon, HeartIcon, PlusSmIcon } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { getUsersQuery } from "@usersQuery";
 import { API_URL } from "@config";
@@ -119,29 +119,20 @@ const Home = ({ isAuth }: any) => {
                     >
                       랜덤 목록
                     </button>
-                    {/* <button
-                      type="button"
-                      className="ml-2 inline-flex items-center px-2.5 py-1.5 m-2 border border-transparent text-xs font-medium rounded text-gray-300 bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-                      onClick={() => {
-                        setUsers([]);
-                      }}
-                    >
-                      목록 리셋
-                    </button> */}
                   </div>
                   {posts &&
                     posts.length > 0 &&
                     posts.map((post) => (
                       <>
-                        <Link href={`/posts/${post.id}`}>
-                          <li
-                            key={post.id}
-                            className="bg-gray-900 border border-gray-500  px-4 py-6 sm:p-6 sm:rounded-lg mt-4"
+                        <li
+                          key={post.id}
+                          className="bg-gray-900 border border-gray-500  px-4 py-6 sm:p-6 sm:rounded-lg mt-4"
+                        >
+                          <article
+                            aria-labelledby={"question-title-" + post.id}
                           >
-                            <article
-                              aria-labelledby={"question-title-" + post.id}
-                            >
-                              <div>
+                            <Link href={`/posts/${post.id}`}>
+                              <>
                                 <div className="flex space-x-3">
                                   <div className="flex-shrink-0">
                                     <img
@@ -155,96 +146,6 @@ const Home = ({ isAuth }: any) => {
                                       {post?.userName || "익명"}
                                     </p>
                                   </div>
-                                  <div className="flex-shrink-0 self-center flex">
-                                    {/* <Menu
-                                    as="div"
-                                    className="relative inline-block text-left"
-                                  >
-                                    <div>
-                                      <Menu.Button className="-m-2 p-2 rounded-full flex items-center text-gray-400 hover:text-gray-200">
-                                        <span className="sr-only">
-                                          Open options
-                                        </span>
-                                        <DotsVerticalIcon
-                                          className="h-5 w-5"
-                                          aria-hidden="true"
-                                        />
-                                      </Menu.Button>
-                                    </div>
-
-                                    <Transition
-                                      as={Fragment}
-                                      enter="transition ease-out duration-100"
-                                      enterFrom="transform opacity-0 scale-95"
-                                      enterTo="transform opacity-100 scale-100"
-                                      leave="transition ease-in duration-75"
-                                      leaveFrom="transform opacity-100 scale-100"
-                                      leaveTo="transform opacity-0 scale-95"
-                                    >
-                                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                        <div className="py-1">
-                                          <Menu.Item>
-                                            {({ active }) => (
-                                              <a
-                                                href="#"
-                                                className={classNames(
-                                                  active
-                                                    ? "bg-gray-100 text-gray-900"
-                                                    : "text-gray-700",
-                                                  "flex px-4 py-2 text-sm"
-                                                )}
-                                              >
-                                                <StarIcon
-                                                  className="mr-3 h-5 w-5 text-gray-400"
-                                                  aria-hidden="true"
-                                                />
-                                                <span>Add to favorites</span>
-                                              </a>
-                                            )}
-                                          </Menu.Item>
-                                          <Menu.Item>
-                                            {({ active }) => (
-                                              <a
-                                                href="#"
-                                                className={classNames(
-                                                  active
-                                                    ? "bg-gray-100 text-gray-900"
-                                                    : "text-gray-700",
-                                                  "flex px-4 py-2 text-sm"
-                                                )}
-                                              >
-                                                <CodeIcon
-                                                  className="mr-3 h-5 w-5 text-gray-400"
-                                                  aria-hidden="true"
-                                                />
-                                                <span>Embed</span>
-                                              </a>
-                                            )}
-                                          </Menu.Item>
-                                          <Menu.Item>
-                                            {({ active }) => (
-                                              <a
-                                                href="#"
-                                                className={classNames(
-                                                  active
-                                                    ? "bg-gray-100 text-gray-900"
-                                                    : "text-gray-700",
-                                                  "flex px-4 py-2 text-sm"
-                                                )}
-                                              >
-                                                <FlagIcon
-                                                  className="mr-3 h-5 w-5 text-gray-400"
-                                                  aria-hidden="true"
-                                                />
-                                                <span>Report content</span>
-                                              </a>
-                                            )}
-                                          </Menu.Item>
-                                        </div>
-                                      </Menu.Items>
-                                    </Transition>
-                                  </Menu> */}
-                                  </div>
                                 </div>
                                 <div
                                   id={"question-content-" + post.id}
@@ -254,34 +155,35 @@ const Home = ({ isAuth }: any) => {
                                     "YYYY-MM-DD HH:mm"
                                   )}
                                 </div>
-                              </div>
-                              <div
-                                className="mt-2 text-sm text-gray-300 space-y-4"
-                                dangerouslySetInnerHTML={{
-                                  __html: post?.title,
-                                }}
-                              />
-                              {/* mapping 해야함. */}
-                              <div className="mt-4">
-                                {post?.categoryTitles?.map(
-                                  (category, index) => (
-                                    <span
-                                      key={index}
-                                      className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2"
-                                    >
-                                      {category}
-                                    </span>
-                                  )
-                                )}
-                              </div>
-                              {/* <div className="mt-6 flex justify-between space-x-8">
+                                <div
+                                  className="mt-2 text-sm text-gray-300 space-y-4"
+                                  dangerouslySetInnerHTML={{
+                                    __html: post?.title,
+                                  }}
+                                />
+                                {/* mapping 해야함. */}
+                                <div className="mt-4">
+                                  {post?.categoryTitles?.map(
+                                    (category, index) => (
+                                      <span
+                                        key={index}
+                                        className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2"
+                                      >
+                                        {category}
+                                      </span>
+                                    )
+                                  )}
+                                </div>
+                              </>
+                            </Link>
+                            <div className="mt-6 flex flex-row-reverse space-x-8">
                               <div className="flex space-x-6">
                                 <span className="inline-flex items-center text-sm">
                                   <button
                                     type="button"
                                     className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
                                   >
-                                    <ThumbUpIcon
+                                    <HeartIcon
                                       className="h-5 w-5"
                                       aria-hidden="true"
                                     />
@@ -291,57 +193,10 @@ const Home = ({ isAuth }: any) => {
                                     <span className="sr-only">likes</span>
                                   </button>
                                 </span>
-                                <span className="inline-flex items-center text-sm">
-                                  <button
-                                    type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
-                                  >
-                                    <ChatAltIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                    <span className="font-medium text-gray-900">
-                                      {post.id}
-                                    </span>
-                                    <span className="sr-only">replies</span>
-                                  </button>
-                                </span>
-                                <span className="inline-flex items-center text-sm">
-                                  <button
-                                    type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
-                                  >
-                                    <EyeIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                    <span className="font-medium text-gray-900">
-                                      {post.id}
-                                    </span>
-                                    <span className="sr-only">views</span>
-                                  </button>
-                                </span>
                               </div>
-                              <div className="flex text-sm">
-                                <span className="inline-flex items-center text-sm">
-                                  <button
-                                    type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
-                                  >
-                                    <ShareIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                    <span className="font-medium text-gray-900">
-                                      Share
-                                    </span>
-                                  </button>
-                                </span>
-                              </div>
-                            </div> */}
-                            </article>
-                          </li>
-                        </Link>
+                            </div>
+                          </article>
+                        </li>
                       </>
                     ))}
 
