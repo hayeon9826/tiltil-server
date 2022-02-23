@@ -53,3 +53,12 @@ export const LogOutUserQuery = (email: string) => `mutation {
     errors
   }
 }`;
+
+export const refreshUserQuery = () => `mutation {
+  refreshUser()){
+    refresh
+    token
+    csrf
+    errors
+  }
+}`;

@@ -28,7 +28,7 @@ TIL (Today I learned) 오늘 배운 내용을 짧게 적을 수 있는 게시판
 
 #### 적용 예정
 
-- [-] Refresh API 작업
+- [x] Refresh API 작업
 
 - [-] 좋아요 기능
 - [ ] 검색 기능

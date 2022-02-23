@@ -92,6 +92,19 @@ const headerTokenConfig = (config: any) => {
   return config;
 };
 
+const refreshTokenConfig = (config: any) => {
+  const method = config.method.toUpperCase();
+  if (method !== "OPTIONS") {
+    const { csrf, token, refresh } = getToken();
+    config.headers = {
+      ...config.headers,
+      "X-CSRF-TOKEN": csrf,
+      Authorization: `Bearer ${refresh}`,
+    };
+  }
+  return config;
+};
+
 const headerConfig = {
   baseURL: API_URL,
   headers: {
@@ -106,6 +119,17 @@ axios.defaults.paramsSerializer = (params) =>
   });
 
 const PlainAPI = axios.create(headerConfig);
+const RefreshAPI = axios.create({
+  baseURL: API_URL,
+  timeout: 10000,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    Authorization: "Bearer *",
+  },
+});
+
 const API = axios.create({
   baseURL: API_URL,
   timeout: 10000,
@@ -118,6 +142,7 @@ const API = axios.create({
 });
 
 API.interceptors.request.use(headerTokenConfig);
+RefreshAPI.interceptors.request.use(refreshTokenConfig);
 API.interceptors.response.use(null, refreshInterceptor(API));
 
-export { API, PlainAPI };
+export { API, PlainAPI, RefreshAPI };

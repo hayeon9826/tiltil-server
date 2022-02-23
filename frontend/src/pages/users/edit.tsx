@@ -16,7 +16,6 @@ const UserEditPage = ({ changeInput, inputData, isAuth }: any) => {
   const onSubmit = async (inputValues: SignUpAttribute) => {
     const query = UpdateUserQuery(inputValues.email, inputValues.name);
     const response = await postQuery(query);
-    console.log(response);
     if (
       response.data?.data?.updateUser &&
       response.data?.data?.updateUser?.token

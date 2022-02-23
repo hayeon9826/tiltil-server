@@ -3,6 +3,7 @@ module Types
     field :create_user, mutation: Mutations::Users::CreateUser
     field :sign_in_user, mutation: Mutations::Users::SignInUser
     field :sign_up_user, mutation: Mutations::Users::SignUpUser
+    field :refresh_user, mutation: Mutations::Users::RefreshUser
     field :log_out_user, mutation: Mutations::Users::LogOutUser
     field :update_user, mutation: Mutations::Users::UpdateUser
     field :create_post, mutation: Mutations::Posts::CreatePost

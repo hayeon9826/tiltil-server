@@ -1,7 +1,7 @@
 import { SigninAttribute, SignUpAttribute } from "@interface";
 import { Token } from "@interface";
 import { getToken } from "@store";
-import { API, PlainAPI } from "./config";
+import { API, PlainAPI, RefreshAPI } from "./config";
 
 // login, register APIs
 export const login = async (params: SigninAttribute) => {
@@ -28,3 +28,5 @@ export const refresh = (): Promise<{ data: Token }> =>
 
 // Query APIs
 export const postQuery = (query: any) => API.post("/graphql", { query });
+export const refreshQuery = (query: any) =>
+  RefreshAPI.post("/graphql", { query });
