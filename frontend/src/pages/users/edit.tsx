@@ -37,8 +37,6 @@ const UserEditPage = ({ changeInput, inputData, isAuth }: any) => {
     setValue("email", currentUser?.email);
   }, [currentUser, setValue]);
 
-  console.log(currentUser);
-
   return (
     <>
       <Header />

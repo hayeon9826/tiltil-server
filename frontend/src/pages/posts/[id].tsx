@@ -33,8 +33,6 @@ const Page = () => {
 
   const { currentUser } = useAuth();
 
-  console.log(currentUser);
-
   const MarkDownStyle = styled.div`
     font-size: 1rem;
     line-height: 2.5rem;
@@ -115,7 +113,6 @@ const Page = () => {
                         try {
                           if (confirm("게시글을 삭제하시겠습니까?")) {
                             const result = await postQuery(DeletePostQuery(id));
-                            console.log(result);
                             toast(
                               result?.data?.data?.deletePost?.message ||
                                 "다시 시도해주세요."

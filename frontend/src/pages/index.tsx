@@ -123,81 +123,77 @@ const Home = ({ isAuth }: any) => {
                   {posts &&
                     posts.length > 0 &&
                     posts.map((post) => (
-                      <>
-                        <li
-                          key={post.id}
-                          className="bg-gray-900 border border-gray-500  px-4 py-6 sm:p-6 sm:rounded-lg mt-4"
-                        >
-                          <article
-                            aria-labelledby={"question-title-" + post.id}
-                          >
-                            <Link href={`/posts/${post.id}`}>
-                              <>
-                                <div className="flex space-x-3">
-                                  <div className="flex-shrink-0">
-                                    <img
-                                      className="h-10 w-10 rounded-full"
-                                      src={`${API_URL}/image/profile.png`}
-                                      alt=""
-                                    />
-                                  </div>
-                                  <div className="min-w-0 flex-1">
-                                    <p className="text-sm font-medium text-gray-300 m-auto mt-2">
-                                      {post?.userName || "익명"}
-                                    </p>
-                                  </div>
+                      <li
+                        key={post.id}
+                        className="bg-gray-900 border border-gray-500  px-4 py-6 sm:p-6 sm:rounded-lg mt-4"
+                      >
+                        <article aria-labelledby={"question-title-" + post.id}>
+                          <Link href={`/posts/${post.id}`}>
+                            <>
+                              <div className="flex space-x-3">
+                                <div className="flex-shrink-0">
+                                  <img
+                                    className="h-10 w-10 rounded-full"
+                                    src={`${API_URL}/image/profile.png`}
+                                    alt=""
+                                  />
                                 </div>
-                                <div
-                                  id={"question-content-" + post.id}
-                                  className="mt-4 text-xs text-gray-400"
-                                >
-                                  {moment(post?.createdAt).format(
-                                    "YYYY-MM-DD HH:mm"
-                                  )}
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-sm font-medium text-gray-300 m-auto mt-2">
+                                    {post?.userName || "익명"}
+                                  </p>
                                 </div>
-                                <div
-                                  className="mt-2 text-sm text-gray-300 space-y-4"
-                                  dangerouslySetInnerHTML={{
-                                    __html: post?.title,
-                                  }}
-                                />
-                                {/* mapping 해야함. */}
-                                <div className="mt-4">
-                                  {post?.categoryTitles?.map(
-                                    (category, index) => (
-                                      <span
-                                        key={index}
-                                        className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2"
-                                      >
-                                        {category}
-                                      </span>
-                                    )
-                                  )}
-                                </div>
-                              </>
-                            </Link>
-                            <div className="mt-6 flex flex-row-reverse space-x-8">
-                              <div className="flex space-x-6">
-                                <span className="inline-flex items-center text-sm">
-                                  <button
-                                    type="button"
-                                    className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
-                                  >
-                                    <HeartIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                    <span className="font-medium text-gray-900">
-                                      {post.id}
-                                    </span>
-                                    <span className="sr-only">likes</span>
-                                  </button>
-                                </span>
                               </div>
+                              <div
+                                id={"question-content-" + post.id}
+                                className="mt-4 text-xs text-gray-400"
+                              >
+                                {moment(post?.createdAt).format(
+                                  "YYYY-MM-DD HH:mm"
+                                )}
+                              </div>
+                              <div
+                                className="mt-2 text-sm text-gray-300 space-y-4"
+                                dangerouslySetInnerHTML={{
+                                  __html: post?.title,
+                                }}
+                              />
+                              {/* mapping 해야함. */}
+                              <div className="mt-4">
+                                {post?.categoryTitles?.map(
+                                  (category, index) => (
+                                    <span
+                                      key={index}
+                                      className="flex-shrink-0 inline-block px-2 py-0.5 text-purple-800 text-xs font-medium bg-purple-100 rounded-full mr-2"
+                                    >
+                                      {category}
+                                    </span>
+                                  )
+                                )}
+                              </div>
+                            </>
+                          </Link>
+                          <div className="mt-6 flex flex-row-reverse space-x-8">
+                            <div className="flex space-x-6">
+                              <span className="inline-flex items-center text-sm">
+                                <button
+                                  type="button"
+                                  className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
+                                >
+                                  <HeartIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                  <span className="font-medium text-gray-900">
+                                    {post.id}
+                                  </span>
+                                  <span className="sr-only">likes</span>
+                                </button>
+                              </span>
                             </div>
-                          </article>
-                        </li>
-                      </>
+                          </div>
+                        </article>
+                      </li>
                     ))}
 
                   {/* {questions.map((question) => (

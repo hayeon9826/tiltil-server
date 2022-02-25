@@ -39,8 +39,6 @@ module Types
       
     end
 
-   
-
     def users(**args)
       if args[:id]
         User.where(id: args[:id])

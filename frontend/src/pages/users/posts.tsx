@@ -64,7 +64,6 @@ export default function myPosts() {
   const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
     useAuth();
 
-  console.log(currentUser);
   const router = useRouter();
   const [posts, setPosts] = useState<postProps[]>([]);
 
@@ -72,7 +71,6 @@ export default function myPosts() {
     const { data: postsData } = await postQuery(
       getUserPostsQuery(currentUser?.user_id)
     );
-    console.log(postsData);
 
     await setPosts(postsData && postsData?.data && postsData?.data?.posts);
   };

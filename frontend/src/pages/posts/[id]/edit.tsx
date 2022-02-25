@@ -111,8 +111,6 @@ export default function PostEdit() {
     );
   }, [categories]);
 
-  console.log(postCategories, "@@@postCategories");
-
   return (
     <div className="w-full min-h-full bg-gray-900">
       <Header />
@@ -141,9 +139,7 @@ export default function PostEdit() {
               ) {
                 await toast(response?.data?.data?.updatePost?.message);
                 await router.back();
-                console.log(response);
               } else {
-                console.log(response);
                 await toast(
                   response?.data?.data?.updatePost?.error ||
                     "문제가 발생했습니다. 다시 시도해주세요."

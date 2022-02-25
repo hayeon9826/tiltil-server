@@ -34,7 +34,7 @@ const LoginPage = ({
       if (response?.data?.data?.signInUser?.errors) {
         toast(response?.data?.data?.signInUser?.errors);
       } else {
-        toast("사용자가 없습니다. 다시 시도해주세요.");
+        toast("문제가 생겼습니다. 다시 시도해주세요.");
       }
     }
   };
@@ -61,7 +61,7 @@ const LoginPage = ({
                   type="email"
                   {...register("email", { required: true })}
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-800 rounded-t-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
+                  placeholder="이메일"
                   onChange={changeInput}
                   value={inputData?.email}
                 />
@@ -77,7 +77,7 @@ const LoginPage = ({
                   autoComplete="current-password"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-800 rounded-b-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
+                  placeholder="비밀번호"
                 />
               </div>
             </div>

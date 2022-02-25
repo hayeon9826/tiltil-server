@@ -67,7 +67,6 @@ export default function PostNew() {
   };
 
   const handleSelect = (values: number[]) => {
-    console.log(values);
     setValue("category", values);
   };
 
@@ -81,7 +80,6 @@ export default function PostNew() {
     setValue("content", "");
     setValue("title", "");
     getCategories();
-    console.log("ss");
   }, []);
 
   const router = useRouter();

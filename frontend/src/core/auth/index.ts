@@ -73,7 +73,7 @@ const useAuth = () => {
       response.data?.data?.refreshUser?.token
     ) {
       authenticateUser(response?.data?.data?.refreshUser);
-      console.log(response.data?.data?.refreshUser);
+      // console.log(response.data?.data?.refreshUser);
     }
   };
 

@@ -131,7 +131,9 @@ const Header = ({ searchBar = false }) => {
                   >
                     <span className="sr-only">View notifications</span>
                     <Link href="/notifications">
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      <>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      </>
                     </Link>
                   </a>
                 )}

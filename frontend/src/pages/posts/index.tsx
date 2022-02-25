@@ -22,7 +22,6 @@ export default function PostIndex() {
     useAuth();
   const router = useRouter();
   const { category, categoryId } = router.query;
-  console.log(category, categoryId);
 
   const getData = async () => {
     const { data: categoryData } = await postQuery(getCategoriesQuery(null));

@@ -27,6 +27,17 @@ export interface categoryProps {
   title: string;
 }
 
+export interface UserLikes {
+  [key: string]: Like[];
+}
+
+interface Like {
+  id: number;
+  targetable_type: string;
+  targetable_id: number;
+  user_id: number;
+}
+
 export interface postProps {
   id: string;
   title: string;

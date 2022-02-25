@@ -55,7 +55,7 @@ export const LogOutUserQuery = (email: string) => `mutation {
 }`;
 
 export const refreshUserQuery = () => `mutation {
-  refreshUser()){
+  refreshUser(){
     refresh
     token
     csrf
