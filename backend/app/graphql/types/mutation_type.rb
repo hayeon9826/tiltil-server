@@ -9,5 +9,7 @@ module Types
     field :create_post, mutation: Mutations::Posts::CreatePost
     field :delete_post, mutation: Mutations::Posts::DeletePost
     field :update_post, mutation: Mutations::Posts::UpdatePost
+    field :create_like, mutation: Mutations::Likes::CreateLike
+    field :delete_like, mutation: Mutations::Likes::DeleteLike
   end
 end

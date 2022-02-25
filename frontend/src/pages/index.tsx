@@ -10,6 +10,7 @@ import { getUsersQuery } from "@usersQuery";
 import { API_URL } from "@config";
 import { categoryProps, postProps } from "@interface";
 import moment from "moment";
+import LikeContainer from "@components/LikeContainer";
 
 const tabs = [
   { name: "인기글", href: "#", current: true },
@@ -173,25 +174,7 @@ const Home = ({ isAuth }: any) => {
                               </div>
                             </>
                           </Link>
-                          <div className="mt-6 flex flex-row-reverse space-x-8">
-                            <div className="flex space-x-6">
-                              <span className="inline-flex items-center text-sm">
-                                <button
-                                  type="button"
-                                  className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
-                                >
-                                  <HeartIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
-                                  <span className="font-medium text-gray-900">
-                                    {post.id}
-                                  </span>
-                                  <span className="sr-only">likes</span>
-                                </button>
-                              </span>
-                            </div>
-                          </div>
+                          <LikeContainer target={post} />
                         </article>
                       </li>
                     ))}

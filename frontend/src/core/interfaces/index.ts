@@ -31,7 +31,7 @@ export interface UserLikes {
   [key: string]: Like[];
 }
 
-interface Like {
+export interface Like {
   id: number;
   targetable_type: string;
   targetable_id: number;
