@@ -16,6 +16,9 @@ module Types
       argument :postId, Integer, required: false
     end
 
+    field :likes, [LikeType], null: false
+
+
     def posts(**args)
       if args[:id]
         Post.where(id: args[:id])
@@ -28,6 +31,10 @@ module Types
       else
         Post.all.order(created_at: :desc)
       end
+    end
+
+    def likes()
+      Like.where(user_id: context[:current_user].id)
     end
 
     def categories(**args)

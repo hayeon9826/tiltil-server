@@ -10,7 +10,7 @@ module Mutations
       field :token, String, null: true
       field :csrf, String, null: true
       field :errors, String, null: true
-      field :refresh, String, null: false
+      field :refresh, String, null: true
 
       def resolve(**attributes)
         if attributes

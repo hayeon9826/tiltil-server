@@ -1,19 +1,30 @@
 export const CreateLikeQuery = (
-  targetId: string,
+  targetId: number,
   targetType: string
 ) => `mutation {
-  createLike(targetableId: ${targetId}, targetableType: ${targetType}) {
+  createLike(targetableId: ${targetId}, targetableType: "${targetType}") {
     error
     success
+    like
   }
 }`;
 
 export const DeleteLikeQuery = (
-  targetId: string,
+  targetId: number,
   targetType: string
 ) => `mutation {
-  deleteLike(targetableId: ${targetId}, targetableType: ${targetType}) {
+  deleteLike(targetableId: ${targetId}, targetableType: "${targetType}") {
     error
     success
+    like
+  }
+}`;
+
+export const getLikesQuery = () => `query {
+  likes(){
+    id 
+    targetableId
+    targetableType
+    userId
   }
 }`;

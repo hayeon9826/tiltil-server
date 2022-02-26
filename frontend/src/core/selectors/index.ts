@@ -14,6 +14,6 @@ export const getLikeIds = selectorFamily({
     (model_name: string) =>
     ({ get }) => {
       const likes = get(userLikes);
-      return likes[model_name] || [];
+      return likes ? likes[model_name] : [];
     },
 });

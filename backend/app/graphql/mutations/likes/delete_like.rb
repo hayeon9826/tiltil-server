@@ -3,7 +3,7 @@ module Mutations
     class DeleteLike < BaseMutation
       null true
       
-      argument :targetable_id, Number, required: true
+      argument :targetable_id, Integer, required: true
       argument :targetable_type, String, required: true
 
       # return type from the mutation
@@ -13,7 +13,7 @@ module Mutations
       def resolve(**attributes)
         if attributes 
           if attributes[:targetable_type].present? && attributes[:targetable_id].present?
-            like = attributes[:targetable_type].classify.constantize.find_by(targetable_id: attributes[:targetable_id], targetable_type: attributes[:targetable_type], user_id: context[:current_user].id)
+            like = Like.find_by(targetable_id: attributes[:targetable_id], targetable_type: attributes[:targetable_type], user_id: context[:current_user].id)
             if like.destroy
               { success: "좋아요를 취소했습니다." }
             else

@@ -7,7 +7,10 @@ import useAuth from "@auth";
 import { ChatAltIcon, HeartIcon, PlusSmIcon } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { getUsersQuery } from "@usersQuery";
+import { getLikesQuery } from "@likesQuery";
 import { API_URL } from "@config";
+import { userLikes } from "@atoms";
+import { useSetRecoilState } from "recoil";
 import { categoryProps, postProps } from "@interface";
 import moment from "moment";
 import LikeContainer from "@components/LikeContainer";
@@ -23,6 +26,7 @@ function classNames(...classes: string[]) {
 }
 
 const Home = ({ isAuth }: any) => {
+  const setUserLike = useSetRecoilState(userLikes);
   const { currentUser, isAuthenticated } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
 
@@ -33,12 +37,14 @@ const Home = ({ isAuth }: any) => {
     const { data: categoryData } = await postQuery(getCategoriesQuery(null));
     const { data: postsData } = await postQuery(getPostsQuery(true, null));
     const { data: usersData } = await postQuery(getUsersQuery(true));
+    const { data: likesData } = await postQuery(getLikesQuery());
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
     await setPosts(postsData && postsData?.data && postsData?.data?.posts);
 
     await setUsers(usersData && usersData?.data && usersData?.data?.users);
+    await setUserLike(likesData && likesData?.data && likesData?.data?.likes);
   };
 
   useEffect(() => {

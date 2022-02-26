@@ -39,7 +39,7 @@ export interface Like {
 }
 
 export interface postProps {
-  id: string;
+  id: number;
   title: string;
   content: string;
   userId: number;

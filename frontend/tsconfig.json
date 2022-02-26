@@ -28,7 +28,8 @@
       "@store": ["src/core/store/index"],
       "@utils": ["src/core/utils/index"],
       "@usersQuery": ["src/core/query/user"],
-      "@postsQuery": ["src/core/query/post"]
+      "@postsQuery": ["src/core/query/post"],
+      "@likesQuery": ["src/core/query/like"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/**/*"],
