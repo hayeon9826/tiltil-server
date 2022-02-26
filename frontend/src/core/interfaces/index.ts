@@ -33,9 +33,9 @@ export interface UserLikes {
 
 export interface Like {
   id: number;
-  targetable_type: string;
-  targetable_id: number;
-  user_id: number;
+  targetableType: string;
+  targetableId: number;
+  userId: number;
 }
 
 export interface postProps {

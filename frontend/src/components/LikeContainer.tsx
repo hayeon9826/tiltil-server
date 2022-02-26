@@ -6,8 +6,9 @@ import { postProps, Like, UserLikes } from "@interface";
 import useAuth from "@auth";
 import { postQuery } from "@api";
 import { CreateLikeQuery, DeleteLikeQuery } from "@likesQuery";
-import { HeartIcon } from "@heroicons/react/solid";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import toast from "react-simple-toasts";
+import { reject } from "lodash";
 
 interface LikeContainerProps {
   target: postProps;
@@ -26,14 +27,24 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
   const targetLikes: Like[] = useRecoilValue(getLikeIds(target_name));
   const { currentUser, isAuthenticated } = useAuth();
 
-  console.log(targetLikes, "@@@targetLikes");
-
   const deleteLike = async () => {
     const query = DeleteLikeQuery(target.id, target_name);
     const response = await postQuery(query);
+    console.log(response);
 
-    if (response?.data?.data?.deleteLike?.message) {
-      await toast("좋아요를 생성했습니다.");
+    if (response?.data?.data?.deleteLike?.success) {
+      toast("좋아요를 취소했습니다.");
+      setUserLikes((likes: UserLikes) => ({
+        ...likes,
+        [target_name]: reject(
+          likes[target_name],
+          (like: Like) =>
+            like.targetableType ===
+              response?.data?.data?.deleteLike?.like?.targetableType &&
+            like.targetableId ===
+              response?.data?.data?.deleteLike?.like.targetableId
+        ),
+      }));
     } else {
       toast(response?.data?.data?.deleteLike?.error || "다시 시도해주세요.");
     }
@@ -42,9 +53,8 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
   const createLike = async () => {
     const query = CreateLikeQuery(target.id, target_name);
     const response = await postQuery(query);
-    console.log(response);
-    if (response?.data?.data?.createLike?.message) {
-      await toast("좋아요를 생성했습니다.");
+    if (response?.data?.data?.createLike?.success) {
+      toast("좋아요를 생성했습니다.");
       setUserLikes((likes: UserLikes) => {
         const likeList = likes[target_name] || [];
         return {
@@ -52,6 +62,8 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
           [target_name]: [...likeList, response?.data?.data?.createLike?.like],
         };
       });
+      console.log(response?.data?.data?.createLike?.like);
+      console.log(targetLikes);
     } else {
       toast(response?.data?.data?.createLike?.error || "다시 시도해주세요.");
     }
@@ -59,10 +71,11 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
 
   const onClickLike = () => {
     if (isAuthenticated) {
-      const targetLike = targetLikes.find(
-        (like: Like) => like.targetable_id === target.id
-      );
-      console.log(targetLike, "@@targetLike");
+      const targetLike =
+        targetLikes &&
+        targetLikes?.find(
+          (like: Like) => like.targetableId === parseInt(target.id)
+        );
 
       if (targetLike) {
         // 좋아요 눌렀으면 좋아요 삭제
@@ -85,7 +98,15 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
             onClick={onClickLike}
             className="inline-flex space-x-2 text-gray-400 hover:text-gray-300"
           >
-            <HeartIcon className="h-5 w-5" aria-hidden="true" />
+            {targetLikes &&
+            targetLikes
+              .map((like: Like) => like.targetableId)
+              .includes(parseInt(target?.id)) ? (
+              <FaHeart className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <FaRegHeart className="h-5 w-5" aria-hidden="true" />
+            )}
+
             <span className="sr-only">likes</span>
           </button>
         </span>

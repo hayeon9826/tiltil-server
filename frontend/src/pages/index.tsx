@@ -14,6 +14,7 @@ import { useSetRecoilState } from "recoil";
 import { categoryProps, postProps } from "@interface";
 import moment from "moment";
 import LikeContainer from "@components/LikeContainer";
+import { groupBy } from "lodash";
 
 const tabs = [
   { name: "인기글", href: "#", current: true },
@@ -38,13 +39,14 @@ const Home = ({ isAuth }: any) => {
     const { data: postsData } = await postQuery(getPostsQuery(true, null));
     const { data: usersData } = await postQuery(getUsersQuery(true));
     const { data: likesData } = await postQuery(getLikesQuery());
+
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
     await setPosts(postsData && postsData?.data && postsData?.data?.posts);
 
     await setUsers(usersData && usersData?.data && usersData?.data?.users);
-    await setUserLike(likesData && likesData?.data && likesData?.data?.likes);
+    await setUserLike(groupBy(likesData?.data?.likes, "targetableType"));
   };
 
   useEffect(() => {

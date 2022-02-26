@@ -13,15 +13,6 @@ import { postQuery } from "@api";
 import { refreshUserQuery } from "@usersQuery";
 
 const useAuth = () => {
-  // const setUserToken = (token: string, csrf: string) => {
-  //   localStorage.setItem(TOKEN_KEY, token);
-  //   localStorage.setItem(CSRF_KEY, csrf);
-  // };
-
-  // const authToken =
-  //   typeof window !== "undefined" && window.localStorage?.getItem(TOKEN_KEY);
-  // const isAuthenticated = authToken ? true : false;
-
   const [currentUser, setCurrentUser] = useRecoilState<AuthState>(
     authSelector as any
   );
@@ -35,13 +26,6 @@ const useAuth = () => {
       currentUser: getCurrentUserFromToken(token),
     });
   };
-
-  // console.log(currentUser?.token ? checkTokenValid(currentUser?.token) : false);
-
-  // console.log(
-  //   currentUser?.token ? checkRefreshValid(currentUser?.token) : false
-  // );
-  // console.log(currentUser?.token);
 
   useEffect(() => {
     if (currentUser?.currentUser) {
@@ -73,7 +57,6 @@ const useAuth = () => {
       response.data?.data?.refreshUser?.token
     ) {
       authenticateUser(response?.data?.data?.refreshUser);
-      // console.log(response.data?.data?.refreshUser);
     }
   };
 

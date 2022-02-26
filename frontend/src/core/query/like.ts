@@ -5,7 +5,12 @@ export const CreateLikeQuery = (
   createLike(targetableId: ${targetId}, targetableType: "${targetType}") {
     error
     success
-    like
+    like {
+      id 
+      targetableId
+      targetableType
+      userId
+    }
   }
 }`;
 
@@ -16,12 +21,17 @@ export const DeleteLikeQuery = (
   deleteLike(targetableId: ${targetId}, targetableType: "${targetType}") {
     error
     success
-    like
+    like {
+      id 
+      targetableId
+      targetableType
+      userId
+    }
   }
 }`;
 
 export const getLikesQuery = () => `query {
-  likes(){
+  likes{
     id 
     targetableId
     targetableType

@@ -72,8 +72,8 @@ const Header = ({ searchBar = false }) => {
                 <div className="flex-shrink-0 flex items-center">
                   <a href="/">
                     <img
-                      className="block h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=purple&shade=500"
+                      className="h-8 w-8 rounded-full"
+                      src={`${API_URL}/image/profile2.png`}
                       alt="Workflow"
                     />
                   </a>

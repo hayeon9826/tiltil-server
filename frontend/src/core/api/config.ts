@@ -8,76 +8,76 @@ import {
   unAuthenticateUserThroughPortal,
 } from "@components/RecoilRootPortal";
 
-let isRefreshing = false;
-let failedQueue: any[] = [];
+// let isRefreshing = false;
+// let failedQueue: any[] = [];
 
-const processQueue = (error: any, token = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(token);
-    }
-  });
-  failedQueue = [];
-};
+// const processQueue = (error: any, token = null) => {
+//   failedQueue.forEach((prom) => {
+//     if (error) {
+//       prom.reject(error);
+//     } else {
+//       prom.resolve(token);
+//     }
+//   });
+//   failedQueue = [];
+// };
 
-const refreshInterceptor = (axiosInstance: any) => (error: any) => {
-  const _axios = axiosInstance;
-  const originalRequest = error.config;
-  if (
-    error.response?.status === 401 &&
-    !originalRequest._retry &&
-    error.response?.data?.error !== "Pundit Error"
-  ) {
-    if (isRefreshing) {
-      return new Promise((resolve, reject) => {
-        failedQueue.push({ resolve, reject });
-      })
-        .then((token) => {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          return _axios.request(originalRequest);
-        })
-        .catch((err) => Promise.reject(err));
-    }
+// const refreshInterceptor = (axiosInstance: any) => (error: any) => {
+//   const _axios = axiosInstance;
+//   const originalRequest = error.config;
+//   if (
+//     error.response?.status === 401 &&
+//     !originalRequest._retry &&
+//     error.response?.data?.error !== "Pundit Error"
+//   ) {
+//     if (isRefreshing) {
+//       return new Promise((resolve, reject) => {
+//         failedQueue.push({ resolve, reject });
+//       })
+//         .then((token) => {
+//           originalRequest.headers.Authorization = `Bearer ${token}`;
+//           return _axios.request(originalRequest);
+//         })
+//         .catch((err) => Promise.reject(err));
+//     }
 
-    originalRequest._retry = true;
-    isRefreshing = true;
+//     originalRequest._retry = true;
+//     isRefreshing = true;
 
-    return new Promise((resolve, reject) => {
-      const { token: oldToken, csrf: oldCsrf, refresh } = getToken();
-      axios
-        .post(
-          `${API_URL}/token`,
-          {},
-          {
-            headers: {
-              "X-CSRF-TOKEN": oldCsrf,
-              Authorization: `Bearer ${oldToken}`,
-            },
-          }
-        )
-        .then((res) => {
-          const { csrf, token } = res.data;
-          authenticateUserThroughPortal({ csrf, token, refresh });
-          _axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          processQueue(null, token);
-          resolve(_axios(originalRequest));
-        })
-        .catch((err) => {
-          processQueue(err, null);
-          unAuthenticateUserThroughPortal();
-          reject(err);
-        })
-        .finally(() => {
-          isRefreshing = false;
-        });
-    });
-  }
+//     return new Promise((resolve, reject) => {
+//       const { token: oldToken, csrf: oldCsrf, refresh } = getToken();
+//       axios
+//         .post(
+//           `${API_URL}/token`,
+//           {},
+//           {
+//             headers: {
+//               "X-CSRF-TOKEN": oldCsrf,
+//               Authorization: `Bearer ${oldToken}`,
+//             },
+//           }
+//         )
+//         .then((res) => {
+//           const { csrf, token } = res.data;
+//           authenticateUserThroughPortal({ csrf, token, refresh });
+//           _axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+//           originalRequest.headers.Authorization = `Bearer ${token}`;
+//           processQueue(null, token);
+//           resolve(_axios(originalRequest));
+//         })
+//         .catch((err) => {
+//           processQueue(err, null);
+//           unAuthenticateUserThroughPortal();
+//           reject(err);
+//         })
+//         .finally(() => {
+//           isRefreshing = false;
+//         });
+//     });
+//   }
 
-  return Promise.reject(error);
-};
+//   return Promise.reject(error);
+// };
 
 const headerTokenConfig = (config: any) => {
   const method = config.method.toUpperCase();
@@ -119,6 +119,7 @@ axios.defaults.paramsSerializer = (params) =>
   });
 
 const PlainAPI = axios.create(headerConfig);
+
 const RefreshAPI = axios.create({
   baseURL: API_URL,
   timeout: 10000,
@@ -143,6 +144,6 @@ const API = axios.create({
 
 API.interceptors.request.use(headerTokenConfig);
 RefreshAPI.interceptors.request.use(refreshTokenConfig);
-API.interceptors.response.use(null, refreshInterceptor(API));
+// API.interceptors.response.use(null, refreshInterceptor(API));
 
 export { API, PlainAPI, RefreshAPI };

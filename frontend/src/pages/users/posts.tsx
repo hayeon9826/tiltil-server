@@ -18,44 +18,6 @@ const tabs = [
   { name: "저장한 TIL", href: "/users/likes", current: false },
 ];
 
-// const posts = [
-//   {
-//     question:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-//     user: "__khy",
-//     category: "React",
-//     id: "1",
-//   },
-//   {
-//     question:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-//     user: "__khy",
-//     category: "React",
-//     id: "2",
-//   },
-//   {
-//     question:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-//     user: "__khy",
-//     category: "React",
-//     id: "3",
-//   },
-//   {
-//     question:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-//     user: "__khy",
-//     category: "React",
-//     id: "4",
-//   },
-//   {
-//     question:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur odio eget neque cursus, et consequat purus interdum? ",
-//     user: "__khy",
-//     category: "React",
-//     id: "5",
-//   },
-// ];
-
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
