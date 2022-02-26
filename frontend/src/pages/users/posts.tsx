@@ -122,7 +122,7 @@ export default function myPosts() {
                         {posts &&
                           posts.length > 0 &&
                           posts.map((post) => (
-                            <Link href={`/posts/${post.id}`}>
+                            <Link href={`/posts/${post.id}`} key={post.id}>
                               <li
                                 key={post.id}
                                 className="col-span-1 bg-gray-900 rounded-lg border border-gray-500 divide-y divide-gray-200"

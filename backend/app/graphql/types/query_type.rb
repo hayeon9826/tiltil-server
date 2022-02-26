@@ -34,7 +34,9 @@ module Types
     end
 
     def likes()
-      Like.where(user_id: context[:current_user].id)
+      if context[:current_user].present?
+        Like.where(user_id: context[:current_user].id)
+      end
     end
 
     def categories(**args)
