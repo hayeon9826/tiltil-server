@@ -32,6 +32,18 @@ export const getUserPostsQuery = (id: string) => `query{
   }
 }`;
 
+export const getLikePostsQuery = () => `query{
+  likePosts{
+    id
+    title
+    content
+    categoryTitles
+    userName
+    createdAt
+    categoryIds
+  }
+}`;
+
 export const getPostQuery = (id: any) => `query {
   posts(id: ${id}){
     id

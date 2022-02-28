@@ -65,7 +65,7 @@ export default function myPosts() {
 
         {/* Content area */}
         <Header />
-        <div className="w-full bg-gray-900">
+        <div className="min-h-screen w-full bg-gray-900">
           <div className="max-w-4xl mx-auto flex flex-col md:px-8 xl:px-0">
             <main className="flex-1">
               <div className="relative max-w-4xl mx-auto md:px-8 xl:px-0">

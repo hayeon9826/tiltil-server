@@ -20,7 +20,7 @@ module Mutations
           if user&.valid_password?(attributes[:password])
             payload = { user_id: user.id, email: user.email, created_at: user.created_at, name: user.name, access_exp: 1.hour.from_now.to_i, refresh_exp: 2.weeks.from_now.to_i }
             refresh_payload = { user_id: user.id }
-            session =  JWTSessions::Session.new(payload: payload, refresh_payload: refresh_payload, refresh_by_access_allowed: true)
+            session =  JWTSessions::Session.new(payload: payload, refresh_payload: refresh_payload)
             tokens = session.login
 
             { token: tokens[:access], csrf: tokens[:csrf], refresh: tokens[:refresh], errors: "성공적으로 로그인 되었습니다." }

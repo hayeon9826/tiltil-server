@@ -4,17 +4,15 @@ import Header from "@components/Header";
 import { User } from "@interface";
 import Link from "next/link";
 import useAuth from "@auth";
-import { ChatAltIcon, HeartIcon, PlusSmIcon } from "@heroicons/react/solid";
+import { PlusSmIcon } from "@heroicons/react/solid";
 import { getCategoriesQuery, getPostsQuery } from "@postsQuery";
 import { getUsersQuery } from "@usersQuery";
-import { getLikesQuery } from "@likesQuery";
 import { API_URL } from "@config";
 import { userLikes } from "@atoms";
 import { useSetRecoilState } from "recoil";
 import { categoryProps, postProps } from "@interface";
 import moment from "moment";
 import LikeContainer from "@components/LikeContainer";
-import { groupBy } from "lodash";
 
 const tabs = [
   { name: "인기글", href: "#", current: true },
@@ -38,15 +36,12 @@ const Home = ({ isAuth }: any) => {
     const { data: categoryData } = await postQuery(getCategoriesQuery(null));
     const { data: postsData } = await postQuery(getPostsQuery(true, null));
     const { data: usersData } = await postQuery(getUsersQuery(true));
-    const { data: likesData } = await postQuery(getLikesQuery());
-
     await setCategories(
       categoryData && categoryData?.data && categoryData?.data?.categories
     );
     await setPosts(postsData && postsData?.data && postsData?.data?.posts);
 
     await setUsers(usersData && usersData?.data && usersData?.data?.users);
-    await setUserLike(groupBy(likesData?.data?.likes, "targetableType"));
   };
 
   useEffect(() => {
@@ -182,7 +177,7 @@ const Home = ({ isAuth }: any) => {
                               </div>
                             </>
                           </Link>
-                          <LikeContainer target={post} />
+                          <LikeContainer target={post} target_name={"Post"} />
                         </article>
                       </li>
                     ))}

@@ -13,7 +13,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      current_user: current_user
+      current_user: current_user,
+      auth_refresh: auth_refresh
     }
     result = BackendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -40,9 +41,19 @@ class GraphqlController < ApplicationController
       end
     end
 
+    def refresh_token
+      refresh_token ||= if request.headers['X-Refresh-Token'].present?
+        request.headers['X-Refresh-Token']
+      end
+    end
+
     ## 토큰 해석 : 토큰 해석은 lib/json_web_token.rb 내의 decode 메소드에서 진행됩니다.
     def auth_token
       auth_token ||= JsonWebToken.decode(http_token)
+    end
+
+    def auth_refresh
+      auth_refresh ||= JsonWebToken.decode(refresh_token)
     end
 
 

@@ -12,6 +12,10 @@ import { API_URL } from "@config";
 import { LogOutUserQuery } from "src/core/query/user";
 import toast from "react-simple-toasts";
 import { useRouter } from "next/router";
+import { groupBy } from "lodash";
+import { useSetRecoilState } from "recoil";
+import { getLikesQuery } from "@likesQuery";
+import { userLikes } from "@atoms";
 
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
@@ -22,6 +26,12 @@ const Header = ({ searchBar = false }) => {
   const { currentUser, isAuthenticated, authenticateUser, unAuthenticateUser } =
     useAuth();
   const router = useRouter();
+  const setUserLike = useSetRecoilState(userLikes);
+
+  const setLikes = async () => {
+    const { data: likesData } = await postQuery(getLikesQuery());
+    await setUserLike(groupBy(likesData?.data?.likes, "targetableType"));
+  };
 
   useEffect(() => {
     (async function checkToken() {
@@ -35,6 +45,7 @@ const Header = ({ searchBar = false }) => {
         destroyToken();
         unAuthenticateUser();
       } finally {
+        setLikes();
         await sleep(700);
         setIsLoading(false);
       }

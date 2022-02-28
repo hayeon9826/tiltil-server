@@ -9,7 +9,7 @@ import {
 } from "@utils";
 import { authSelector } from "@selectors";
 import { getToken, saveToken, destroyToken } from "@store";
-import { postQuery } from "@api";
+import { refreshQuery } from "@api";
 import { refreshUserQuery } from "@usersQuery";
 
 const useAuth = () => {
@@ -48,10 +48,11 @@ const useAuth = () => {
         refreshUserApi();
       }
     }
+    // refreshUserApi();
   }, [currentUser]);
 
   const refreshUserApi = async () => {
-    const response = await postQuery(refreshUserQuery());
+    const response = await refreshQuery(refreshUserQuery());
     if (
       response.data?.data?.refreshUser &&
       response.data?.data?.refreshUser?.token

@@ -54,8 +54,9 @@ export const LogOutUserQuery = (email: string) => `mutation {
   }
 }`;
 
+// query로 바꾸기
 export const refreshUserQuery = () => `mutation {
-  refreshUser(){
+  refreshUser{
     refresh
     token
     csrf

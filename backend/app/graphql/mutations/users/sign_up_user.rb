@@ -21,9 +21,9 @@ module Mutations
           user = User.new(email: attributes[:email], password: attributes[:password], password_confirmation: attributes[:passwordConfirmation])
 
           if user.save
-            payload = { user_id: user.id, email: user.email, name: user.name, refresh_by_access_allowed: true, access_exp: 1.hour.from_now.to_i, refresh_exp: 2.weeks.from_now.to_i }
+            payload = { user_id: user.id, email: user.email, name: user.name, access_exp: 1.hour.from_now.to_i, refresh_exp: 2.weeks.from_now.to_i }
             refresh_payload = { user_id: user.id }
-            session =  JWTSessions::Session.new(payload: payload, refresh_payload: refresh_payload, refresh_by_access_allowed: true)
+            session =  JWTSessions::Session.new(payload: payload, refresh_payload: refresh_payload)
             tokens = session.login
 
             { token: tokens[:access], csrf: tokens[:csrf], errors: "성공적으로 가입이 되었습니다.", refresh: tokens[:refresh] }

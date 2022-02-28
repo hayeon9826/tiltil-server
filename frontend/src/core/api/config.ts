@@ -99,7 +99,8 @@ const refreshTokenConfig = (config: any) => {
     config.headers = {
       ...config.headers,
       "X-CSRF-TOKEN": csrf,
-      Authorization: `Bearer ${refresh}`,
+      Authorization: `Bearer ${token}`,
+      "X-Refresh-Token": refresh,
     };
   }
   return config;

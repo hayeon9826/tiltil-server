@@ -16,7 +16,9 @@ module Types
       argument :postId, Integer, required: false
     end
 
-    field :likes, [LikeType], null: false
+    field :likes, [LikeType], null: true
+
+    field :likePosts, [PostType], null: false
 
 
     def posts(**args)
@@ -30,6 +32,12 @@ module Types
         Post.all.sample(10)
       else
         Post.all.order(created_at: :desc)
+      end
+    end
+
+    def likePosts()
+      if context[:current_user].present?
+        Post.where(id: context[:current_user]&.likes&.pluck(:targetable_id))
       end
     end
 

@@ -20,7 +20,7 @@ module Mutations
           if user.update(name: attributes[:name])
             payload = { user_id: user.id, email: user.email, created_at: user.created_at, name: user.name }
             refresh_payload = { user_id: user.id }
-            session =  JWTSessions::Session.new(payload: payload, refresh_payload: refresh_payload, refresh_by_access_allowed: true, access_exp: 1.hour.from_now.to_i, refresh_exp: 2.weeks.from_now.to_i)
+            session =  JWTSessions::Session.new(payload: payload, refresh_payload: refresh_payload, access_exp: 1.hour.from_now.to_i, refresh_exp: 2.weeks.from_now.to_i)
             tokens = session.login
             { token: tokens[:access], csrf: tokens[:csrf], errors: "유저 정보가 수정되었습니다.", refresh: tokens[:refresh] }
           else

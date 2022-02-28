@@ -25,12 +25,12 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
 }) => {
   const setUserLikes = useSetRecoilState(userLikes);
   const targetLikes: Like[] = useRecoilValue(getLikeIds(target_name));
+
   const { currentUser, isAuthenticated } = useAuth();
 
   const deleteLike = async () => {
     const query = DeleteLikeQuery(target.id, target_name);
     const response = await postQuery(query);
-    console.log(response);
 
     if (response?.data?.data?.deleteLike?.success) {
       toast("좋아요를 취소했습니다.");
@@ -62,8 +62,6 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
           [target_name]: [...likeList, response?.data?.data?.createLike?.like],
         };
       });
-      console.log(response?.data?.data?.createLike?.like);
-      console.log(targetLikes);
     } else {
       toast(response?.data?.data?.createLike?.error || "다시 시도해주세요.");
     }
@@ -74,7 +72,7 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
       const targetLike =
         targetLikes &&
         targetLikes?.find(
-          (like: Like) => like.targetableId === parseInt(target.id)
+          (like: Like) => like.targetableId === parseInt(target?.id)
         );
 
       if (targetLike) {
