@@ -29,9 +29,19 @@ gem 'graphql', '~> 1.13'
 gem "graphiql-rails"
 gem 'sass-rails'
 
+gem 'capistrano'
+gem 'capistrano-bundler'
+gem 'capistrano-passenger'
+gem 'capistrano-rails'
+gem 'capistrano-rbenv'
+gem 'capistrano-rails-collection'
+gem 'capistrano-figaro-yml'
+gem 'capistrano-database-yml'
 
 gem 'jwt'
 gem "jwt_sessions"
+
+gem "figaro"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
