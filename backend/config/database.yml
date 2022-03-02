@@ -84,5 +84,7 @@ test:
 production:
   <<: *default
   database: tiltil_backend_production
-  username: <%= Rails.application.credentials.dig(:DB_USER_NAME) %>
-  password: <%= Rails.application.credentials.dig(:DB_USER_PASSWORD) %>
+  username: deploy
+  password: deploy123qwe
+  # username: <%= Rails.application.credentials.dig(:DB_USER_NAME) %>
+  # password: <%= Rails.application.credentials.dig(:DB_USER_PASSWORD) %>
