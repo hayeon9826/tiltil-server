@@ -5,9 +5,34 @@ set :application, "tiltil-server"
 set :repo_url, "git@github.com:hayeon9826/tiltil-server.git"
 set :deploy_to, "/home/deploy/tiltil"
 set :ssh_options, { forward_agent: true }
-set :keep_releases, 2
 
 set :repo_tree, "backend"
+
+# Capistrano를 통해 배포된 현재/과거에 배포됐던 프로젝트 최대 수용갯수 (Default : 5)
+set :keep_releases, 5
+
+## [Rails Version 6.0 ~] linked_files 파일을 EC2 서버로 Upload
+namespace :deploy do
+  namespace :check do
+    before :linked_files, :set_master_key do
+      on roles(:app), in: :sequence, wait: 10 do
+        unless test("[ -f #{shared_path}/config/application.yml ]")
+          upload! 'config/application.yml', "#{shared_path}/config/application.yml"
+        end
+        
+        unless test("[ -f #{shared_path}/config/master.key ]")
+          upload! 'config/master.key', "#{shared_path}/config/master.key"
+        end
+        
+        unless test("[ -f #{shared_path}/config/database.yml ]")
+          upload! 'config/database.yml', "#{shared_path}/config/database.yml"
+        end
+      end
+    end
+  end
+end
+
+
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
