@@ -92,7 +92,7 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                   onChange={changeInput}
                   value={inputData?.password}
                   className="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  placeholder="Password"
+                  placeholder="비밀번호 입력"
                 />
               </div>
               <div>
@@ -108,7 +108,7 @@ const RegisterPage = ({ changeInput, inputData, isAuth }: any) => {
                     type="password"
                     {...register("password_confirmation", { required: true })}
                     className="mt-1 focus:ring-purple-500 focus:border-purple-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    placeholder="비밀번호 입력"
+                    placeholder="비밀번호 확인"
                     onChange={changeInput}
                     autoComplete="current-password"
                     required
