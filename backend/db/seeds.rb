@@ -27,5 +27,5 @@ end
 
 
 
-# createUsers
-# createCategories
+createUsers
+createCategories
