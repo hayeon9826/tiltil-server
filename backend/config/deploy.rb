@@ -36,7 +36,7 @@ end
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-append :linked_files, "config/master.key"
+append :linked_files, %w{config/application.yml config/database.yml config/master.key}
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
 
 # Default deploy_to directory is /var/www/my_app_name
