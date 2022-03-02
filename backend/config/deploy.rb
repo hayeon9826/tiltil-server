@@ -4,7 +4,8 @@ lock "~> 3.16.0"
 set :application, "tiltil-server"
 set :repo_url, "git@github.com:hayeon9826/tiltil-server.git"
 set :deploy_to, "/home/deploy/tiltil"
-set :ssh_options, { forward_agent: true }
+# set :ssh_options, { forward_agent: true }
+set :ssh_options, { forward_agent: true, user: fetch(:user), keys: %w(/Users/apple/Desktop/programming/deploy_keys/tiltil-key.pem) }
 
 set :repo_tree, "backend"
 
