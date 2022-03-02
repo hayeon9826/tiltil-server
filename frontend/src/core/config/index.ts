@@ -1,12 +1,12 @@
 export const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://tiltil-server.herokuapp.com/'"
+    ? "https://tiltil-server.herokuapp.com/"
     : "http://localhost:3000";
 
 export const configs = {
   API_URL:
     process.env.NODE_ENV === "production"
-      ? "https://tiltil-server.herokuapp.com/'"
+      ? "https://tiltil-server.herokuapp.com/"
       : "http://localhost:3000",
   SERVICE_URL:
     process.env.NODE_ENV === "production"
