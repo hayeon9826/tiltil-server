@@ -7,4 +7,4 @@ JWTSessions.token_store = :redis, {
   token_prefix: "jwt_#{Rails.application.class.module_parent_name.underscore}"
 }
 JWTSessions.algorithm = "HS256"
-JWTSessions.encryption_key = Rails.application.credentials.secret_key_base
+JWTSessions.encryption_key = Rails.application.credentials.dig(:secret_key_base)
