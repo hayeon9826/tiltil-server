@@ -16,17 +16,17 @@ export const convertObjectToFormData = ({
   return fd;
 };
 
-export const getCurrentUserFromToken = (token: string | null) => {
+export const getCurrentUserFromToken = (token: string) => {
   const user = jwt_decode(token);
   return user;
 };
 
 export const checkTokenValid = (token: string): boolean => {
   const { exp } = jwt_decode(token) as JwtPayload;
-  return !!(Date.now() <= exp * 1000);
+  return !!exp && Date.now() <= exp * 1000;
 };
 
 export const checkRefreshValid = (refresh: string): boolean => {
   const { exp } = jwt_decode(refresh) as JwtPayload;
-  return !!(Date.now() <= exp * 1000);
+  return !!exp && Date.now() <= exp * 1000;
 };

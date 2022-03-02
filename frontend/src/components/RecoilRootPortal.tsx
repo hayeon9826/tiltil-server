@@ -54,7 +54,7 @@ export const authenticateUserThroughPortal = ({
       token,
       csrf,
       refresh,
-      currentUser: getCurrentUserFromToken(token),
+      currentUser: token ? getCurrentUserFromToken(token) : null,
     });
   } catch (err) {
     unAuthenticateUserThroughPortal();

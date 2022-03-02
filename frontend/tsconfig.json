@@ -2,10 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -14,24 +19,60 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@styles/*": ["src/styles/*"],
-      "@api": ["src/core/api/index"],
-      "@config": ["src/core/config/index"],
-      "@interface": ["src/core/interfaces/index"],
-      "@atoms": ["src/core/atom/index"],
-      "@selectors": ["src/core/selectors/index"],
-      "@auth": ["src/core/auth/index"],
-      "@query": ["src/core/query"],
-      "@store": ["src/core/store/index"],
-      "@utils": ["src/core/utils/index"],
-      "@usersQuery": ["src/core/query/user"],
-      "@postsQuery": ["src/core/query/post"],
-      "@likesQuery": ["src/core/query/like"]
-    }
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@api": [
+        "src/core/api/index"
+      ],
+      "@config": [
+        "src/core/config/index"
+      ],
+      "@interface": [
+        "src/core/interfaces/index"
+      ],
+      "@atoms": [
+        "src/core/atom/index"
+      ],
+      "@selectors": [
+        "src/core/selectors/index"
+      ],
+      "@auth": [
+        "src/core/auth/index"
+      ],
+      "@query": [
+        "src/core/query"
+      ],
+      "@store": [
+        "src/core/store/index"
+      ],
+      "@utils": [
+        "src/core/utils/index"
+      ],
+      "@usersQuery": [
+        "src/core/query/user"
+      ],
+      "@postsQuery": [
+        "src/core/query/post"
+      ],
+      "@likesQuery": [
+        "src/core/query/like"
+      ]
+    },
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/**/*"],
-  "exclude": ["node_modules", "**/*.{test|spec}.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.{test|spec}.tsx"
+  ]
 }

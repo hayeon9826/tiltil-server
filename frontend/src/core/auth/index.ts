@@ -23,7 +23,7 @@ const useAuth = () => {
       token,
       csrf,
       refresh,
-      currentUser: getCurrentUserFromToken(token),
+      currentUser: token ? getCurrentUserFromToken(token) : null,
     });
   };
 

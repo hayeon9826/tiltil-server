@@ -129,23 +129,16 @@ const Page = () => {
                   </div>
                 </>
               )}
-              {/* <div
-                className={`whitespace-pre-line text-xs pt-8  ${
-                  post?.content ? "text-gray-200" : "text-gray-400"
-                } md:text-sm mt-1 md:mt-2 `}
-                dangerouslySetInnerHTML={{
-                  __html: post?.content || "내용이 없습니다.",
-                }}
-              /> */}
+
               <div className="markdown-body">
                 <MarkDownStyle>
                   <ReactMarkdown
                     remarkPlugins={[[remarkGfm]]}
-                    renderers={{
-                      inlineCode: InlineCodeBlock,
-                      code: CodeBlock,
-                      blockquote: BlockQuote,
-                    }}
+                    // renderers={{
+                    //   inlineCode: InlineCodeBlock,
+                    //   code: CodeBlock,
+                    //   blockquote: BlockQuote,
+                    // }}
                   >
                     {`${post?.content}`}
                   </ReactMarkdown>

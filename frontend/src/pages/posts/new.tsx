@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState, useRef } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor as EditorType, EditorProps } from "@toast-ui/react-editor";
-import { TuiEditorWithForwardedProps } from "./TuiEditorWrapper";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -22,13 +21,14 @@ interface EditorPropsWithHandlers extends EditorProps {
 
 interface dictionaryProps {
   value?: number | null;
-  label: string;
+  label?: string | null;
 }
 
-const Editor = dynamic<TuiEditorWithForwardedProps>(
-  () => import("./TuiEditorWrapper"),
-  { ssr: false }
-);
+const Editor = dynamic(() => import("@components/TuiEditorWrapper"), {
+  loading: () => <p className="p-4 text-sm text-gray-500">로딩중입니다...</p>,
+  ssr: false,
+});
+
 const EditorWithForwardedRef = React.forwardRef<
   EditorType | undefined,
   EditorPropsWithHandlers
@@ -100,7 +100,7 @@ export default function PostNew() {
               const query = CreatePostQuery(
                 data.title,
                 editorMarkdown,
-                data.category.map((cat) => cat.value)
+                data.category.map((cat: any) => cat.value)
               );
               const response = await postQuery(query);
 

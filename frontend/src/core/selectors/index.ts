@@ -5,7 +5,7 @@ import { AuthState } from "@interface";
 export const authSelector = selector({
   key: "authSelector",
   get: ({ get }) => get(authState),
-  set: ({ set }, newAuthState) => set(authState, newAuthState),
+  set: ({ set }, newAuthState: any) => set(authState, newAuthState),
 });
 
 export const getLikeIds = selectorFamily({

@@ -71,9 +71,7 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
     if (isAuthenticated) {
       const targetLike =
         targetLikes &&
-        targetLikes?.find(
-          (like: Like) => like.targetableId === parseInt(target?.id)
-        );
+        targetLikes?.find((like: Like) => like.targetableId === target?.id * 1);
 
       if (targetLike) {
         // 좋아요 눌렀으면 좋아요 삭제
@@ -99,7 +97,7 @@ const LikeContainer: React.FC<LikeContainerProps> = ({
             {targetLikes &&
             targetLikes
               .map((like: Like) => like.targetableId)
-              .includes(parseInt(target?.id)) ? (
+              .includes(target?.id * 1) ? (
               <FaHeart className="h-5 w-5" aria-hidden="true" />
             ) : (
               <FaRegHeart className="h-5 w-5" aria-hidden="true" />
