@@ -107,8 +107,6 @@ const SavedPosts = ({ isAuth }: any) => {
     }
   });
 
-  console.log(categories);
-
   return (
     <>
       <div className="min-h-screen bg-gray-900">

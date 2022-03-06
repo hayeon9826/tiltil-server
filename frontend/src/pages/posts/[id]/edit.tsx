@@ -101,8 +101,6 @@ export default function PostEdit() {
     }
   }, [post]);
 
-  // console.log(postCategories);
-
   useEffect(() => {
     setPostCategories(
       categories.filter((category) =>

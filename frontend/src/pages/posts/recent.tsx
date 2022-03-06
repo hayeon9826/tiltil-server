@@ -13,7 +13,7 @@ import { API_URL } from "@config";
 const tabs = [
   { name: "인기글", href: "/", current: false },
   { name: "최신글", href: "#", current: true },
-  { name: "저장됨", href: "/posts/saved", current: false },
+  // { name: "저장됨", href: "/posts/saved", current: false },
 ];
 
 function classNames(...classes: string[]) {

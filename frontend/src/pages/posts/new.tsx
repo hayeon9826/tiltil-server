@@ -100,7 +100,7 @@ export default function PostNew() {
               const query = CreatePostQuery(
                 data.title,
                 editorMarkdown,
-                data.category.map((cat: any) => cat.value)
+                data?.category?.map((cat: any) => cat?.value)
               );
               const response = await postQuery(query);
 

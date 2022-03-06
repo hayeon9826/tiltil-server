@@ -17,7 +17,7 @@ import LikeContainer from "@components/LikeContainer";
 const tabs = [
   { name: "인기글", href: "#", current: true },
   { name: "최신글", href: "/posts/recent", current: false },
-  { name: "저장됨", href: "/posts/saved", current: false },
+  // { name: "저장됨", href: "/posts/saved", current: false },
 ];
 
 function classNames(...classes: string[]) {
@@ -46,7 +46,7 @@ const Home = ({ isAuth }: any) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log("isAuthenticated");
+      // console.log("isAuthenticated");
     }
     getData();
   }, []);
@@ -129,7 +129,7 @@ const Home = ({ isAuth }: any) => {
                     posts.map((post) => (
                       <li
                         key={post.id}
-                        className="bg-gray-900 border border-gray-500  px-4 py-6 sm:p-6 sm:rounded-lg mt-4"
+                        className="bg-gray-900 border border-gray-500 cursor-pointer px-4 py-6 sm:p-6 sm:rounded-lg mt-4"
                       >
                         <article aria-labelledby={"question-title-" + post.id}>
                           <Link href={`/posts/${post.id}`}>

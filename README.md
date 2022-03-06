@@ -2,6 +2,8 @@
 
 오늘배움(TIL)은 당일 배운 내용을 짧게 적을 수 있는 게시판 서비스입니다.
 
+링크: https://tiltil-server.vercel.app/
+
 ## 기술 스택
 
 - 백엔드: Ruby on Rails, GraphQL
